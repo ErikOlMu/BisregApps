@@ -1,0 +1,412 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="..\packages\Microsoft.CodeQuality.Analyzers.2.9.8\build\Microsoft.CodeQuality.Analyzers.props" Condition="Exists('..\packages\Microsoft.CodeQuality.Analyzers.2.9.8\build\Microsoft.CodeQuality.Analyzers.props')" />
+  <Import Project="..\packages\EntityFramework.6.3.0\build\EntityFramework.props" Condition="Exists('..\packages\EntityFramework.6.3.0\build\EntityFramework.props')" />
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{C3CD02F2-42A9-4F75-B937-C417D5667891}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <RootNamespace>AltasBisreg</RootNamespace>
+    <AssemblyName>AltasBisreg</AssemblyName>
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    <Deterministic>true</Deterministic>
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <PublishUrl>publish\</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Disk</InstallFrom>
+    <UpdateEnabled>false</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <ApplicationRevision>3</ApplicationRevision>
+    <ApplicationVersion>1.1.0.%2a</ApplicationVersion>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <PublishWizardCompleted>true</PublishWizardCompleted>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>shipping_products_22121.ico</ApplicationIcon>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ManifestCertificateThumbprint>E593110D90B01D6D5F1222F5FD2CFBD8299AED74</ManifestCertificateThumbprint>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ManifestKeyFile>AltasBisreg_TemporaryKey.pfx</ManifestKeyFile>
+  </PropertyGroup>
+  <PropertyGroup>
+    <GenerateManifests>true</GenerateManifests>
+  </PropertyGroup>
+  <PropertyGroup>
+    <TargetZone>LocalIntranet</TargetZone>
+  </PropertyGroup>
+  <PropertyGroup />
+  <PropertyGroup>
+    <SignManifests>true</SignManifests>
+  </PropertyGroup>
+  <PropertyGroup />
+  <ItemGroup>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.3.0\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.3.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Data.Sqlite, Version=3.1.1.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Data.Sqlite.Core.3.1.1\lib\netstandard2.0\Microsoft.Data.Sqlite.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Office.Interop.Excel, Version=15.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Office.Interop.Excel.15.0.4795.1000\lib\net20\Microsoft.Office.Interop.Excel.dll</HintPath>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </Reference>
+    <Reference Include="SQLitePCLRaw.batteries_v2, Version=2.0.2.669, Culture=neutral, PublicKeyToken=8226ea5df37bcae9, processorArchitecture=MSIL">
+      <HintPath>..\packages\SQLitePCLRaw.bundle_e_sqlite3.2.0.2\lib\net461\SQLitePCLRaw.batteries_v2.dll</HintPath>
+    </Reference>
+    <Reference Include="SQLitePCLRaw.core, Version=2.0.2.669, Culture=neutral, PublicKeyToken=1488e028ca7ab535, processorArchitecture=MSIL">
+      <HintPath>..\packages\SQLitePCLRaw.core.2.0.2\lib\netstandard2.0\SQLitePCLRaw.core.dll</HintPath>
+    </Reference>
+    <Reference Include="SQLitePCLRaw.nativelibrary, Version=2.0.2.669, Culture=neutral, PublicKeyToken=502ed628492ab262, processorArchitecture=MSIL">
+      <HintPath>..\packages\SQLitePCLRaw.bundle_e_sqlite3.2.0.2\lib\net461\SQLitePCLRaw.nativelibrary.dll</HintPath>
+    </Reference>
+    <Reference Include="SQLitePCLRaw.provider.dynamic_cdecl, Version=2.0.2.669, Culture=neutral, PublicKeyToken=b68184102cba0b3b, processorArchitecture=MSIL">
+      <HintPath>..\packages\SQLitePCLRaw.provider.dynamic_cdecl.2.0.2\lib\netstandard2.0\SQLitePCLRaw.provider.dynamic_cdecl.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Buffers, Version=4.0.2.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Buffers.4.4.0\lib\netstandard2.0\System.Buffers.dll</HintPath>
+    </Reference>
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data.SQLite, Version=1.0.112.0, Culture=neutral, PublicKeyToken=db937bc2d44ff139, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Data.SQLite.Core.1.0.112.0\lib\net46\System.Data.SQLite.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Data.SQLite.EF6, Version=1.0.112.0, Culture=neutral, PublicKeyToken=db937bc2d44ff139, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Data.SQLite.EF6.1.0.112.0\lib\net46\System.Data.SQLite.EF6.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Data.SQLite.Linq, Version=1.0.112.0, Culture=neutral, PublicKeyToken=db937bc2d44ff139, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Data.SQLite.Linq.1.0.112.0\lib\net46\System.Data.SQLite.Linq.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Memory, Version=4.0.1.1, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Memory.4.5.3\lib\netstandard2.0\System.Memory.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Numerics" />
+    <Reference Include="System.Numerics.Vectors, Version=4.1.3.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Numerics.Vectors.4.4.0\lib\net46\System.Numerics.Vectors.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Runtime.CompilerServices.Unsafe, Version=4.0.4.1, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Runtime.CompilerServices.Unsafe.4.5.2\lib\netstandard2.0\System.Runtime.CompilerServices.Unsafe.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Deployment" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Controladores\ConnexionSQL.cs" />
+    <Compile Include="Controladores\ConnexionExcel.cs" />
+    <Compile Include="Controladores\SerlizadorAlertas.cs" />
+    <Compile Include="Modelos\Capa1\DocumentoProducto.cs" />
+    <Compile Include="Modelos\Capa1\Producto.cs" />
+    <Compile Include="Modelos\Capa3\Tarifa.cs" />
+    <Compile Include="Modelos\Settings\Alerta.cs" />
+    <Compile Include="Modelos\Settings\TmpDiseño.cs" />
+    <Compile Include="Modelos\Settings\ListaDiseño.cs" />
+    <Compile Include="Modelos\Settings\Serializardor.cs" />
+    <Compile Include="Vista\Buscador.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Vista\Buscador.Designer.cs">
+      <DependentUpon>Buscador.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Vista\Configuracion.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Vista\Configuracion.Designer.cs">
+      <DependentUpon>Configuracion.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Vista\Editor de Document.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Vista\Editor de Document.Designer.cs">
+      <DependentUpon>Editor de Document.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Vista\EditorAlertas.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Vista\EditorAlertas.Designer.cs">
+      <DependentUpon>EditorAlertas.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Vista\EditorAtributos.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Vista\EditorAtributos.Designer.cs">
+      <DependentUpon>EditorAtributos.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Vista\EditorBase.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Vista\EditorBase.Designer.cs">
+      <DependentUpon>EditorBase.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Vista\EditorDiseño.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Vista\EditorDiseño.Designer.cs">
+      <DependentUpon>EditorDiseño.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Vista\EditorDiseñosTemporales.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Vista\EditorDiseñosTemporales.Designer.cs">
+      <DependentUpon>EditorDiseñosTemporales.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Vista\EditorDocumentoProductos.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Vista\EditorDocumentoProductos.Designer.cs">
+      <DependentUpon>EditorDocumentoProductos.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Vista\EditorFamilias.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Vista\EditorFamilias.Designer.cs">
+      <DependentUpon>EditorFamilias.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Vista\EditorLocalidad.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Vista\EditorLocalidad.Designer.cs">
+      <DependentUpon>EditorLocalidad.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Vista\EditorProductosComposicion.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Vista\EditorProductosComposicion.Designer.cs">
+      <DependentUpon>EditorProductosComposicion.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Vista\EditorPueblos.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Vista\EditorPueblos.Designer.cs">
+      <DependentUpon>EditorPueblos.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Vista\EditorSeccion.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Vista\EditorSeccion.Designer.cs">
+      <DependentUpon>EditorSeccion.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Vista\ImportacionDocumentoProductos.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Vista\ImportacionDocumentoProductos.Designer.cs">
+      <DependentUpon>ImportacionDocumentoProductos.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Vista\Importacion.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Vista\Importacion.Designer.cs">
+      <DependentUpon>Importacion.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Vista\Listado.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Vista\Listado.Designer.cs">
+      <DependentUpon>Listado.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Vista\NuevoPack.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Vista\NuevoPack.Designer.cs">
+      <DependentUpon>NuevoPack.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Vista\Tablas.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Vista\Tablas.Designer.cs">
+      <DependentUpon>Tablas.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Vista\VentanaPrincipal.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Vista\VentanaPrincipal.Designer.cs">
+      <DependentUpon>VentanaPrincipal.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Modelos\Capa1\Documento.cs" />
+    <Compile Include="Modelos\Capa1\Item.cs" />
+    <Compile Include="Modelos\Capa2\ProdComposicion.cs" />
+    <Compile Include="Modelos\Capa3\Atributo.cs" />
+    <Compile Include="Modelos\Capa2\Base.cs" />
+    <Compile Include="Modelos\Capa2\Composicion.cs" />
+    <Compile Include="Modelos\Capa2\Diseño.cs" />
+    <Compile Include="Modelos\Capa3\Familia.cs" />
+    <Compile Include="Modelos\Capa3\Localidad.cs" />
+    <Compile Include="Modelos\Capa2\Pueblo.cs" />
+    <Compile Include="Modelos\Capa3\RelAtributo.cs" />
+    <Compile Include="Modelos\Capa3\Seccion.cs" />
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Modelos\Settings\Config.cs" />
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <EmbeddedResource Include="Vista\Buscador.resx">
+      <DependentUpon>Buscador.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Vista\Configuracion.resx">
+      <DependentUpon>Configuracion.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Vista\Editor de Document.resx">
+      <DependentUpon>Editor de Document.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Vista\EditorAlertas.resx">
+      <DependentUpon>EditorAlertas.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Vista\EditorAtributos.resx">
+      <DependentUpon>EditorAtributos.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Vista\EditorBase.resx">
+      <DependentUpon>EditorBase.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Vista\EditorDiseño.resx">
+      <DependentUpon>EditorDiseño.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Vista\EditorDiseñosTemporales.resx">
+      <DependentUpon>EditorDiseñosTemporales.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Vista\EditorDocumentoProductos.resx">
+      <DependentUpon>EditorDocumentoProductos.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Vista\EditorFamilias.resx">
+      <DependentUpon>EditorFamilias.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Vista\EditorLocalidad.resx">
+      <DependentUpon>EditorLocalidad.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Vista\EditorProductosComposicion.resx">
+      <DependentUpon>EditorProductosComposicion.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Vista\EditorPueblos.resx">
+      <DependentUpon>EditorPueblos.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Vista\EditorSeccion.resx">
+      <DependentUpon>EditorSeccion.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Vista\ImportacionDocumentoProductos.resx">
+      <DependentUpon>ImportacionDocumentoProductos.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Vista\Importacion.resx">
+      <DependentUpon>Importacion.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Vista\Listado.resx">
+      <DependentUpon>Listado.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Vista\NuevoPack.resx">
+      <DependentUpon>NuevoPack.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Vista\Tablas.resx">
+      <DependentUpon>Tablas.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Vista\VentanaPrincipal.resx">
+      <DependentUpon>VentanaPrincipal.cs</DependentUpon>
+    </EmbeddedResource>
+    <None Include="AltasBisreg_TemporaryKey.pfx" />
+    <None Include="packages.config" />
+    <None Include="Properties\app.manifest" />
+    <None Include="Properties\DataSources\AltasBisreg.Modelos.Capa1.Documento.datasource" />
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Analyzer Include="..\packages\Microsoft.CodeQuality.Analyzers.2.9.8\analyzers\dotnet\cs\Humanizer.dll" />
+    <Analyzer Include="..\packages\Microsoft.CodeQuality.Analyzers.2.9.8\analyzers\dotnet\cs\Microsoft.CodeQuality.Analyzers.dll" />
+    <Analyzer Include="..\packages\Microsoft.CodeQuality.Analyzers.2.9.8\analyzers\dotnet\cs\Microsoft.CodeQuality.CSharp.Analyzers.dll" />
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Connected Services\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Altas.sql">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="folderdiseños.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="shipping_products_22121.ico" />
+    <Content Include="SQLite.Interop.dll" />
+  </ItemGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include=".NETFramework,Version=v4.7.2">
+      <Visible>False</Visible>
+      <ProductName>Microsoft .NET Framework 4.7.2 %28x86 y x64%29</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Import Project="..\packages\SQLitePCLRaw.lib.e_sqlite3.2.0.2\build\net461\SQLitePCLRaw.lib.e_sqlite3.targets" Condition="Exists('..\packages\SQLitePCLRaw.lib.e_sqlite3.2.0.2\build\net461\SQLitePCLRaw.lib.e_sqlite3.targets')" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>Este proyecto hace referencia a los paquetes NuGet que faltan en este equipo. Use la restauración de paquetes NuGet para descargarlos. Para obtener más información, consulte http://go.microsoft.com/fwlink/?LinkID=322105. El archivo que falta es {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\packages\SQLitePCLRaw.lib.e_sqlite3.2.0.2\build\net461\SQLitePCLRaw.lib.e_sqlite3.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\SQLitePCLRaw.lib.e_sqlite3.2.0.2\build\net461\SQLitePCLRaw.lib.e_sqlite3.targets'))" />
+    <Error Condition="!Exists('..\packages\EntityFramework.6.3.0\build\EntityFramework.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\EntityFramework.6.3.0\build\EntityFramework.props'))" />
+    <Error Condition="!Exists('..\packages\EntityFramework.6.3.0\build\EntityFramework.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\EntityFramework.6.3.0\build\EntityFramework.targets'))" />
+    <Error Condition="!Exists('..\packages\System.Data.SQLite.Core.1.0.112.0\build\net46\System.Data.SQLite.Core.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\System.Data.SQLite.Core.1.0.112.0\build\net46\System.Data.SQLite.Core.targets'))" />
+    <Error Condition="!Exists('..\packages\Microsoft.CodeQuality.Analyzers.2.9.8\build\Microsoft.CodeQuality.Analyzers.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.CodeQuality.Analyzers.2.9.8\build\Microsoft.CodeQuality.Analyzers.props'))" />
+  </Target>
+  <Import Project="..\packages\EntityFramework.6.3.0\build\EntityFramework.targets" Condition="Exists('..\packages\EntityFramework.6.3.0\build\EntityFramework.targets')" />
+  <Import Project="..\packages\System.Data.SQLite.Core.1.0.112.0\build\net46\System.Data.SQLite.Core.targets" Condition="Exists('..\packages\System.Data.SQLite.Core.1.0.112.0\build\net46\System.Data.SQLite.Core.targets')" />
+</Project>
