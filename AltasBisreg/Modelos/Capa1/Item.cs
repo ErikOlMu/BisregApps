@@ -281,7 +281,7 @@ namespace AltasBisreg.Modelos.Capa1
         {
             if (Referencia != null){
 
-                if (Referencia.Length == 11 || Referencia.Length == 9)
+                if (Referencia.Length == 11 || Referencia.Length == 9 || Referencia.Length == 15 || Referencia.Length == 16 || Referencia.Length == 17)
                 {
                     char[] r = Referencia.ToCharArray();
                     string pueblo;
@@ -354,7 +354,36 @@ namespace AltasBisreg.Modelos.Capa1
                         this.@base = Base.GetBase(@base, tipo);
                         this.diseño = Diseño.GetDiseño(diseño);
                     }
+                    if (Referencia.Length == 15 || Referencia.Length == 16 || Referencia.Length == 17)
+                    {
+                        int CountBases = int.Parse(r[Referencia.Length - 4].ToString());
+                        int CountDiseños = int.Parse(r[Referencia.Length - 2].ToString());
 
+                        @base = "";
+                        diseño = "";
+
+                        int contadortotal = 5;
+
+                        int contador = 0;
+                        while (contador < CountBases)
+                        {
+                            @base = @base + r[contadortotal];
+                            contadortotal= contadortotal + 1;
+                            contador = contadortotal + 1;
+                        }
+                        contador = 0;
+                        while (contador < CountDiseños)
+                        {
+                            diseño = diseño + r[contadortotal];
+                            contadortotal = contadortotal + 1;
+                            contador = contadortotal + 1;
+                        }
+
+                        this.pueblo = Pueblo.GetPueblo(pueblo);
+                        this.@base = Base.GetBase(@base, tipo);
+                        this.diseño = Diseño.GetDiseño(diseño);
+
+                    }
                 }
             }
             else
@@ -364,7 +393,8 @@ namespace AltasBisreg.Modelos.Capa1
                 this.diseño = null;
             }
 
-
+            string hola = "";
+            MessageBox.Show(this.pueblo.GetID() + this.@base.GetId() + this.diseño.GetID());
         }
     }
 }
