@@ -271,7 +271,7 @@ namespace AltasBisreg.Modelos.Capa1
         public string GetDescripcion()
         {
             
-            return @base.GetNombre() + " " +pueblo.GetNombre() +"" +diseño.GetDescripcion();
+            return @base.GetNombre() + " " +pueblo.GetNombre() +" " +diseño.GetDescripcion();
 
             
 
