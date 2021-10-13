@@ -218,7 +218,7 @@ namespace AltasBisreg.Controladores
             //K
             Articulos.Cells[ultimafila, 11] = "1";
             //L
-            Articulos.Cells[ultimafila, 12] = "0";
+            Articulos.Cells[ultimafila, 12] = "1";
             //M
             Articulos.Cells[ultimafila, 13] = "C";
             //N
@@ -230,7 +230,7 @@ namespace AltasBisreg.Controladores
             //Q
             Articulos.Cells[ultimafila, 17] = "01";
             //R
-            Articulos.Cells[ultimafila, 18] = "1";
+            Articulos.Cells[ultimafila, 18] = "0";
             //Localidad
             //S
             Articulos.Cells[ultimafila, 19] = item.GetPueblo().GetLocalidad(); ;
