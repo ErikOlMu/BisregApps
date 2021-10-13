@@ -21,6 +21,14 @@ namespace Catalogos_Bisreg_WinForms
         {
             InitializeComponent();
 
+            if (!Directory.Exists("Tamaños"))
+            {
+                Directory.CreateDirectory("Tamaños");
+            }
+            if (!Directory.Exists("temp"))
+            {
+                Directory.CreateDirectory("temp");
+            }
             
             txb_DirIMG.Text = Settings.Directorio_IMG;
         }
@@ -48,7 +56,8 @@ namespace Catalogos_Bisreg_WinForms
                 //Creamos la fila
                 DataGridViewRow Columna = new DataGridViewRow();
                 //Añadimos la Referencia
-                if ( File.Exists(Settings.Directorio_IMG+"\\"+i.Referencia+".jpg") || File.Exists(Settings.Directorio_IMG + "\\" + i.Referencia + ".png") ){
+                if ( File.Exists(Settings.Directorio_IMG+"\\"+i.Referencia+".jpg") || File.Exists(Settings.Directorio_IMG + "\\" + i.Referencia + ".png") || File.Exists(Settings.Directorio_IMG + "\\" + i.Referencia + "_0.jpg") || File.Exists(Settings.Directorio_IMG + "\\" + i.Referencia + "_0.png"))
+                {
 
                     Columna.DefaultCellStyle.BackColor = Color.Green;
 
@@ -191,6 +200,11 @@ namespace Catalogos_Bisreg_WinForms
 
                 Tabla.Rows.RemoveAt(Tabla.CurrentRow.Index);
             }
+        }
+
+        private void FormPrincipal_Load(object sender, EventArgs e)
+        {
+
         }
     }
 }

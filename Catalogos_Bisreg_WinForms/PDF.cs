@@ -65,7 +65,22 @@ namespace Catalogos_Bisreg_WinForms
                     }
                     catch (Exception ex2)
                     {
-                        Ventana.Foto = System.Drawing.Image.FromFile("Imagen.jpg");
+                        try
+                        {
+                            Ventana.Foto = System.Drawing.Image.FromFile(Settings.Directorio_IMG + "\\" + i.Referencia + "_0.jpg");
+                        }
+                        catch (Exception ex3)
+                        {
+                            try
+                            {
+                                Ventana.Foto = System.Drawing.Image.FromFile(Settings.Directorio_IMG + "\\" + i.Referencia + "_0.png");
+
+                            }
+                            catch (Exception ex4)
+                            {
+                                Ventana.Foto = System.Drawing.Image.FromFile("Imagen.jpg");
+                            }
+                        }
                     }
                 }
 

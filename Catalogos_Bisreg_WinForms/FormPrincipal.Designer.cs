@@ -156,7 +156,8 @@
             this.Controls.Add(this.TablaProductos);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "FormPrincipal";
-            this.Text = "Form1";
+            this.Text = "Catalogos Bisreg";
+            this.Load += new System.EventHandler(this.FormPrincipal_Load);
             ((System.ComponentModel.ISupportInitialize)(this.TablaProductos)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();

@@ -294,17 +294,27 @@ namespace Catalogos_Bisreg_WinForms
         }
         private void getTamaños()
         {
-            DirectoryInfo D = new DirectoryInfo(Settings.DirTamaños);
-            foreach (FileInfo file in D.GetFiles())
+            try
             {
-                if (file.Extension == ".size")
+                DirectoryInfo D = new DirectoryInfo(Settings.DirTamaños);
+
+                foreach (FileInfo file in D.GetFiles())
                 {
-                    cb_sizeSalida.Items.Add(file.Name);   
+                    if (file.Extension == ".size")
+                    {
+                        cb_sizeSalida.Items.Add(file.Name);
+                    }
+
+
                 }
-                
+                cb_sizeSalida.SelectedItem = "Gerard.size";
+            }
+            catch (IOException ex)
+            {
 
             }
-            cb_sizeSalida.SelectedItem = "Gerard.size";
+            
+            
         }
 
         private void button1_Click(object sender, EventArgs e)

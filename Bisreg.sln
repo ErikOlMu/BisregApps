@@ -7,20 +7,30 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AltasBisreg", "AltasBisreg\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Catalogos_Bisreg_WinForms", "Catalogos_Bisreg_WinForms\Catalogos_Bisreg_WinForms.csproj", "{80EDE420-6D40-4CA0-A4A3-53E70FB267AA}"
 EndProject
+Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "CatalogosBisreg", "CatalogosBisreg\CatalogosBisreg.vdproj", "{1D848D21-E1BA-4172-860C-56366103387A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		All|Any CPU = All|Any CPU
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{C3CD02F2-42A9-4F75-B937-C417D5667891}.All|Any CPU.ActiveCfg = Debug|Any CPU
+		{C3CD02F2-42A9-4F75-B937-C417D5667891}.All|Any CPU.Build.0 = Debug|Any CPU
 		{C3CD02F2-42A9-4F75-B937-C417D5667891}.Debug|Any CPU.ActiveCfg = Release|Any CPU
 		{C3CD02F2-42A9-4F75-B937-C417D5667891}.Debug|Any CPU.Build.0 = Release|Any CPU
 		{C3CD02F2-42A9-4F75-B937-C417D5667891}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C3CD02F2-42A9-4F75-B937-C417D5667891}.Release|Any CPU.Build.0 = Release|Any CPU
+		{80EDE420-6D40-4CA0-A4A3-53E70FB267AA}.All|Any CPU.ActiveCfg = Release|Any CPU
+		{80EDE420-6D40-4CA0-A4A3-53E70FB267AA}.All|Any CPU.Build.0 = Release|Any CPU
 		{80EDE420-6D40-4CA0-A4A3-53E70FB267AA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{80EDE420-6D40-4CA0-A4A3-53E70FB267AA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{80EDE420-6D40-4CA0-A4A3-53E70FB267AA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{80EDE420-6D40-4CA0-A4A3-53E70FB267AA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1D848D21-E1BA-4172-860C-56366103387A}.All|Any CPU.ActiveCfg = Debug
+		{1D848D21-E1BA-4172-860C-56366103387A}.Debug|Any CPU.ActiveCfg = Debug
+		{1D848D21-E1BA-4172-860C-56366103387A}.Release|Any CPU.ActiveCfg = Release
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
