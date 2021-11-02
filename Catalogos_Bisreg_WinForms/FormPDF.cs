@@ -36,6 +36,8 @@ namespace Catalogos_Bisreg_WinForms
             getTamaños();
             txb_DirIMG.Text = Settings.Directorio_IMG;
             txb_Columnas.Text = Settings.Columnas_Pagina.ToString();
+            tbxfilas.Text = Settings.Filas_Pagina.ToString();
+            cb_sizeSalida.SelectedIndex = 0;
             txb_Ruta_Salida.Text = Settings.Directorio_Salida_PDF;
 
         }
@@ -268,6 +270,19 @@ namespace Catalogos_Bisreg_WinForms
             }
         }
 
+        private void tbxfilas_TextChanged(object sender, EventArgs e)
+        {
+            try
+            {
+                Settings.Filas_Pagina = Int32.Parse(tbxfilas.Text);
+                Settings.setSettings();
+            }
+            catch (Exception ex)
+            {
+
+            }
+        }
+
         private void txb_Ruta_Salida_TextChanged(object sender, EventArgs e)
         {
             try
@@ -346,5 +361,9 @@ namespace Catalogos_Bisreg_WinForms
 
             Settings.setSettings();
         }
+
+ 
+
+        
     }
 }

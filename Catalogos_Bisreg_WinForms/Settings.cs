@@ -21,6 +21,7 @@ namespace Catalogos_Bisreg_WinForms
         public static string File = "Settings.conf";
         public static string Directorio_IMG;
         public static int Columnas_Pagina ;
+        public static int Filas_Pagina;
         public static string Directorio_Salida_PDF;
         public static string DirTamaños = "Tamaños\\";
         //Valores posiciones i tamaño por defecto
@@ -56,6 +57,7 @@ namespace Catalogos_Bisreg_WinForms
             File = Importados.File;
             Directorio_IMG = Importados.Directorio_IMG;
             Columnas_Pagina = Importados.Columnas_Pagina;
+            Filas_Pagina = Importados.Filas_Pagina;
             Directorio_Salida_PDF = Importados.Directorio_Salida_PDF;
 
 
@@ -82,6 +84,7 @@ namespace Catalogos_Bisreg_WinForms
             i.File = File;
             i.Directorio_IMG = Directorio_IMG;
             i.Columnas_Pagina = Columnas_Pagina;
+            i.Filas_Pagina = Filas_Pagina;
             i.Directorio_Salida_PDF = Directorio_Salida_PDF;
 
 
@@ -113,6 +116,7 @@ namespace Catalogos_Bisreg_WinForms
         public string File = "Settings.conf";
         public string Directorio_IMG;
         public int Columnas_Pagina;
+        public int Filas_Pagina;
         public string Directorio_Salida_PDF;
         public static string DirTamaños = "Tamaños\\";
 
@@ -149,6 +153,7 @@ namespace Catalogos_Bisreg_WinForms
                     File = S.File;
                     Directorio_IMG = S.Directorio_IMG;
                     Columnas_Pagina = S.Columnas_Pagina;
+                    Filas_Pagina = S.Filas_Pagina;
                     Directorio_Salida_PDF = S.Directorio_Salida_PDF;
 
                     TamañoImagen = S.TamañoImagen;
@@ -174,6 +179,7 @@ namespace Catalogos_Bisreg_WinForms
                 this.File = "Settings.conf";
                 this.Directorio_IMG = null;
                 this.Columnas_Pagina = 0;
+                this.Filas_Pagina = 0;
             }
         }
         public void setSettings()

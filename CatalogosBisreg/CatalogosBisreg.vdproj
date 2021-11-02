@@ -15,14 +15,14 @@
     {
         "Entry"
         {
-        "MsmKey" = "8:_14CD84EE5E7B4CCF9A6003EBF3523800"
+        "MsmKey" = "8:_072854C019AA487582C86FF6F56C6EFA"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
         "MsmKey" = "8:_1F6018AC6FD94A852F996800E1B79B3C"
-        "OwnerKey" = "8:_14CD84EE5E7B4CCF9A6003EBF3523800"
+        "OwnerKey" = "8:_39C2005FC5524147B4E8F4B9D96E416A"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -39,26 +39,38 @@
         }
         "Entry"
         {
+        "MsmKey" = "8:_39C2005FC5524147B4E8F4B9D96E416A"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_5FFB6EA7893449C097011D92D7270C6C"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
         "MsmKey" = "8:_63EC6A0A67A0B6EC12496D578BF3B3A7"
-        "OwnerKey" = "8:_14CD84EE5E7B4CCF9A6003EBF3523800"
+        "OwnerKey" = "8:_39C2005FC5524147B4E8F4B9D96E416A"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
         "MsmKey" = "8:_9233EE7F2BD6189E3608C88FABD34029"
-        "OwnerKey" = "8:_14CD84EE5E7B4CCF9A6003EBF3523800"
+        "OwnerKey" = "8:_39C2005FC5524147B4E8F4B9D96E416A"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_A2AA7DBFACE849989A58007877E9D44F"
+        "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_9233EE7F2BD6189E3608C88FABD34029"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_14CD84EE5E7B4CCF9A6003EBF3523800"
+        "OwnerKey" = "8:_39C2005FC5524147B4E8F4B9D96E416A"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -71,6 +83,12 @@
         {
         "MsmKey" = "8:_UNDEFINED"
         "OwnerKey" = "8:_1F6018AC6FD94A852F996800E1B79B3C"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_UNDEFINED"
+        "OwnerKey" = "8:_9233EE7F2BD6189E3608C88FABD34029"
         "MsmSig" = "8:_UNDEFINED"
         }
     }
@@ -91,6 +109,22 @@
         "PrivateKeyFile" = "8:"
         "TimeStampServer" = "8:"
         "InstallerBootstrapper" = "3:2"
+            "BootstrapperCfg:{63ACBE69-63AA-4F98-B2B6-99F9E24495F2}"
+            {
+            "Enabled" = "11:TRUE"
+            "PromptEnabled" = "11:TRUE"
+            "PrerequisitesLocation" = "2:1"
+            "Url" = "8:"
+            "ComponentsUrl" = "8:"
+                "Items"
+                {
+                    "{EDC2488A-8267-493A-A98E-7D9C3B36CDF3}:.NETFramework,Version=v4.7.2"
+                    {
+                    "Name" = "8:Microsoft .NET Framework 4.7.2 (x86 and x64)"
+                    "ProductCode" = "8:.NETFramework,Version=v4.7.2"
+                    }
+                }
+            }
         }
         "Release"
         {
@@ -107,6 +141,22 @@
         "PrivateKeyFile" = "8:"
         "TimeStampServer" = "8:"
         "InstallerBootstrapper" = "3:2"
+            "BootstrapperCfg:{63ACBE69-63AA-4F98-B2B6-99F9E24495F2}"
+            {
+            "Enabled" = "11:TRUE"
+            "PromptEnabled" = "11:TRUE"
+            "PrerequisitesLocation" = "2:1"
+            "Url" = "8:"
+            "ComponentsUrl" = "8:"
+                "Items"
+                {
+                    "{EDC2488A-8267-493A-A98E-7D9C3B36CDF3}:.NETFramework,Version=v4.7.2"
+                    {
+                    "Name" = "8:Microsoft .NET Framework 4.7.2 (x86 and x64)"
+                    "ProductCode" = "8:.NETFramework,Version=v4.7.2"
+                    }
+                }
+            }
         }
     }
     "Deployable"
@@ -136,6 +186,26 @@
         }
         "File"
         {
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_072854C019AA487582C86FF6F56C6EFA"
+            {
+            "SourcePath" = "8:..\\Catalogos_Bisreg_WinForms\\bin\\Release\\Tamaños\\A4.size"
+            "TargetName" = "8:A4.size"
+            "Tag" = "8:"
+            "Folder" = "8:_F1C859A8A3BC4C84BE1FBA77A0329675"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
             "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_1F6018AC6FD94A852F996800E1B79B3C"
             {
             "AssemblyRegister" = "3:1"
@@ -171,6 +241,26 @@
             {
             "SourcePath" = "8:..\\..\\..\\..\\..\\Desktop\\icon.ico"
             "TargetName" = "8:icon.ico"
+            "Tag" = "8:"
+            "Folder" = "8:_63F13BD525F84867846535DAC1B3016A"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_5FFB6EA7893449C097011D92D7270C6C"
+            {
+            "SourcePath" = "8:..\\Catalogos_Bisreg_WinForms\\bin\\Release\\Settings.conf"
+            "TargetName" = "8:Settings.conf"
             "Tag" = "8:"
             "Folder" = "8:_63F13BD525F84867846535DAC1B3016A"
             "Condition" = "8:"
@@ -249,6 +339,26 @@
             "IsDependency" = "11:TRUE"
             "IsolateTo" = "8:"
             }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_A2AA7DBFACE849989A58007877E9D44F"
+            {
+            "SourcePath" = "8:..\\Catalogos_Bisreg_WinForms\\bin\\Release\\Imagen.jpg"
+            "TargetName" = "8:Imagen.jpg"
+            "Tag" = "8:"
+            "Folder" = "8:_63F13BD525F84867846535DAC1B3016A"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
         }
         "FileType"
         {
@@ -265,6 +375,17 @@
             "Property" = "8:TARGETDIR"
                 "Folders"
                 {
+                    "{9EF0B969-E518-4E46-987F-47570745A589}:_F1C859A8A3BC4C84BE1FBA77A0329675"
+                    {
+                    "Name" = "8:Tamaños"
+                    "AlwaysCreate" = "11:FALSE"
+                    "Condition" = "8:"
+                    "Transitive" = "11:FALSE"
+                    "Property" = "8:_71014CDE6C224212AB3A4EBA38B8DAED"
+                        "Folders"
+                        {
+                        }
+                    }
                 }
             }
             "{1525181F-901A-416C-8A58-119130FE478E}:_875483B85C9A41E58DFE9F529BA64015"
@@ -305,15 +426,15 @@
         {
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:CatalogosBisreg"
-        "ProductCode" = "8:{3B9753BC-89DF-4EDC-A224-19B39858C6B8}"
-        "PackageCode" = "8:{0A712708-7965-4A21-A36D-6C432B6F911B}"
+        "ProductCode" = "8:{AB488B58-DB03-4D43-A0C3-D9D3656ABA6F}"
+        "PackageCode" = "8:{19D752B9-52B9-4CE6-99B3-BC4A478F8F8F}"
         "UpgradeCode" = "8:{E96B94EF-6DA0-4669-A4FA-AA8B8CFA7369}"
         "AspNetVersion" = "8:2.0.50727.0"
         "RestartWWWService" = "11:FALSE"
-        "RemovePreviousVersions" = "11:FALSE"
+        "RemovePreviousVersions" = "11:TRUE"
         "DetectNewerInstalledVersion" = "11:TRUE"
         "InstallAllUsers" = "11:FALSE"
-        "ProductVersion" = "8:1.1.0"
+        "ProductVersion" = "8:1.4.0"
         "Manufacturer" = "8:Bisreg"
         "ARPHELPTELEPHONE" = "8:"
         "ARPHELPLINK" = "8:"
@@ -434,7 +555,7 @@
             "ShowCmd" = "3:1"
             "IconIndex" = "3:0"
             "Transitive" = "11:FALSE"
-            "Target" = "8:_14CD84EE5E7B4CCF9A6003EBF3523800"
+            "Target" = "8:_39C2005FC5524147B4E8F4B9D96E416A"
             "Folder" = "8:_875483B85C9A41E58DFE9F529BA64015"
             "WorkingFolder" = "8:_63F13BD525F84867846535DAC1B3016A"
             "Icon" = "8:_235191754F8748B797379FA2253AADB4"
@@ -839,7 +960,7 @@
         }
         "ProjectOutput"
         {
-            "{5259A561-127C-4D43-A0A1-72F10C7B3BF8}:_14CD84EE5E7B4CCF9A6003EBF3523800"
+            "{5259A561-127C-4D43-A0A1-72F10C7B3BF8}:_39C2005FC5524147B4E8F4B9D96E416A"
             {
             "SourcePath" = "8:..\\Catalogos_Bisreg_WinForms\\obj\\Release\\Catalogos_Bisreg_WinForms.exe"
             "TargetName" = "8:"
@@ -859,7 +980,7 @@
             "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             "ProjectOutputGroupRegister" = "3:1"
-            "OutputConfiguration" = "8:Release|Any CPU"
+            "OutputConfiguration" = "8:"
             "OutputGroupCanonicalName" = "8:Built"
             "OutputProjectGuid" = "8:{80EDE420-6D40-4CA0-A4A3-53E70FB267AA}"
             "ShowKeyOutput" = "11:TRUE"

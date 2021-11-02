@@ -21,8 +21,8 @@ namespace Catalogos_Bisreg_WinForms
 
         private Tamaño Plotter;
         private Document doc;
-        private int Filas;
         private ArrayList Productos;
+        private int filaspagina;
         private FormPDF Ventana;
 
         public void inicializarDocumento()
@@ -40,7 +40,10 @@ namespace Catalogos_Bisreg_WinForms
             this.Plotter = Plotter;
             this.Ventana = Ventana;
             Productos = pProductos;
-            Filas = (Productos.Count / Settings.Columnas_Pagina)+1 ;
+            filaspagina = (Productos.Count / Settings.Columnas_Pagina) + 1;
+            
+            //Filas auto
+            //Filas = (Productos.Count / Settings.Columnas_Pagina)+1 ;
             inicializarDocumento();
             generarImagenes();
             doc.Add(RecorridoPDF());
@@ -51,38 +54,25 @@ namespace Catalogos_Bisreg_WinForms
             foreach (Item i in Productos)
             {
                 Ventana.Foto.Dispose();
-                //Poner la foto
+
                 try
                 {
-                    Ventana.Foto = System.Drawing.Image.FromFile(Settings.Directorio_IMG + "\\" + i.Referencia + ".jpg");
+                    Ventana.Foto = System.Drawing.Image.FromFile(Directory.GetFiles(Settings.Directorio_IMG, i.Referencia + "_0.*", SearchOption.TopDirectoryOnly)[0]);
                 }
-                catch(Exception ex)
+                catch (Exception ex)
                 {
                     try
                     {
-                        Ventana.Foto = System.Drawing.Image.FromFile(Settings.Directorio_IMG + "\\" + i.Referencia + ".png");
-                        
+                        Ventana.Foto = System.Drawing.Image.FromFile(Directory.GetFiles(Settings.Directorio_IMG, i.Referencia + ".*", SearchOption.TopDirectoryOnly)[0]);
                     }
-                    catch (Exception ex2)
+                    catch (Exception ex4)
                     {
-                        try
-                        {
-                            Ventana.Foto = System.Drawing.Image.FromFile(Settings.Directorio_IMG + "\\" + i.Referencia + "_0.jpg");
-                        }
-                        catch (Exception ex3)
-                        {
-                            try
-                            {
-                                Ventana.Foto = System.Drawing.Image.FromFile(Settings.Directorio_IMG + "\\" + i.Referencia + "_0.png");
-
-                            }
-                            catch (Exception ex4)
-                            {
-                                Ventana.Foto = System.Drawing.Image.FromFile("Imagen.jpg");
-                            }
-                        }
+                        Ventana.Foto = System.Drawing.Image.FromFile("Imagen.jpg");
                     }
                 }
+
+                //Poner la foto
+                
 
                 //Poner la referencia
                 ((CampoPB)Ventana.Campos[1]).Texto = i.Referencia;
@@ -101,6 +91,9 @@ namespace Catalogos_Bisreg_WinForms
                     }
                 }
                 Ventana.Celda_PDF.Invalidate();
+
+                
+
                 
                 guardarimagen(Ventana.Celda_PDF, "temp\\"+ i.Referencia + ".jpg");
             }
@@ -110,7 +103,10 @@ namespace Catalogos_Bisreg_WinForms
         //Metodo para cerrar el PDF
         public void GuardarPDF()
         {
+
             List<string> strFiles = Directory.GetFiles("temp\\", "*", SearchOption.AllDirectories).ToList();
+
+            
 
             foreach (string fichero in strFiles)
             {
@@ -125,13 +121,20 @@ namespace Catalogos_Bisreg_WinForms
 
             try
             {
+
                 Bitmap Imagen = new Bitmap(Celda_PDF.Width, Celda_PDF.Height);
+                
                 Celda_PDF.DrawToBitmap(Imagen, Celda_PDF.ClientRectangle);
+                
+
+                
+
                 Imagen.Save(ruta, ImageFormat.Jpeg);
             }
             catch (Exception ex)
             {
-                MessageBox.Show("No se ha podido guardar la imagen: " + ruta, "Fallo guardando imagenes", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                //Solo para debug
+                //MessageBox.Show("No se ha podido guardar la imagen: " + ruta, "Fallo guardando imagenes", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }   
             
 
@@ -170,7 +173,7 @@ namespace Catalogos_Bisreg_WinForms
             //ancho sin variacion
             table.LockedWidth = true;
             PdfPCell[] Array_de_celdas = new PdfPCell[Settings.Columnas_Pagina];
-            for (int i = 0; i < (Settings.Columnas_Pagina * Filas); i++)
+            for (int i = 0; i < (Settings.Columnas_Pagina * filaspagina); i++)
             {
                 //Añado una celda con el produto 0 para provar y le mando las columnas del PDF
                 PdfPCell celda;
@@ -189,11 +192,14 @@ namespace Catalogos_Bisreg_WinForms
                         //table.AddCell();
                         
                         //Color Blanco
-                        celda = new PdfPCell(iTextSharp.text.Image.GetInstance(("temp\\" + ((Item)Productos[i]).Referencia + ".jpg")));
+                        celda = new PdfPCell(iTextSharp.text.Image.GetInstance(("temp\\" + ((Item)Productos[i]).Referencia + ".jpg")),true);
                         celda.BorderColor = new BaseColor(Color.White);
 
                         //celda.BorderColor = new BaseColor();
-                        celda.FixedHeight = (Plotter.getHorizontal_Pixel() / Settings.Columnas_Pagina);
+                        //celda.FixedHeight = (Plotter.getVertical_Pixel() / Settings.Filas_Pagina);
+                        celda.FixedHeight = (Plotter.getVertical_Pixel() / Settings.Filas_Pagina);
+
+
                         table.AddCell(celda);
 
                     }
