@@ -56,7 +56,8 @@ namespace AltasBisreg.Controladores
                         InsertarPRCMETO(Libro, i);
                         InsertarPRMMETO(Libro, i);
                         InsertarPRMETODO(Libro, i);
-                        InsertarComposicion(Libro, i);
+                        //Ya no se inserta la composicion
+                        //InsertarComposicion(Libro, i);
                         InsertarAlmacen(Libro, i);
                         ultimafila = ultimafila + 1;
 
@@ -78,7 +79,6 @@ namespace AltasBisreg.Controladores
             }
             catch
             {
-                
             }
         }
         public void GenerarExcelProductos()
@@ -245,7 +245,7 @@ namespace AltasBisreg.Controladores
             //W
             Articulos.Cells[ultimafila, 23] = "1";
             //X
-            Articulos.Cells[ultimafila, 24] = "1";
+            Articulos.Cells[ultimafila, 24] = "0";
 
 
 
@@ -308,8 +308,8 @@ namespace AltasBisreg.Controladores
                         ArticulosPrecio.Cells[ultimaFilaArticulosPrecios, 10] = Config.ValorCoste;
 
                         //Precio Cpste
-                        ArticulosPrecio.Cells[ultimaFilaArticulosPrecios, 4] = item.GetBase().GetCoste();
-                        ArticulosPrecio.Cells[ultimaFilaArticulosPrecios, 8] = item.GetBase().GetCoste();
+                        ArticulosPrecio.Cells[ultimaFilaArticulosPrecios, 4] = item.GetBase().GetPcoste();
+                        ArticulosPrecio.Cells[ultimaFilaArticulosPrecios, 8] = item.GetBase().GetPcoste();
 
                         break;
 
@@ -429,7 +429,6 @@ namespace AltasBisreg.Controladores
             Atributos.Cells[ultimafila, 4] = item.GetBase().GetRelAtributo();
             //Campo estatico
             Atributos.Cells[ultimafila, 5] = "1";
-
         }
         public void InsertarAtributos(Workbook Libro, DocumentoProducto item)
         {

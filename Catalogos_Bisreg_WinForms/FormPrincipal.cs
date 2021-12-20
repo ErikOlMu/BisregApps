@@ -178,7 +178,7 @@ namespace Catalogos_Bisreg_WinForms
                 Settings.Directorio_IMG = txb_DirIMG.Text;
                 Settings.setSettings();
             }
-            catch (Exception ex)
+            catch (Exception)
             {
 
             }

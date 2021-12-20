@@ -34,13 +34,11 @@ namespace AltasBisreg.Vista
             tbx_pv1.Text = @base.GetPv1().ToString();
             tbx_pv2.Text = @base.GetPv2().ToString();
             tbx_pv3.Text = @base.GetPv3().ToString();
-            tbx_pCoste.Text = @base.GetCoste().ToString();
+            tbx_pCoste.Text = @base.GetPcoste().ToString();
             tbx_Atributo.Text = @base.GetAtributo();
             cbx_RelAributo.Text = @base.GetRelAtributo();
             tbx_PedidoMinimo.Text = @base.GetpedidoMinimo().ToString();
 
-            //Composiciones
-            ActualizarComposiciones();
 
             //Tarifas
             ActualizarTarifas();
@@ -62,13 +60,12 @@ namespace AltasBisreg.Vista
             tbx_PedidoMinimo.Text = "";
 
             cbx_RelAributo.DataSource = null;
-            GridComposiciones.DataSource = null;
             GridTarifas.DataSource = null;
 
         }
         public void GuardarValores()
         {
-            Base b = new Base(tbx_ID.Text, cbx_Tipo.Text, tbx_Nombre.Text, tbx_Familia.Text, tbx_Seccion.Text, Convert.ToDecimal(tbx_pv1.Text), Convert.ToDecimal(tbx_pv2.Text), Convert.ToDecimal(tbx_pv3.Text), tbx_Atributo.Text, cbx_RelAributo.Text, Convert.ToInt32(tbx_PedidoMinimo.Text),pack);
+            Base b = new Base(tbx_ID.Text, cbx_Tipo.Text, tbx_Nombre.Text, tbx_Familia.Text, tbx_Seccion.Text, Convert.ToDecimal(tbx_pv1.Text), Convert.ToDecimal(tbx_pv2.Text), Convert.ToDecimal(tbx_pv3.Text),Convert.ToDecimal(tbx_pCoste.Text), tbx_Atributo.Text, cbx_RelAributo.Text, Convert.ToInt32(tbx_PedidoMinimo.Text),pack);
             b.Save();
 
             MessageBox.Show("Base Guardada");
@@ -92,39 +89,8 @@ namespace AltasBisreg.Vista
         }
 
 
-        private void btnaltacomposicion_Click(object sender, EventArgs e)
-        {
-            if (@base != null )
-            {
-                if (Modelos.Capa2.ProdComposicion.GetProdComposicion(txb_CompID.Text) != null)
-                {
-
-                    Composicion c = new Composicion(txb_CompID.Text, @base.GetId(), @base.GetTipo(), Convert.ToDecimal(txb_CompCantidad.Text));
-                if (c.Existe())
-                {
-                    c.SetCantidad(c.GetCantidad() + Composicion.GetComposicion(c.GetID(), c.GetBase(), c.GetTipo()).GetCantidad());
-                }
-                
-                c.Save();
-
-
-                    txb_CompID.Text = "";
-                    txb_CompCantidad.Text = "";
-
-                    ActualizarComposiciones();
-                }
-                else
-                {
-                    MessageBox.Show("No existe el producto");
-                }
-            }
-        }
-        private void ActualizarComposiciones()
-        {
-            var ListBinding = new BindingList<Composicion>(@base.GetComposiciones());
-            GridComposiciones.DataSource = ListBinding;
-            GridComposiciones.Columns[1].Width = 371;
-        }
+        
+ 
         private void ActualizarTarifas()
         {
             var ListBinding = new BindingList<Tarifa>(@base.GetTarifas());
@@ -134,8 +100,6 @@ namespace AltasBisreg.Vista
             int Tamaño = 117;
             GridTarifas.Columns[0].Width = Tamaño;
             GridTarifas.Columns[1].Width = Tamaño;
-
-
         }
         private void ActualizarRelAtributos()
         {
@@ -158,11 +122,6 @@ namespace AltasBisreg.Vista
                 cbx_RelAributo.DataSource = null;
             }
             
-        }
-        private void GridComposiciones_UserDeletingRow(object sender, DataGridViewRowCancelEventArgs e)
-        {
-            @base.GetComposiciones()[e.Row.Index].Delete();
-
         }
 
         private void btn_Guardar_Click(object sender, EventArgs e)

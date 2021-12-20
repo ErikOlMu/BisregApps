@@ -54,7 +54,7 @@ namespace Catalogos_Bisreg_WinForms
 
                     Celda_PDF.Invalidate();
                 }
-                catch(Exception ex)
+                catch(Exception)
                 {
 
                 }
@@ -156,7 +156,7 @@ namespace Catalogos_Bisreg_WinForms
                 }
 
             }
-            catch (System.Exception ex)
+            catch (System.Exception)
             {
             }
         }
@@ -173,7 +173,7 @@ namespace Catalogos_Bisreg_WinForms
 
                 ((CampoPB)Campos[Ltb_Campos.SelectedIndex]).Tamaño = Int32.Parse(tbx_Tamaño.Text);
             }
-            catch(Exception ex){
+            catch(Exception){
 
             }
             Celda_PDF.Invalidate();
@@ -190,7 +190,7 @@ namespace Catalogos_Bisreg_WinForms
                 tbx_Tamaño.Text = ((CampoPB)Campos[Ltb_Campos.SelectedIndex]).Tamaño.ToString();
 
             }
-            catch(Exception ex)
+            catch(Exception)
             {
                 
             }
@@ -204,7 +204,7 @@ namespace Catalogos_Bisreg_WinForms
                 ((CampoPB)Campos[Ltb_Campos.SelectedIndex]).Rotacion = Int32.Parse(tbx_Orientacion.Text);
 
             }
-            catch (Exception ex)
+            catch (Exception)
             {
 
             }
@@ -217,7 +217,7 @@ namespace Catalogos_Bisreg_WinForms
                 ((CampoPB)Campos[Ltb_Campos.SelectedIndex]).Fuente = tbx_Fuente.Text;
 
             }
-            catch (Exception ex)
+            catch (Exception)
             {
 
             }
@@ -251,7 +251,7 @@ namespace Catalogos_Bisreg_WinForms
             Settings.Directorio_IMG = txb_DirIMG.Text;
             Settings.setSettings();
             }
-            catch(Exception ex)
+            catch(Exception)
             {
 
             }
@@ -264,7 +264,7 @@ namespace Catalogos_Bisreg_WinForms
                 Settings.Columnas_Pagina = Int32.Parse(txb_Columnas.Text);
                 Settings.setSettings();
             }
-            catch (Exception ex)
+            catch (Exception)
             {
 
             }
@@ -277,7 +277,7 @@ namespace Catalogos_Bisreg_WinForms
                 Settings.Filas_Pagina = Int32.Parse(tbxfilas.Text);
                 Settings.setSettings();
             }
-            catch (Exception ex)
+            catch (Exception)
             {
 
             }
@@ -290,7 +290,7 @@ namespace Catalogos_Bisreg_WinForms
                 Settings.Directorio_Salida_PDF = txb_Ruta_Salida.Text;
                 Settings.setSettings();
             }
-            catch (Exception ex)
+            catch (Exception)
             {
 
             }
@@ -324,7 +324,7 @@ namespace Catalogos_Bisreg_WinForms
                 }
                 cb_sizeSalida.SelectedItem = "Gerard.size";
             }
-            catch (IOException ex)
+            catch (IOException)
             {
 
             }

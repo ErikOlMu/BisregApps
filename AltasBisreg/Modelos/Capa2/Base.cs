@@ -21,6 +21,7 @@ namespace AltasBisreg.Modelos.Capa2
         private decimal pv1;
         private decimal pv2;
         private decimal pv3;
+        private decimal pcoste;
         private string atributo;
         private string relAtributo;
         private int pedidoMinimo;
@@ -33,7 +34,7 @@ namespace AltasBisreg.Modelos.Capa2
         //------------------------------------------------------------------------------------------------
         //Constuctores
 
-        public Base(string id, string tipo, string nombre, string familia, string seccion, decimal pv1, decimal pv2, decimal pv3, string atributo, string relAtributo, int pedidoMinimo,string pack = "GENERAL")
+        public Base(string id, string tipo, string nombre, string familia, string seccion, decimal pv1, decimal pv2, decimal pv3, decimal pcoste,string atributo, string relAtributo, int pedidoMinimo,string pack = "GENERAL")
         {
             this.id = id;
             this.tipo = tipo;
@@ -43,6 +44,7 @@ namespace AltasBisreg.Modelos.Capa2
             this.pv1 = pv1;
             this.pv2 = pv2;
             this.pv3 = pv3;
+            this.pcoste = pcoste;
             this.atributo = atributo;
             this.relAtributo = relAtributo;
             this.SetpedidoMinimo(pedidoMinimo);
@@ -50,7 +52,7 @@ namespace AltasBisreg.Modelos.Capa2
 
         }
 
-        public Base(string id, string tipo, string nombre, string familia, string seccion, double pv1, double pv2, double pv3, string atributo, string relAtributo, int pedidoMinimo, string pack = "GENERAL")
+        public Base(string id, string tipo, string nombre, string familia, string seccion, double pv1, double pv2, double pv3,double pcoste, string atributo, string relAtributo, int pedidoMinimo, string pack = "GENERAL")
         {
             this.id = id;
             this.tipo = tipo;
@@ -60,6 +62,7 @@ namespace AltasBisreg.Modelos.Capa2
             this.pv1 = new decimal(pv1);
             this.pv2 = new decimal(pv2);
             this.pv3 = new decimal(pv3);
+            this.pcoste = new decimal(pcoste);
             this.atributo = atributo;
             this.relAtributo = relAtributo;
             this.SetpedidoMinimo(pedidoMinimo);
@@ -147,6 +150,19 @@ namespace AltasBisreg.Modelos.Capa2
         {
             pv3 = new decimal(value);
         }
+        public decimal GetPcoste()
+        {
+            return pcoste;
+        }
+        public void SetPcoste(decimal value)
+        {
+            pcoste = value;
+        }
+        //Sobrecarga con double
+        public void SetPcoste(double value)
+        {
+            pcoste = new decimal(value);
+        }
         public string GetAtributo()
         {
             return atributo;
@@ -216,27 +232,6 @@ namespace AltasBisreg.Modelos.Capa2
         {
             return Controladores.ConnexionSQL.GetTarifas(this);
         }
-        // Obtendra el Calculo del coste a partir de las composiciones
-        public decimal GetCoste()
-        {
-            decimal Coste = 0;
-
-            
-                    List<Composicion> lista = GetComposiciones();
-
-                    foreach (Composicion c in lista)
-                    {
-                        Coste = Coste + ProdComposicion.GetProdComposicion(c.GetID()).GetPrecio() * c.GetCantidad();
-                    }
-                
-            
-            return Coste;
-        }
-        public void tCoste()
-        {
-            
-        }
-
         public static List<string> GetPacks()
         {
             return Controladores.ConnexionSQL.GetPacks("BASE");

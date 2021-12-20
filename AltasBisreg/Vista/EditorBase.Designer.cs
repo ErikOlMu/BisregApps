@@ -67,14 +67,6 @@ namespace AltasBisreg.Vista
             this.tbx_pCoste = new System.Windows.Forms.TextBox();
             this.GridTarifas = new System.Windows.Forms.DataGridView();
             this.groupBox5 = new System.Windows.Forms.GroupBox();
-            this.groupBox6 = new System.Windows.Forms.GroupBox();
-            this.GridComposiciones = new System.Windows.Forms.DataGridView();
-            this.groupBox7 = new System.Windows.Forms.GroupBox();
-            this.txb_CompCantidad = new System.Windows.Forms.TextBox();
-            this.txb_CompID = new System.Windows.Forms.TextBox();
-            this.btnaltacomposicion = new System.Windows.Forms.Button();
-            this.label15 = new System.Windows.Forms.Label();
-            this.label13 = new System.Windows.Forms.Label();
             this.btn_Guardar = new System.Windows.Forms.Button();
             this.button1 = new System.Windows.Forms.Button();
             this.porupbox5 = new System.Windows.Forms.GroupBox();
@@ -91,9 +83,6 @@ namespace AltasBisreg.Vista
             this.groupBox4.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.GridTarifas)).BeginInit();
             this.groupBox5.SuspendLayout();
-            this.groupBox6.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.GridComposiciones)).BeginInit();
-            this.groupBox7.SuspendLayout();
             this.porupbox5.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -131,7 +120,7 @@ namespace AltasBisreg.Vista
             this.groupBox1.Controls.Add(this.tbx_ID);
             this.groupBox1.Controls.Add(this.label1);
             this.groupBox1.Controls.Add(this.label2);
-            this.groupBox1.Location = new System.Drawing.Point(18, 53);
+            this.groupBox1.Location = new System.Drawing.Point(240, 15);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Size = new System.Drawing.Size(305, 74);
             this.groupBox1.TabIndex = 3;
@@ -169,9 +158,9 @@ namespace AltasBisreg.Vista
             this.groupBox2.Controls.Add(this.label4);
             this.groupBox2.Controls.Add(this.tbx_Nombre);
             this.groupBox2.Controls.Add(this.label3);
-            this.groupBox2.Location = new System.Drawing.Point(329, 53);
+            this.groupBox2.Location = new System.Drawing.Point(14, 95);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(516, 74);
+            this.groupBox2.Size = new System.Drawing.Size(531, 74);
             this.groupBox2.TabIndex = 4;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Datos";
@@ -214,7 +203,7 @@ namespace AltasBisreg.Vista
             this.groupBox3.Controls.Add(this.label9);
             this.groupBox3.Controls.Add(this.label6);
             this.groupBox3.Controls.Add(this.label5);
-            this.groupBox3.Location = new System.Drawing.Point(19, 134);
+            this.groupBox3.Location = new System.Drawing.Point(12, 187);
             this.groupBox3.Name = "groupBox3";
             this.groupBox3.Size = new System.Drawing.Size(304, 162);
             this.groupBox3.TabIndex = 5;
@@ -335,7 +324,7 @@ namespace AltasBisreg.Vista
             this.groupBox4.Controls.Add(this.label10);
             this.groupBox4.Controls.Add(this.label12);
             this.groupBox4.Controls.Add(this.tbx_pCoste);
-            this.groupBox4.Location = new System.Drawing.Point(329, 134);
+            this.groupBox4.Location = new System.Drawing.Point(326, 187);
             this.groupBox4.Name = "groupBox4";
             this.groupBox4.Size = new System.Drawing.Size(219, 162);
             this.groupBox4.TabIndex = 6;
@@ -404,7 +393,6 @@ namespace AltasBisreg.Vista
             // 
             // tbx_pCoste
             // 
-            this.tbx_pCoste.Enabled = false;
             this.tbx_pCoste.Location = new System.Drawing.Point(103, 117);
             this.tbx_pCoste.Name = "tbx_pCoste";
             this.tbx_pCoste.Size = new System.Drawing.Size(100, 20);
@@ -424,93 +412,16 @@ namespace AltasBisreg.Vista
             // groupBox5
             // 
             this.groupBox5.Controls.Add(this.GridTarifas);
-            this.groupBox5.Location = new System.Drawing.Point(554, 135);
+            this.groupBox5.Location = new System.Drawing.Point(12, 356);
             this.groupBox5.Name = "groupBox5";
             this.groupBox5.Size = new System.Drawing.Size(289, 162);
             this.groupBox5.TabIndex = 24;
             this.groupBox5.TabStop = false;
             this.groupBox5.Text = "Tarifas";
             // 
-            // groupBox6
-            // 
-            this.groupBox6.Controls.Add(this.GridComposiciones);
-            this.groupBox6.Location = new System.Drawing.Point(18, 303);
-            this.groupBox6.Name = "groupBox6";
-            this.groupBox6.Size = new System.Drawing.Size(827, 318);
-            this.groupBox6.TabIndex = 25;
-            this.groupBox6.TabStop = false;
-            this.groupBox6.Text = "Composicion";
-            // 
-            // GridComposiciones
-            // 
-            this.GridComposiciones.AllowUserToAddRows = false;
-            this.GridComposiciones.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.GridComposiciones.Location = new System.Drawing.Point(6, 19);
-            this.GridComposiciones.Name = "GridComposiciones";
-            this.GridComposiciones.Size = new System.Drawing.Size(815, 293);
-            this.GridComposiciones.TabIndex = 24;
-            this.GridComposiciones.UserDeletingRow += new System.Windows.Forms.DataGridViewRowCancelEventHandler(this.GridComposiciones_UserDeletingRow);
-            // 
-            // groupBox7
-            // 
-            this.groupBox7.Controls.Add(this.txb_CompCantidad);
-            this.groupBox7.Controls.Add(this.txb_CompID);
-            this.groupBox7.Controls.Add(this.btnaltacomposicion);
-            this.groupBox7.Controls.Add(this.label15);
-            this.groupBox7.Controls.Add(this.label13);
-            this.groupBox7.Location = new System.Drawing.Point(852, 443);
-            this.groupBox7.Name = "groupBox7";
-            this.groupBox7.Size = new System.Drawing.Size(217, 126);
-            this.groupBox7.TabIndex = 26;
-            this.groupBox7.TabStop = false;
-            this.groupBox7.Text = "Añadir Composicion";
-            // 
-            // txb_CompCantidad
-            // 
-            this.txb_CompCantidad.Location = new System.Drawing.Point(94, 61);
-            this.txb_CompCantidad.Name = "txb_CompCantidad";
-            this.txb_CompCantidad.Size = new System.Drawing.Size(100, 20);
-            this.txb_CompCantidad.TabIndex = 6;
-            this.txb_CompCantidad.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            // 
-            // txb_CompID
-            // 
-            this.txb_CompID.Location = new System.Drawing.Point(94, 35);
-            this.txb_CompID.Name = "txb_CompID";
-            this.txb_CompID.Size = new System.Drawing.Size(100, 20);
-            this.txb_CompID.TabIndex = 5;
-            // 
-            // btnaltacomposicion
-            // 
-            this.btnaltacomposicion.Location = new System.Drawing.Point(136, 97);
-            this.btnaltacomposicion.Name = "btnaltacomposicion";
-            this.btnaltacomposicion.Size = new System.Drawing.Size(75, 23);
-            this.btnaltacomposicion.TabIndex = 4;
-            this.btnaltacomposicion.Text = "Crear";
-            this.btnaltacomposicion.UseVisualStyleBackColor = true;
-            this.btnaltacomposicion.Click += new System.EventHandler(this.btnaltacomposicion_Click);
-            // 
-            // label15
-            // 
-            this.label15.AutoSize = true;
-            this.label15.Location = new System.Drawing.Point(21, 64);
-            this.label15.Name = "label15";
-            this.label15.Size = new System.Drawing.Size(52, 13);
-            this.label15.TabIndex = 3;
-            this.label15.Text = "Cantidad:";
-            // 
-            // label13
-            // 
-            this.label13.AutoSize = true;
-            this.label13.Location = new System.Drawing.Point(21, 38);
-            this.label13.Name = "label13";
-            this.label13.Size = new System.Drawing.Size(67, 13);
-            this.label13.TabIndex = 0;
-            this.label13.Text = "ID Producto:";
-            // 
             // btn_Guardar
             // 
-            this.btn_Guardar.Location = new System.Drawing.Point(994, 598);
+            this.btn_Guardar.Location = new System.Drawing.Point(470, 495);
             this.btn_Guardar.Name = "btn_Guardar";
             this.btn_Guardar.Size = new System.Drawing.Size(75, 23);
             this.btn_Guardar.TabIndex = 27;
@@ -520,7 +431,7 @@ namespace AltasBisreg.Vista
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(852, 598);
+            this.button1.Location = new System.Drawing.Point(308, 495);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(75, 23);
             this.button1.TabIndex = 28;
@@ -535,7 +446,7 @@ namespace AltasBisreg.Vista
             this.porupbox5.Controls.Add(this.btn_CrearTarifa);
             this.porupbox5.Controls.Add(this.label14);
             this.porupbox5.Controls.Add(this.label16);
-            this.porupbox5.Location = new System.Drawing.Point(852, 135);
+            this.porupbox5.Location = new System.Drawing.Point(316, 363);
             this.porupbox5.Name = "porupbox5";
             this.porupbox5.Size = new System.Drawing.Size(217, 126);
             this.porupbox5.TabIndex = 29;
@@ -589,7 +500,7 @@ namespace AltasBisreg.Vista
             // 
             this.label17.AutoSize = true;
             this.label17.Font = new System.Drawing.Font("Microsoft Sans Serif", 20F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label17.Location = new System.Drawing.Point(12, 9);
+            this.label17.Location = new System.Drawing.Point(27, 30);
             this.label17.Name = "label17";
             this.label17.Size = new System.Drawing.Size(104, 31);
             this.label17.TabIndex = 7;
@@ -597,7 +508,7 @@ namespace AltasBisreg.Vista
             // 
             // button2
             // 
-            this.button2.Location = new System.Drawing.Point(997, 12);
+            this.button2.Location = new System.Drawing.Point(389, 495);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(75, 23);
             this.button2.TabIndex = 30;
@@ -609,14 +520,12 @@ namespace AltasBisreg.Vista
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1084, 627);
+            this.ClientSize = new System.Drawing.Size(560, 530);
             this.Controls.Add(this.button2);
             this.Controls.Add(this.label17);
             this.Controls.Add(this.porupbox5);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.btn_Guardar);
-            this.Controls.Add(this.groupBox7);
-            this.Controls.Add(this.groupBox6);
             this.Controls.Add(this.groupBox5);
             this.Controls.Add(this.groupBox4);
             this.Controls.Add(this.groupBox3);
@@ -625,9 +534,7 @@ namespace AltasBisreg.Vista
             this.DoubleBuffered = true;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
-            this.MaximumSize = new System.Drawing.Size(1100, 666);
             this.MinimizeBox = false;
-            this.MinimumSize = new System.Drawing.Size(1100, 666);
             this.Name = "EditorBase";
             this.Text = "Bases";
             this.groupBox1.ResumeLayout(false);
@@ -640,10 +547,6 @@ namespace AltasBisreg.Vista
             this.groupBox4.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.GridTarifas)).EndInit();
             this.groupBox5.ResumeLayout(false);
-            this.groupBox6.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.GridComposiciones)).EndInit();
-            this.groupBox7.ResumeLayout(false);
-            this.groupBox7.PerformLayout();
             this.porupbox5.ResumeLayout(false);
             this.porupbox5.PerformLayout();
             this.ResumeLayout(false);
@@ -681,16 +584,8 @@ namespace AltasBisreg.Vista
         private System.Windows.Forms.TextBox tbx_pCoste;
         private System.Windows.Forms.DataGridView GridTarifas;
         private System.Windows.Forms.GroupBox groupBox5;
-        private System.Windows.Forms.GroupBox groupBox6;
-        private System.Windows.Forms.DataGridView GridComposiciones;
         private System.Windows.Forms.Button btn_Buscar;
         private System.Windows.Forms.ComboBox cbx_Tipo;
-        private System.Windows.Forms.GroupBox groupBox7;
-        private System.Windows.Forms.Label label15;
-        private System.Windows.Forms.Label label13;
-        private System.Windows.Forms.TextBox txb_CompCantidad;
-        private System.Windows.Forms.TextBox txb_CompID;
-        private System.Windows.Forms.Button btnaltacomposicion;
         private System.Windows.Forms.Button btn_Guardar;
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.GroupBox porupbox5;

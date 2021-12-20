@@ -93,7 +93,6 @@ namespace Catalogos_Bisreg_WinForms
                             //MIRA QUE LOS VALORES NO SEAN NULL
                             if (xlRange.Cells[i, j] != null && xlRange.Cells[i, j].Value2 != null && xlRange.Cells[i, j].Value2.ToString() != "")
                             {
-
                                 string ValorCelda = xlRange.Cells[i, j].Value2.ToString();
                                 
                                 if (j == 1)

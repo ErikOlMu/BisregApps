@@ -44,7 +44,17 @@ namespace AltasBisreg.Modelos.Capa1
         public string Referencia {
 
             get { if (Algunnull()) { return ReferenciaTemporal; } else {  return this.GetReferencia(); }; }
-            set { SetItem(value); ReferenciaTemporal = value; } 
+            set {
+                ReferenciaTemporal = value;
+                try
+                {
+                    SetItem(value);
+                }
+                catch
+                {
+                    
+                }
+                 } 
         }
         public string Descripcion
         {
@@ -152,22 +162,7 @@ namespace AltasBisreg.Modelos.Capa1
         {
             get
             {
-
-                if (Algunnull()) { return 0; } 
-                
-                else 
-                {
-                    decimal r = 0;
-                    thread = new Thread(
-                    () =>
-                    {
-                         r = this.GetBase().GetCoste();
-                    });
-                    thread.Start();
-                    thread.Join();
-                    return r;
-                }
-                
+                if (Algunnull()) { return 0; } else { return this.GetBase().GetPcoste(); }
             }
         }
         public string Atributo
@@ -364,8 +359,7 @@ namespace AltasBisreg.Modelos.Capa1
                 this.diseño = null;
             }
 
-            string hola = "";
-            MessageBox.Show(this.pueblo.GetID() + this.@base.GetId() + this.diseño.GetID());
+            
         }
     }
 }

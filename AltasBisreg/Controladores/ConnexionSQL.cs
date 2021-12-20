@@ -233,6 +233,7 @@ namespace AltasBisreg.Controladores
                             Convert.ToDecimal(reader["PV1"]), 
                             Convert.ToDecimal(reader["PV2"]), 
                             Convert.ToDecimal(reader["PV3"]),
+                            Convert.ToDecimal(reader["PCOSTE"]),
                             reader["ATRIBUTO"].ToString(),
                             reader["VALOR_ATRIBUTO"].ToString(),
                             Convert.ToInt32(reader["PEDIDO_MINIMO"]),
@@ -248,8 +249,8 @@ namespace AltasBisreg.Controladores
             using (var ctx = GetInstance())
             {
                 string query;
-                if (Update) query = "UPDATE BASE SET DESCRIPCION = :DESCRIPCION ,FAMILIA = :FAMILIA ,SECCION = :SECCION ,PV1 = :PV1 ,PV2 = :PV2 ,PV3 = :PV3 ,ATRIBUTO = :ATRIBUTO ,VALOR_ATRIBUTO = :VALOR_ATRIBUTO ,PEDIDO_MINIMO = :PEDIDO_MINIMO WHERE ID = :ID AND TIPO = :TIPO AND PACK = :PACK;";
-                else query = "INSERT INTO BASE (PACK,ID,TIPO,DESCRIPCION,FAMILIA,SECCION,PV1,PV2,PV3,ATRIBUTO,VALOR_ATRIBUTO,PEDIDO_MINIMO) VALUES (?,?,?,?,?,?,?,?,?,?,?,?) ;";
+                if (Update) query = "UPDATE BASE SET DESCRIPCION = :DESCRIPCION ,FAMILIA = :FAMILIA ,SECCION = :SECCION ,PV1 = :PV1 ,PV2 = :PV2 ,PV3 = :PV3 ,PCOSTE = :PCOSTE ,ATRIBUTO = :ATRIBUTO ,VALOR_ATRIBUTO = :VALOR_ATRIBUTO ,PEDIDO_MINIMO = :PEDIDO_MINIMO WHERE ID = :ID AND TIPO = :TIPO AND PACK = :PACK;";
+                else query = "INSERT INTO BASE (PACK,ID,TIPO,DESCRIPCION,FAMILIA,SECCION,PV1,PV2,PV3,PCOSTE,ATRIBUTO,VALOR_ATRIBUTO,PEDIDO_MINIMO) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?) ;";
 
                 using (var command = new SQLiteCommand(query, ctx))
                 {
@@ -262,6 +263,7 @@ namespace AltasBisreg.Controladores
                     command.Parameters.Add(new SQLiteParameter("PV1", @base.GetPv1()));
                     command.Parameters.Add(new SQLiteParameter("PV2", @base.GetPv2()));
                     command.Parameters.Add(new SQLiteParameter("PV3", @base.GetPv3()));
+                    command.Parameters.Add(new SQLiteParameter("PCOSTE", @base.GetPcoste()));
                     command.Parameters.Add(new SQLiteParameter("ATRIBUTO", @base.GetAtributo()));
                     command.Parameters.Add(new SQLiteParameter("VALOR_ATRIBUTO", @base.GetRelAtributo()));
                     command.Parameters.Add(new SQLiteParameter("PEDIDO_MINIMO", @base.GetpedidoMinimo()));
@@ -310,6 +312,7 @@ namespace AltasBisreg.Controladores
                             Convert.ToDecimal(reader["PV1"]),
                             Convert.ToDecimal(reader["PV2"]),
                             Convert.ToDecimal(reader["PV3"]),
+                            Convert.ToDecimal(reader["PCOSTE"]),
                             reader["ATRIBUTO"].ToString(),
                             reader["VALOR_ATRIBUTO"].ToString(),
                             Convert.ToInt32(reader["PEDIDO_MINIMO"]),

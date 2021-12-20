@@ -179,15 +179,17 @@ namespace AltasBisreg.Vista
             int CPv1 = GetColumna(6);
             int CPv2 = GetColumna(7);
             int CPv3 = GetColumna(8);
-            int CAtributo = GetColumna(9);
-            int CValorAtributo = GetColumna(10);
-            int CPedidoMinimo = GetColumna(11);
+            int CPcoste = GetColumna(9);
+
+            int CAtributo = GetColumna(10);
+            int CValorAtributo = GetColumna(11);
+            int CPedidoMinimo = GetColumna(12);
 
             for (int i = 0; i < GridExcel.Rows.Count - 1; i++)
             {
                 b = new Base(
                     //ID
-                    GridExcel.Rows[i].Cells[Cid].Value.ToString(), 
+                    GridExcel.Rows[i].Cells[Cid].Value.ToString(),
                     //TIPO
                     GridExcel.Rows[i].Cells[Ctipo].Value.ToString(),
                     //Descripcion
@@ -202,6 +204,8 @@ namespace AltasBisreg.Vista
                     Convert.ToDecimal(GridExcel.Rows[i].Cells[CPv2].Value),
                     //PV3
                     Convert.ToDecimal(GridExcel.Rows[i].Cells[CPv3].Value),
+                    //PCOSTE
+                    Convert.ToDecimal(GridExcel.Rows[i].Cells[CPcoste].Value),
                     //Atributo
                     GridExcel.Rows[i].Cells[CAtributo].Value.ToString(),
                     //Valor Atributo

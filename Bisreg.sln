@@ -7,7 +7,13 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AltasBisreg", "AltasBisreg\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Catalogos_Bisreg_WinForms", "Catalogos_Bisreg_WinForms\Catalogos_Bisreg_WinForms.csproj", "{80EDE420-6D40-4CA0-A4A3-53E70FB267AA}"
 EndProject
-Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "CatalogosBisreg", "CatalogosBisreg\CatalogosBisreg.vdproj", "{1D848D21-E1BA-4172-860C-56366103387A}"
+Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "AltasInstaller", "AltasInstaller\AltasInstaller.vdproj", "{057BBBFF-2917-4D58-B703-20E6FC6CFC10}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BisregApi", "BisregApi\BisregApi.csproj", "{B11380FC-7C1C-4FAB-AC16-C058654FC73D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Catalogos Bisreg", "Catalogos Bisreg\Catalogos Bisreg.csproj", "{86694B10-CC28-47B3-992D-FD502107C045}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Referencias Clientes", "Referencias Clientes\Referencias Clientes.csproj", "{BB22D371-721B-4192-B127-15A3B2DAB33A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -28,9 +34,27 @@ Global
 		{80EDE420-6D40-4CA0-A4A3-53E70FB267AA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{80EDE420-6D40-4CA0-A4A3-53E70FB267AA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{80EDE420-6D40-4CA0-A4A3-53E70FB267AA}.Release|Any CPU.Build.0 = Release|Any CPU
-		{1D848D21-E1BA-4172-860C-56366103387A}.All|Any CPU.ActiveCfg = Debug
-		{1D848D21-E1BA-4172-860C-56366103387A}.Debug|Any CPU.ActiveCfg = Debug
-		{1D848D21-E1BA-4172-860C-56366103387A}.Release|Any CPU.ActiveCfg = Release
+		{057BBBFF-2917-4D58-B703-20E6FC6CFC10}.All|Any CPU.ActiveCfg = Release
+		{057BBBFF-2917-4D58-B703-20E6FC6CFC10}.Debug|Any CPU.ActiveCfg = Debug
+		{057BBBFF-2917-4D58-B703-20E6FC6CFC10}.Release|Any CPU.ActiveCfg = Release
+		{B11380FC-7C1C-4FAB-AC16-C058654FC73D}.All|Any CPU.ActiveCfg = Release|Any CPU
+		{B11380FC-7C1C-4FAB-AC16-C058654FC73D}.All|Any CPU.Build.0 = Release|Any CPU
+		{B11380FC-7C1C-4FAB-AC16-C058654FC73D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B11380FC-7C1C-4FAB-AC16-C058654FC73D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B11380FC-7C1C-4FAB-AC16-C058654FC73D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B11380FC-7C1C-4FAB-AC16-C058654FC73D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{86694B10-CC28-47B3-992D-FD502107C045}.All|Any CPU.ActiveCfg = Release|Any CPU
+		{86694B10-CC28-47B3-992D-FD502107C045}.All|Any CPU.Build.0 = Release|Any CPU
+		{86694B10-CC28-47B3-992D-FD502107C045}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{86694B10-CC28-47B3-992D-FD502107C045}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{86694B10-CC28-47B3-992D-FD502107C045}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{86694B10-CC28-47B3-992D-FD502107C045}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BB22D371-721B-4192-B127-15A3B2DAB33A}.All|Any CPU.ActiveCfg = Release|Any CPU
+		{BB22D371-721B-4192-B127-15A3B2DAB33A}.All|Any CPU.Build.0 = Release|Any CPU
+		{BB22D371-721B-4192-B127-15A3B2DAB33A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BB22D371-721B-4192-B127-15A3B2DAB33A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BB22D371-721B-4192-B127-15A3B2DAB33A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BB22D371-721B-4192-B127-15A3B2DAB33A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
