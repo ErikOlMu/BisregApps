@@ -30,7 +30,6 @@ namespace Referencias_Clientes.Vista
             InicializarApp();
         }
 
-
         //Inicializar Vista
         private void InicializarApp()
         {
@@ -45,6 +44,8 @@ namespace Referencias_Clientes.Vista
                 settings = (Settings)Config.getConfig("Config.conf", typeof(Settings));
             }
 
+            settings.Save();
+
         }
 
         //Evento btn Importar Excel
@@ -56,6 +57,17 @@ namespace Referencias_Clientes.Vista
             Campos.Add("Referencia Cliente");
             //Importo el Excel al DataGrid
             dtg.ItemsSource = Excel.GetDataTable(Dialogos.OpenFile(),Campos,settings.Limite_Excel).DefaultView;
+        }
+
+        private void btn_EditarCanvas_Click(object sender, RoutedEventArgs e)
+        {
+            //TO DO ----- Venta Vista Previa
+        }
+
+        //Abro la ventana Configuracion
+        private void btn_Config_Click(object sender, RoutedEventArgs e)
+        {
+            new Configuracion().Show();
         }
     }
 }

@@ -1,0 +1,24 @@
+﻿<Window x:Class="Referencias_Clientes.Vista.Configuracion"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Referencias_Clientes.Vista"
+        mc:Ignorable="d"
+        xmlns:uc="clr-namespace:BisregApi.ControlesWPF;assembly=BisregApi"
+
+        Title="Configuracion" Height="450" Width="800" Icon="pack://application:,,/BisregApi;Component/IMG/Configuracion64px.ico" >
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="1*"/>
+            <ColumnDefinition Width="2*"/>
+        </Grid.ColumnDefinitions>
+        <Button x:Name="btnGuardar" Grid.Column="0" Margin="30" Content="Guardar" Click="btnGuardar_Click"/>
+        <uc:CanvasViewer Grid.Column="1" x:Name="CanvasView">
+            <uc:CanvasViewer.Contenido >
+                <uc:BisregCanvas />
+            </uc:CanvasViewer.Contenido>
+        </uc:CanvasViewer>
+        
+    </Grid>
+</Window>

@@ -15,6 +15,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Catalogos Bisreg", "Catalog
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Referencias Clientes", "Referencias Clientes\Referencias Clientes.csproj", "{BB22D371-721B-4192-B127-15A3B2DAB33A}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PruebasWPF", "PruebasWPF\PruebasWPF.csproj", "{172E7EDE-9058-443E-9CA1-6ACEB0BB0BBF}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		All|Any CPU = All|Any CPU
@@ -55,6 +57,12 @@ Global
 		{BB22D371-721B-4192-B127-15A3B2DAB33A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BB22D371-721B-4192-B127-15A3B2DAB33A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BB22D371-721B-4192-B127-15A3B2DAB33A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{172E7EDE-9058-443E-9CA1-6ACEB0BB0BBF}.All|Any CPU.ActiveCfg = Release|Any CPU
+		{172E7EDE-9058-443E-9CA1-6ACEB0BB0BBF}.All|Any CPU.Build.0 = Release|Any CPU
+		{172E7EDE-9058-443E-9CA1-6ACEB0BB0BBF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{172E7EDE-9058-443E-9CA1-6ACEB0BB0BBF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{172E7EDE-9058-443E-9CA1-6ACEB0BB0BBF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{172E7EDE-9058-443E-9CA1-6ACEB0BB0BBF}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

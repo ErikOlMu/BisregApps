@@ -29,9 +29,8 @@
                     <RowDefinition Height="1*"/>
                 </Grid.RowDefinitions>
                 <uc:BotonImagen x:Name="btn_Imprimir" Grid.Row="1" Grid.Column="0" Margin="10" Titulo="Imprimir" Imagen="pack://application:,,/BisregApi;Component/IMG/Print256px.png"/>
-                <uc:BotonImagen x:Name="btn_Guardar" Grid.Row="1" Grid.Column="1" Margin="10" Titulo="Guardar PDF" Imagen="pack://application:,,/BisregApi;Component/IMG/PDF256px.png"/>
-                <uc:BotonImagen x:Name="btn_Config" Grid.Row="0" Grid.Column="1" Margin="10" Titulo="Configuarcion" Imagen="pack://application:,,/BisregApi;Component/IMG/Configuracion256px.png"/>
-
+                <uc:BotonImagen x:Name="btn_EditarCanvas" Grid.Row="1" Grid.Column="1" Margin="10" Titulo="Vista Previa" Imagen="pack://application:,,/BisregApi;Component/IMG/DocPreview128px.png" Click="btn_EditarCanvas_Click"/>
+                <uc:BotonImagen x:Name="btn_Config" Grid.Row="0" Grid.Column="1" Margin="10" Titulo="Configuarcion" Imagen="pack://application:,,/BisregApi;Component/IMG/Configuracion256px.png" Click="btn_Config_Click"/>
             </Grid>
         </Grid>
         <DataGrid x:Name="dtg" Margin="5" Grid.Row="1"/>
