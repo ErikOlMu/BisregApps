@@ -7,10 +7,25 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     <Grid Background="LightGray">
-        <FlowDocumentScrollViewer >
-            <FlowDocument x:Name="flowDoc" PageHeight="29,7cm" PageWidth="21cm" ColumnWidth="999999" PagePadding="0">
-
+        <FlowDocumentPageViewer>
+            <FlowDocument x:Name="flowDoc" PageHeight="29.7cm" PageWidth="21cm" ColumnWidth="999999" PagePadding="0">
+                <Table>
+                    <TableRowGroup>
+                        <TableRow>
+                            <TableCell>
+                                <BlockUIContainer>
+                                    <Canvas Width="10"/>
+                                </BlockUIContainer>
+                            </TableCell>
+                            <TableCell>
+                                <BlockUIContainer>
+                                    <Canvas Width="10"/>
+                                </BlockUIContainer>
+                            </TableCell>
+                        </TableRow>
+                    </TableRowGroup>
+                </Table>
             </FlowDocument>
-        </FlowDocumentScrollViewer>
+        </FlowDocumentPageViewer>
     </Grid>
 </Window>

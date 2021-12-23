@@ -17,6 +17,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Referencias Clientes", "Ref
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PruebasWPF", "PruebasWPF\PruebasWPF.csproj", "{172E7EDE-9058-443E-9CA1-6ACEB0BB0BBF}"
 EndProject
+Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "Instalador_ReferenciasClientes", "Instalador_ReferenciasClientes\Instalador_ReferenciasClientes.vdproj", "{9F7BA320-0B1E-4580-8BD8-4647706AFC85}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		All|Any CPU = All|Any CPU
@@ -63,6 +65,9 @@ Global
 		{172E7EDE-9058-443E-9CA1-6ACEB0BB0BBF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{172E7EDE-9058-443E-9CA1-6ACEB0BB0BBF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{172E7EDE-9058-443E-9CA1-6ACEB0BB0BBF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9F7BA320-0B1E-4580-8BD8-4647706AFC85}.All|Any CPU.ActiveCfg = Release
+		{9F7BA320-0B1E-4580-8BD8-4647706AFC85}.Debug|Any CPU.ActiveCfg = Debug
+		{9F7BA320-0B1E-4580-8BD8-4647706AFC85}.Release|Any CPU.ActiveCfg = Release
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

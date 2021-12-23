@@ -26,78 +26,78 @@ namespace PruebasWPF
         {
             InitializeComponent();
 
-           
-
-           
-
-            flowDoc.Background = Brushes.White;
-            
-
-            Table table = new Table();
-            TableRowGroup tableRowGroup = new TableRowGroup();
-            
-            for (int i = 0; i < 5; i++)
-            {
-                TableRow rowDefinition = new TableRow();
-                
-                for (int y = 0; y < 2; y++)
-                {
-                    TableCell tableCell = new TableCell();
-                    BlockUIContainer contenedor = new BlockUIContainer();
-
-                    Border border = new Border();
-                    border.BorderBrush = Brushes.Black;
-                    Canvas canvas = new Canvas();
-                    border.BorderThickness = new Thickness(2);
-
-                    LengthConverter lc = new LengthConverter();
-                    double convertedw = (double)new LengthConverter().ConvertFrom("10,5cm");
-                    double convertedh = (double)new LengthConverter().ConvertFrom("7,2cm");
-
-                    canvas.Width = convertedw;
-                    canvas.Height = convertedh;
-                    
-
-                    TextBlock textBlock = new TextBlock();
-                    textBlock.Text = i + "erik" + y;
-                    textBlock.FontWeight = FontWeights.Bold;
-                    textBlock.FontSize = 75;
-                    Canvas.SetLeft(textBlock, 100);
-                    Canvas.SetTop(textBlock, 100);
-                    canvas.Children.Add(textBlock);
-
-                    border.Child = canvas;
 
 
-                    contenedor.Child = border;
-                    tableCell.Blocks.Add(contenedor);
-                    rowDefinition.Cells.Add(tableCell);
-                }
-                
-                tableRowGroup.Rows.Add(rowDefinition);
+            /* 
 
-            }
+             flowDoc.Background = Brushes.White;
 
 
+             Table table = new Table();
+             TableRowGroup tableRowGroup = new TableRowGroup();
 
-            table.RowGroups.Add(tableRowGroup);
+             for (int i = 0; i < 5; i++)
+             {
+                 TableRow rowDefinition = new TableRow();
 
-            flowDoc.Blocks.Add(table);
-            flowDoc.Name = "Erik";
+                 for (int y = 0; y < 2; y++)
+                 {
+                     TableCell tableCell = new TableCell();
+                     BlockUIContainer contenedor = new BlockUIContainer();
+
+                     Border border = new Border();
+                     border.BorderBrush = Brushes.Black;
+                     Canvas canvas = new Canvas();
+                     border.BorderThickness = new Thickness(2);
+
+                     LengthConverter lc = new LengthConverter();
+                     double convertedw = (double)new LengthConverter().ConvertFrom("10,5cm");
+                     double convertedh = (double)new LengthConverter().ConvertFrom("7,2cm");
+
+                     canvas.Width = convertedw;
+                     canvas.Height = convertedh;
+
+
+                     TextBlock textBlock = new TextBlock();
+                     textBlock.Text = i + "erik" + y;
+                     textBlock.FontWeight = FontWeights.Bold;
+                     textBlock.FontSize = 75;
+                     Canvas.SetLeft(textBlock, 100);
+                     Canvas.SetTop(textBlock, 100);
+                     canvas.Children.Add(textBlock);
+
+                     border.Child = canvas;
+
+
+                     contenedor.Child = border;
+                     tableCell.Blocks.Add(contenedor);
+                     rowDefinition.Cells.Add(tableCell);
+                 }
+
+                 tableRowGroup.Rows.Add(rowDefinition);
+
+             }
+
+
+
+             table.RowGroups.Add(tableRowGroup);
+
+             flowDoc.Blocks.Add(table);
+             flowDoc.Name = "Erik";
 
 
             PrintDialog printDialog = new PrintDialog();
 
-            if (printDialog.ShowDialog().Value)
-            {
+             if (printDialog.ShowDialog().Value)
+             {
 
-                flowDoc.PageHeight = printDialog.PrintableAreaHeight;
-                flowDoc.PageWidth = printDialog.PrintableAreaWidth;
-                IDocumentPaginatorSource idocument = flowDoc as IDocumentPaginatorSource;
+                 flowDoc.PageHeight = printDialog.PrintableAreaHeight;
+                 flowDoc.PageWidth = printDialog.PrintableAreaWidth;
+                 IDocumentPaginatorSource idocument = flowDoc as IDocumentPaginatorSource;
 
-                printDialog.PrintDocument(idocument.DocumentPaginator, "Printing FlowDocument");
-            }
-
+                 printDialog.PrintDocument(idocument.DocumentPaginator, "Printing FlowDocument");
+             }
+             */
         }
 
 

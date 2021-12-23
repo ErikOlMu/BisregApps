@@ -56,6 +56,10 @@ namespace BisregApi.Utilidades
             Coordenadas = coordenadas;
             Tamaño = tamaño;
         }
+        public CampoCanvas(UIElement elemento)
+        {
+            Elemento = elemento;
+        }
 
         public string Valor 
         {
@@ -140,5 +144,15 @@ namespace BisregApi.Utilidades
            
         }
 
+        public ContentControl ContentControl
+        {
+            get
+            {
+                ContentControl control = new ContentControl();
+                control.Content = Elemento;
+                return control;
+            }
+
+        }
     }
 }

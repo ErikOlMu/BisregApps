@@ -71,9 +71,11 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Utilidades\CampoCanvas.cs" />
     <Compile Include="Utilidades\Config.cs" />
+    <Compile Include="Utilidades\Conversor.cs" />
     <Compile Include="Utilidades\Dialogos.cs" />
     <Compile Include="Utilidades\Excel.cs" />
     <Compile Include="Utilidades\PDF.cs" />
+    <Compile Include="Utilidades\PrintDoc.cs" />
     <Compile Include="Utilidades\Sqlite.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -120,7 +122,12 @@
     <Resource Include="IMG\DocPreview48px.png" />
     <Resource Include="IMG\Escalar128px.png" />
     <Resource Include="IMG\Configuracion64px.ico" />
-    <Content Include="Print64px.png" />
+    <Resource Include="IMG\Save128px.png" />
+    <Resource Include="IMG\Reload128px.png" />
+    <Resource Include="IMG\Add256px.png" />
+    <Resource Include="IMG\Delete256px.png" />
+    <Resource Include="IMG\CatalogoLogo256px.ico" />
+    <Resource Include="IMG\CatalogoLogo48px.ico" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="IMG\PDF32px.ico">

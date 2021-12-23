@@ -1,0 +1,14 @@
+﻿<Window x:Class="Referencias_Clientes.Vista.VistaPrevia"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Referencias_Clientes.Vista"
+        xmlns:uc="clr-namespace:BisregApi.ControlesWPF;assembly=BisregApi"
+        mc:Ignorable="d"
+        
+        Title="VistaPrevia" Height="450" Width="800" Background="LightGray">
+    <FlowDocumentPageViewer x:Name="ViewerDoc">
+       
+    </FlowDocumentPageViewer>
+</Window>

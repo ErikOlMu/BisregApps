@@ -7,16 +7,92 @@
         mc:Ignorable="d"
         xmlns:uc="clr-namespace:BisregApi.ControlesWPF;assembly=BisregApi"
 
-        Title="Configuracion" Height="450" Width="800" Icon="pack://application:,,/BisregApi;Component/IMG/Configuracion64px.ico" >
+        Title="Configuracion" Height="700" Width="1100" MinHeight="700" MinWidth="1100" Icon="pack://application:,,/BisregApi;Component/IMG/Configuracion64px.ico" Closing="Window_Closing" >
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="1*"/>
             <ColumnDefinition Width="2*"/>
         </Grid.ColumnDefinitions>
-        <Button x:Name="btnGuardar" Grid.Column="0" Margin="30" Content="Guardar" Click="btnGuardar_Click"/>
-        <uc:CanvasViewer Grid.Column="1" x:Name="CanvasView">
+        <Grid Grid.Column="0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="1*"/>
+                <RowDefinition Height="1*"/>
+                <RowDefinition Height="1*"/>
+                <RowDefinition Height="1.5*"/>
+                <RowDefinition Height="0.5*"/>
+                <RowDefinition Height="0.5*"/>
+            </Grid.RowDefinitions>
+
+            <Grid Grid.Row="0">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="1*"/>
+                    <RowDefinition Height="1*"/>
+                </Grid.RowDefinitions>
+                <Label Grid.Row="0" Content="Tamaño" FontSize="24" FontWeight="Bold" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                <TextBox Grid.Row="1" x:Name="tbx_Tamaño"  FontSize="24"   Margin="10" KeyDown="tbx_Tamaño_KeyDown" PreviewTextInput="tbx_PreviewTextInput" VerticalContentAlignment="Center" TabIndex="0"/>
+            </Grid>
+            <Grid Grid.Row="1" x:Name="grd_Fuente">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="1*"/>
+                    <RowDefinition Height="1*"/>
+                </Grid.RowDefinitions>
+                <Label Grid.Row="0" Content="Fuente" FontSize="24" FontWeight="Bold" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                <ComboBox Grid.Row="1" x:Name="cbx_Fuente" FontSize="24" Margin="10" SelectionChanged="cbx_Fuente_SelectionChanged" TabIndex="1"/>
+            </Grid>
+            <Grid Grid.Row="2">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="1*"/>
+                    <RowDefinition Height="1*"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="1*"/>
+                    <ColumnDefinition Width="1*"/>
+                </Grid.ColumnDefinitions>
+                <Label Grid.Row="0" Grid.Column="0" Content="Filas" FontSize="24" FontWeight="Bold" VerticalAlignment="Center" HorizontalAlignment="Left"/>
+                <Label Grid.Row="1" Grid.Column="0" Content="Columnas" FontSize="24" FontWeight="Bold" VerticalAlignment="Center" HorizontalAlignment="Left"/>
+
+                <TextBox x:Name="tbx_Filas" PreviewTextInput="tbx_PreviewTextInput" Grid.Column="1" Grid.Row="0" Margin="5" FontSize="24" KeyDown="tbx_Filas_KeyDown" VerticalContentAlignment="Center" TabIndex="2"/>
+                <TextBox x:Name="tbx_Columnas" PreviewTextInput="tbx_PreviewTextInput" Grid.Column="1" Grid.Row="1" Margin="5" FontSize="24" KeyDown="tbx_Columnas_KeyDown"  VerticalContentAlignment="Center" TabIndex="3"/>
+
+            </Grid>
+            <Grid Grid.Row="3">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="1*"/>
+                    <RowDefinition Height="1*"/>
+                    <RowDefinition Height="1*"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="1*"/>
+                    <ColumnDefinition Width="1*"/>
+                </Grid.ColumnDefinitions>
+              
+                    
+                <Label x:Name="lbl_NTPagina" Grid.Row="0" Grid.Column="0" Content="Tamaño Pagina" FontSize="17" FontWeight="Bold" VerticalAlignment="Center" HorizontalAlignment="Left"/>
+                <ComboBox  Grid.Row="0" Grid.Column="1" x:Name="cbx_Tamaños" Margin="5" FontSize="24" SelectionChanged="cbx_Tamaños_SelectionChanged"  TabIndex="4"/>
+                <TextBox x:Name="tbx_NombreTamaños" Grid.Row="0" Grid.Column="1" Margin="5" Visibility="Hidden" FontSize="24" VerticalContentAlignment="Center" TabIndex="5"/>
+                <Label Grid.Row="1" Grid.Column="0" Content="Ancho" FontSize="17" FontWeight="Bold" VerticalAlignment="Center" HorizontalAlignment="Left"/>
+                <Label Grid.Row="2" Grid.Column="0" Content="Alto" FontSize="17" FontWeight="Bold" VerticalAlignment="Center" HorizontalAlignment="Left"/>
+
+                <TextBox IsEnabled="False" Grid.Row="1" Grid.Column="1" x:Name="tbx_Ancho" PreviewTextInput="tbx_PreviewTextInput" Margin="5" FontSize="24" VerticalContentAlignment="Center" TabIndex="6"/>
+                <TextBox IsEnabled="False" Grid.Row="2" Grid.Column="1" x:Name="tbx_Alto" PreviewTextInput="tbx_PreviewTextInput" Margin="5" FontSize="24" VerticalContentAlignment="Center" TabIndex="7"/>
+
+            </Grid>
+            <Grid Grid.Row="4">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="1*"/>
+                    <ColumnDefinition Width="1*"/>
+                </Grid.ColumnDefinitions>
+                <uc:BotonImagen Grid.Column="0" x:Name="btn_EliminarTamaño" Margin="10" Titulo="Eliminar Tamaño" Imagen="pack://application:,,/BisregApi;Component/IMG/Delete256px.png" Click="btn_EliminarTamaño_Click"/>
+                <uc:BotonImagen Grid.Column="0" x:Name="btn_CancelarCreacion" Margin="10" Titulo="Cancelar" Imagen="pack://application:,,/BisregApi;Component/IMG/Delete256px.png" Visibility="Hidden" Click="btn_CancelarCreacion_Click"/>
+                <uc:BotonImagen Grid.Column="1" x:Name="btn_AñadirTamaño"  Margin="10" Titulo="Añadir Tamaño" Imagen="pack://application:,,/BisregApi;Component/IMG/Add256px.png" Click="btn_AñadirTamaño_Click"/>
+                <uc:BotonImagen Grid.Column="1" x:Name="btn_GuardarTamaño"  Margin="10" Titulo="Añadir Tamaño" Imagen="pack://application:,,/BisregApi;Component/IMG/Save128px.png" Visibility="Hidden" Click="btn_GuardarTamaño_Click"/>
+            </Grid>
+
+            <uc:BotonImagen Grid.Row="5" x:Name="btn_Recargar" Click="btn_Recargar_Click" Grid.Column="0" Margin="10" Titulo="Recargar" Imagen="pack://application:,,/BisregApi;Component/IMG/Reload128px.png"/>
+        </Grid>
+        <uc:CanvasViewer Grid.Column="1" x:Name="CanvasView" >
             <uc:CanvasViewer.Contenido >
-                <uc:BisregCanvas />
+                <uc:BisregCanvas MouseLeftButtonUp="Canvas_MouseLeftButtonUp"/>
             </uc:CanvasViewer.Contenido>
         </uc:CanvasViewer>
         

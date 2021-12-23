@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:Referencias_Clientes.Vista"
         xmlns:uc="clr-namespace:BisregApi.ControlesWPF;assembly=BisregApi"
         mc:Ignorable="d"
-        Title="Referencias Clientes" Icon="pack://application:,,/BisregApi;Component/IMG/Tabla64px.ico" Height="450" Width="800" MinHeight="450" MinWidth="800">
+        Title="Referencias Clientes" Icon="pack://application:,,/BisregApi;Component/IMG/CatalogoLogo48px.ico" Height="450" Width="800" MinHeight="450" MinWidth="800">
     
     <Grid>
         <Grid.RowDefinitions>
@@ -28,8 +28,20 @@
                     <RowDefinition Height="1*"/>
                     <RowDefinition Height="1*"/>
                 </Grid.RowDefinitions>
-                <uc:BotonImagen x:Name="btn_Imprimir" Grid.Row="1" Grid.Column="0" Margin="10" Titulo="Imprimir" Imagen="pack://application:,,/BisregApi;Component/IMG/Print256px.png"/>
-                <uc:BotonImagen x:Name="btn_EditarCanvas" Grid.Row="1" Grid.Column="1" Margin="10" Titulo="Vista Previa" Imagen="pack://application:,,/BisregApi;Component/IMG/DocPreview128px.png" Click="btn_EditarCanvas_Click"/>
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="1*"/>
+                        <RowDefinition Height="1*"/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="1*"/>
+                        <ColumnDefinition Width="1*"/>
+                    </Grid.ColumnDefinitions>
+                    <Label Grid.Row="0" Grid.Column="0" Content="Copias" VerticalAlignment="Center" HorizontalAlignment="Center" FontWeight="Bold" FontSize="24"/>
+                    <TextBox x:Name="tbx_Copias" Grid.Row="0" Grid.Column="1" Margin="5" FontWeight="Bold" FontSize="24" HorizontalContentAlignment="Center" Text="0" PreviewTextInput="tbx_Copias_PreviewTextInput" TextChanged="tbx_Copias_TextChanged"/>
+                </Grid>
+                <uc:BotonImagen x:Name="btn_Imprimir" Grid.Row="1" Grid.Column="0" Margin="10" Titulo="Imprimir" Imagen="pack://application:,,/BisregApi;Component/IMG/Print256px.png" Click="btn_Imprimir_Click"/>
+                <uc:BotonImagen x:Name="btn_VistaPrevia" Grid.Row="1" Grid.Column="1" Margin="10" Titulo="Vista Previa" Imagen="pack://application:,,/BisregApi;Component/IMG/DocPreview128px.png" Click="btn_VistaPrevia_Click"/>
                 <uc:BotonImagen x:Name="btn_Config" Grid.Row="0" Grid.Column="1" Margin="10" Titulo="Configuarcion" Imagen="pack://application:,,/BisregApi;Component/IMG/Configuracion256px.png" Click="btn_Config_Click"/>
             </Grid>
         </Grid>

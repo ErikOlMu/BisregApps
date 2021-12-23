@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Controls.Primitives;
 using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
@@ -21,6 +22,19 @@ namespace BisregApi.ControlesWPF
     public partial class BisregCanvas : UserControl
     {
 
+        private CampoCanvas UltimoCampo;
+
+        public Canvas canvasprincipal
+        {
+            get
+            {
+                return CanvasPrincipal;
+            }
+            set
+            {
+                CanvasPrincipal = value;
+            }
+        }
 
         // El desplazamiento de la posición del mouse del control seleccionado
         Point targetPoint;
@@ -29,7 +43,8 @@ namespace BisregApi.ControlesWPF
         private List<CampoCanvas> _CamposList = new List<CampoCanvas>();
 
         //Get y set para no borrar nunca la lista
-        public List<CampoCanvas> CamposList {
+        public List<CampoCanvas> CamposList
+        {
             get
             {
                 return _CamposList;
@@ -47,7 +62,9 @@ namespace BisregApi.ControlesWPF
             InitializeComponent();
 
             UpdateCampos();
+            
         }
+
 
         
         private void CanvasPrincipal_MouseDown(object sender, MouseButtonEventArgs e)
@@ -63,8 +80,14 @@ namespace BisregApi.ControlesWPF
 
         private void CanvasPrincipal_MouseUp(object sender, MouseButtonEventArgs e)
         {
+            UltimoCampo = new CampoCanvas(Mouse.Captured as UIElement);
             // Cancelar captura del mouse
             Mouse.Capture(null);
+        }
+
+        public CampoCanvas GetUltimoCampo()
+        {
+            return UltimoCampo;
         }
 
         private void CanvasPrincipal_MouseMove(object sender, MouseEventArgs e)
@@ -80,16 +103,18 @@ namespace BisregApi.ControlesWPF
             }
         }
 
+
         public void UpdateCampos()
         {
             CanvasPrincipal.Children.Clear();
-            foreach(CampoCanvas campo in CamposList)
+
+            foreach (CampoCanvas campo in CamposList)
             {
+                
                 CanvasPrincipal.Children.Add(campo.Elemento);
             }
         }
-
-
-
     }
+
 }
+

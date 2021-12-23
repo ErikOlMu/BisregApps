@@ -43,7 +43,7 @@ namespace Catalogos_Bisreg.Vista
             if (!File.Exists(SettingsFile))
             {
                 settings = new Settings();
-                settings.File = SettingsFile;
+                settings.file = SettingsFile;
             }
             else
             {
