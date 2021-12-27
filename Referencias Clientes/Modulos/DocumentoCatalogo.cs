@@ -66,11 +66,11 @@ namespace Referencias_Clientes.Modulos
 
 
             //Creo los campos
-            CampoCanvas CampoReferencia = new CampoCanvas(Referencia, settings.CordReferencia, settings.TamañoReferencia);
+            CampoCanvas CampoReferencia = new CampoCanvas(Referencia, settings.CordReferencia, settings.TamañoReferencia,settings.RotacionReferencia);
             //CampoCanvas CampoReferenciaCliente = new CampoCanvas("CLIENTE", settings.CordReferenciaCliente, settings.TamañoReferenciaCliente);
-            CampoCanvas CampoReferenciaCliente = new CampoCanvas(ReferenciaCliente, settings.CordReferenciaCliente, settings.TamañoReferenciaCliente);
-            CampoCanvas CampoPueblo = new CampoCanvas(Pueblo, settings.CordPueblo, settings.TamañoPueblo);
-            CampoCanvas CampoCantidad = new CampoCanvas(Cantidad, settings.CordCantidad, settings.TamañoCantidad);
+            CampoCanvas CampoReferenciaCliente = new CampoCanvas(ReferenciaCliente, settings.CordReferenciaCliente, settings.TamañoReferenciaCliente,settings.RotacionReferenciaCliente);
+            CampoCanvas CampoPueblo = new CampoCanvas(Pueblo, settings.CordPueblo, settings.TamañoPueblo,settings.RotacionPueblo);
+            CampoCanvas CampoCantidad = new CampoCanvas(Cantidad, settings.CordCantidad, settings.TamañoCantidad,settings.RotacionCantidad);
 
             //Pongo la Fuente
             try
@@ -113,18 +113,16 @@ namespace Referencias_Clientes.Modulos
                     TableRow rowDefinition = new TableRow();
                     for (int y = 0; y < settings.Columnas; y++)
                     {
-                        TableCell tableCell = new TableCell();
-
-                        
+                        TableCell tableCell = new TableCell();         
                         BlockUIContainer contenedor = new BlockUIContainer();
-
+                         
                         try
                         {
-                            contenedor.Child = getCanvas(datos.Rows[cont][1].ToString(), datos.Rows[cont][0].ToString(),datos.Rows[cont][2].ToString(),"Uds.");
+                            contenedor.Child = getCanvas(datos.Rows[cont][1].ToString(), datos.Rows[cont][0].ToString(),datos.Rows[cont][2].ToString(),"Pcs:");
                         }
                         catch
                         {
-                            contenedor.Child = getCanvas("", "","","");
+                            contenedor.Child = getCanvas("","","","");
                         }
 
                         if (contcopia >= settings.Copias)

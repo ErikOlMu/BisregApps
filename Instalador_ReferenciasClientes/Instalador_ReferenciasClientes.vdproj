@@ -22,7 +22,7 @@
         "Entry"
         {
         "MsmKey" = "8:_1FFC63C566124BF689913878E015459F"
-        "OwnerKey" = "8:_65528064995F4182BEE77B993A185CC8"
+        "OwnerKey" = "8:_5BA5C2600A814C4CBDAD82F8FCC0A01C"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -34,18 +34,18 @@
         "Entry"
         {
         "MsmKey" = "8:_3A348ACCD1056AE26CDBDEED7004019D"
-        "OwnerKey" = "8:_65528064995F4182BEE77B993A185CC8"
+        "OwnerKey" = "8:_5BA5C2600A814C4CBDAD82F8FCC0A01C"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
         "MsmKey" = "8:_5A0B8C0629967A74206A3B09294AC911"
-        "OwnerKey" = "8:_65528064995F4182BEE77B993A185CC8"
+        "OwnerKey" = "8:_5BA5C2600A814C4CBDAD82F8FCC0A01C"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
-        "MsmKey" = "8:_65528064995F4182BEE77B993A185CC8"
+        "MsmKey" = "8:_5BA5C2600A814C4CBDAD82F8FCC0A01C"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
@@ -58,7 +58,7 @@
         "Entry"
         {
         "MsmKey" = "8:_91F4C91B9A0C9A6B221B65256EC1A36A"
-        "OwnerKey" = "8:_65528064995F4182BEE77B993A185CC8"
+        "OwnerKey" = "8:_5BA5C2600A814C4CBDAD82F8FCC0A01C"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -70,7 +70,7 @@
         "Entry"
         {
         "MsmKey" = "8:_A18316B21CB1F06638E16BCAED38F377"
-        "OwnerKey" = "8:_65528064995F4182BEE77B993A185CC8"
+        "OwnerKey" = "8:_5BA5C2600A814C4CBDAD82F8FCC0A01C"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -82,7 +82,7 @@
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_65528064995F4182BEE77B993A185CC8"
+        "OwnerKey" = "8:_5BA5C2600A814C4CBDAD82F8FCC0A01C"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -435,15 +435,15 @@
         {
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:Referencias Clientes"
-        "ProductCode" = "8:{19CE6B51-D19B-4175-85F2-13ABDC96A596}"
-        "PackageCode" = "8:{BD264C21-4920-453B-AB42-D173949C146C}"
+        "ProductCode" = "8:{FEE557FB-018A-4EF0-984E-97FE82466D13}"
+        "PackageCode" = "8:{835BA2FA-A7E7-4C4D-B45C-B59AB1A347C9}"
         "UpgradeCode" = "8:{D971A56A-9BD3-42A0-9CBD-8FEE43B51130}"
         "AspNetVersion" = "8:4.0.30319.0"
         "RestartWWWService" = "11:FALSE"
         "RemovePreviousVersions" = "11:TRUE"
         "DetectNewerInstalledVersion" = "11:TRUE"
         "InstallAllUsers" = "11:FALSE"
-        "ProductVersion" = "8:1.1.5"
+        "ProductVersion" = "8:1.2.0"
         "Manufacturer" = "8:Bisreg"
         "ARPHELPTELEPHONE" = "8:"
         "ARPHELPLINK" = "8:"
@@ -556,7 +556,7 @@
         }
         "Shortcut"
         {
-            "{970C0BB2-C7D0-45D7-ABFA-7EC378858BC0}:_00C1C48100B1471D89849D570CD9860E"
+            "{970C0BB2-C7D0-45D7-ABFA-7EC378858BC0}:_F6E1D69EC8E44338B36FAD0169779550"
             {
             "Name" = "8:Referencias Clientes"
             "Arguments" = "8:"
@@ -564,7 +564,7 @@
             "ShowCmd" = "3:1"
             "IconIndex" = "3:0"
             "Transitive" = "11:FALSE"
-            "Target" = "8:_65528064995F4182BEE77B993A185CC8"
+            "Target" = "8:_5BA5C2600A814C4CBDAD82F8FCC0A01C"
             "Folder" = "8:_095115EB3CA2447095F43B48B08D131A"
             "WorkingFolder" = "8:_C1B64407EEA74ECEB7EEAF0143EAE0BC"
             "Icon" = "8:_6558226906944B959BB1668E584D43AA"
@@ -969,9 +969,9 @@
         }
         "ProjectOutput"
         {
-            "{5259A561-127C-4D43-A0A1-72F10C7B3BF8}:_65528064995F4182BEE77B993A185CC8"
+            "{5259A561-127C-4D43-A0A1-72F10C7B3BF8}:_5BA5C2600A814C4CBDAD82F8FCC0A01C"
             {
-            "SourcePath" = "8:..\\Referencias Clientes\\obj\\Release\\Referencias Clientes.exe"
+            "SourcePath" = "8:..\\Referencias Clientes\\obj\\Debug\\Referencias Clientes.exe"
             "TargetName" = "8:"
             "Tag" = "8:"
             "Folder" = "8:_C1B64407EEA74ECEB7EEAF0143EAE0BC"
@@ -989,7 +989,7 @@
             "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             "ProjectOutputGroupRegister" = "3:1"
-            "OutputConfiguration" = "8:Release|Any CPU"
+            "OutputConfiguration" = "8:"
             "OutputGroupCanonicalName" = "8:Built"
             "OutputProjectGuid" = "8:{BB22D371-721B-4192-B127-15A3B2DAB33A}"
             "ShowKeyOutput" = "11:TRUE"

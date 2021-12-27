@@ -48,6 +48,10 @@ namespace Referencias_Clientes.Modulos
         public string FuentePueblo = "Segoe UI";
         public string FuenteCantidad = "Segoe UI";
 
+        public double RotacionReferencia = 0;
+        public double RotacionReferenciaCliente = 0;
+        public double RotacionPueblo  = 0;
+        public double RotacionCantidad =  0;
 
         public int Columnas = 2;
         public int Filas = 4;

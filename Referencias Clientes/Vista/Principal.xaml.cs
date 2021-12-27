@@ -69,11 +69,16 @@ namespace Referencias_Clientes.Vista
             Columnas.Add(3);
             Columnas.Add(0);
             Columnas.Add(8);
-            //try
-            //{
+            try
+            {
                 //Importo el Excel al DataGrid
                 dtg.ItemsSource = Excel.GetDataTable(Dialogos.OpenFile(), Campos, settings.Limite_Excel, Columnas).DefaultView;
-            
+            }
+            catch
+            {
+                //Excepcion por si no importa el excel
+                MessageBox.Show("No se a podido importar el archivo");
+            }
         }
 
         //Abro la ventana Configuracion
@@ -96,15 +101,11 @@ namespace Referencias_Clientes.Vista
 
         private void btn_Imprimir_Click(object sender, RoutedEventArgs e)
         {
-            try
-            {
+            //try
+            //{
                 if (dtg.ItemsSource == null) MessageBox.Show("Primero debes importar datos");
                 else PrintDoc.Print(new DocumentoCatalogo().GetFlowDocument((dtg.ItemsSource as DataView).ToTable()));
-            }
-            catch
-            {
-                MessageBox.Show("No se puede imprimir el documento actual");
-            }
+            
         }
 
         private static readonly Regex _regex = new Regex("[^0-9-]+");

@@ -5,6 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Catalogos_Bisreg.Vista"
         mc:Ignorable="d"
+        xmlns:uc="clr-namespace:BisregApi.ControlesWPF;assembly=BisregApi"
         Title="Generar PDF" Height="450" Width="800" Icon="pack://application:,,/BisregApi;Component/IMG/PDF32px.ico">
     <Grid>
         <Grid.ColumnDefinitions>
@@ -55,32 +56,14 @@
                     <ComboBox Grid.Row="1" Margin="5" Name="cbx_Fuente"/>
                 </Grid>
             </Grid>
-            <Grid Grid.Row="1">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="1*"/>
-                    <RowDefinition Height="3*"/>
-                </Grid.RowDefinitions>
-                <Label Grid.Row="0" FontSize="12">
-                    <Bold>Campos</Bold>
-                </Label>
-                <ListBox Grid.Row="1" x:Name="lbx_Campos" Margin="5"/>
-            </Grid>
-        </Grid>
-        
-        <Grid Grid.Column="1" x:Name="GridCanvas" Margin="0">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*"/>
-            </Grid.ColumnDefinitions>
             
-            <Border x:Name="BorderCanvas" BorderBrush="Black" BorderThickness="2" Width="{Binding ActualHeight, ElementName=BorderCanvas}" MaxHeight="{Binding ActualWidth, ElementName=GridCanvas}" MaxWidth="{Binding ActualWidth, ElementName=GridCanvas}">
-                <Viewbox Width="{Binding ActualWidth, ElementName=BorderCanvas}" Height="{Binding ActualHeight, ElementName=BorderCanvas}">
-                <Canvas Grid.Column="0" x:Name="CanvasProducto" Background="White" Width="{Binding ActualWidth, ElementName=BorderCanvas}" Height="{Binding ActualHeight, ElementName=BorderCanvas}">
-                    <Button Click="Guardar_Click" Height="60" Canvas.Left="164" Canvas.Top="210" Width="68">Botton</Button>
-                    <TextBlock Height="72" Canvas.Left="84" Canvas.Top="85" Width="98" RenderTransformOrigin="0.434,0.438">Erik</TextBlock>
-                </Canvas>
-                </Viewbox>
-            </Border>
         </Grid>
+
+        <uc:CanvasViewer Grid.Column="1" x:Name="CanvasView" >
+            <uc:CanvasViewer.Contenido >
+                <uc:BisregCanvas/>
+            </uc:CanvasViewer.Contenido>
+        </uc:CanvasViewer>
 
     </Grid>
 </Window>

@@ -22,7 +22,15 @@ namespace BisregApi.Utilidades
     public class CampoCanvas
     {
 
-        //Constructor del Campos Canvas
+        //Constructores del Campos Canvas
+        public CampoCanvas(string valor, Point coordenadas, int tamaño)
+        {
+            Elemento = new TextBlock();
+            Valor = valor;
+            Coordenadas = coordenadas;
+            Tamaño = tamaño;
+            Rotacion = 0;
+        }
         public CampoCanvas(string valor,Point coordenadas, int tamaño, byte Tipo)
         {
             //Creamos el Elemento segun el tipo indicado
@@ -46,21 +54,82 @@ namespace BisregApi.Utilidades
             Valor = valor;
             Coordenadas = coordenadas;
             Tamaño = tamaño;
+            Rotacion = 0;
         }
+        public CampoCanvas(string valor,Point coordenadas, int tamaño, double rotacion, byte Tipo)
+        {
+            //Creamos el Elemento segun el tipo indicado
+            switch (Tipo)
+            {
+                case 0:
+                    Elemento = new UIElement();
+                    break;
+                case 1:
+                    Elemento = new TextBlock();
+                    break;
+                case 2:
+                    Elemento = new Image();
+                    break;
+                default:
+                    //En el caso que no hay ninguno se crea un TextBlock
+                    Elemento = new TextBlock();
+                    break;
+            }
 
+            Valor = valor;
+            Coordenadas = coordenadas;
+            Tamaño = tamaño;
+            Rotacion = rotacion;
+        }
         //Constructor que no hace falta indicar el tipo (Por defecto sera un Texto
-        public CampoCanvas(string valor, Point coordenadas, int tamaño)
+        public CampoCanvas(string valor, Point coordenadas, int tamaño, double rotacion)
         {
             Elemento = new TextBlock();
             Valor = valor;
             Coordenadas = coordenadas;
             Tamaño = tamaño;
+            Rotacion = rotacion;
         }
         public CampoCanvas(UIElement elemento)
         {
             Elemento = elemento;
         }
 
+        public double Rotacion
+        {
+            get
+            {
+                try
+                {
+                    if (Elemento is TextBlock)
+                    {
+                        return (Elemento.GetValue(TextBlock.LayoutTransformProperty) as RotateTransform).Angle;
+                    }
+                    if (Elemento is Image)
+                    {
+                        return (Elemento.GetValue(Image.LayoutTransformProperty) as RotateTransform).Angle;
+                    }
+                    return 0.0;
+                }
+                catch
+                {
+                    return 0.0;
+                }
+            }
+            set
+            {
+
+                if (Elemento is TextBlock)
+                {
+                    Elemento.SetValue(TextBlock.LayoutTransformProperty, new RotateTransform(value));
+                }
+                if (Elemento is Image)
+                {
+                    Elemento.SetValue(Image.LayoutTransformProperty, new RotateTransform(value));
+                }
+
+            }
+        }
         public string Valor 
         {
             get 

@@ -56,6 +56,12 @@ namespace Referencias_Clientes.Vista
             tbx_Columnas.Text = settings.Columnas.ToString();
             tbx_Filas.Text = settings.Filas.ToString();
 
+            //Si no hay tamaños, añado el tamaño A4
+            if (settings.TamañosPagina.Count == 0)
+            {
+                settings.TamañosPagina.Add(new Tamaño("A4", Sizes.A4));
+            }
+
             cbx_Tamaños.Items.Clear();
             foreach (Tamaño tamaño in settings.TamañosPagina)
             {
@@ -64,7 +70,6 @@ namespace Referencias_Clientes.Vista
 
             cbx_Tamaños.SelectedIndex = settings.TamañoSeleccionado;
 
-            
 
             
             
@@ -103,10 +108,10 @@ namespace Referencias_Clientes.Vista
             
 
             //Creo los campos
-            CampoCanvas CampoReferencia = new CampoCanvas("REFERENCIA", settings.CordReferencia, settings.TamañoReferencia);
-            CampoCanvas CampoReferenciaCliente = new CampoCanvas("CLIENTE", settings.CordReferenciaCliente, settings.TamañoReferenciaCliente);
-            CampoCanvas CampoPueblo = new CampoCanvas("PUEBLO", settings.CordPueblo, settings.TamañoPueblo);
-            CampoCanvas CampoCantidad = new CampoCanvas("Uds:", settings.CordCantidad, settings.TamañoCantidad);
+            CampoCanvas CampoReferencia = new CampoCanvas("REFERENCIA", settings.CordReferencia, settings.TamañoReferencia, settings.RotacionReferencia);
+            CampoCanvas CampoReferenciaCliente = new CampoCanvas("CLIENTE", settings.CordReferenciaCliente, settings.TamañoReferenciaCliente,settings.RotacionReferenciaCliente);
+            CampoCanvas CampoPueblo = new CampoCanvas("PUEBLO", settings.CordPueblo, settings.TamañoPueblo,settings.RotacionPueblo);
+            CampoCanvas CampoCantidad = new CampoCanvas("Pcs:", settings.CordCantidad, settings.TamañoCantidad,settings.RotacionCantidad);
 
             //Pongo la Fuente
             try
@@ -135,19 +140,22 @@ namespace Referencias_Clientes.Vista
             settings.TamañoReferencia = (CanvasView.Contenido as BisregCanvas).CamposList[0].Tamaño;
             settings.CordReferencia = (CanvasView.Contenido as BisregCanvas).CamposList[0].Coordenadas;
             settings.FuenteReferencia = ((CanvasView.Contenido as BisregCanvas).CamposList[0].Elemento.GetValue(TextBlock.FontFamilyProperty) as FontFamily).Source;
-
+            settings.RotacionReferencia = (CanvasView.Contenido as BisregCanvas).CamposList[0].Rotacion;
 
             settings.TamañoReferenciaCliente = (CanvasView.Contenido as BisregCanvas).CamposList[1].Tamaño;
             settings.CordReferenciaCliente = (CanvasView.Contenido as BisregCanvas).CamposList[1].Coordenadas;
             settings.FuenteReferenciaCliente = ((CanvasView.Contenido as BisregCanvas).CamposList[1].Elemento.GetValue(TextBlock.FontFamilyProperty) as FontFamily).Source;
+            settings.RotacionReferenciaCliente = (CanvasView.Contenido as BisregCanvas).CamposList[1].Rotacion;
 
             settings.TamañoPueblo = (CanvasView.Contenido as BisregCanvas).CamposList[2].Tamaño;
             settings.CordPueblo = (CanvasView.Contenido as BisregCanvas).CamposList[2].Coordenadas;
             settings.FuentePueblo = ((CanvasView.Contenido as BisregCanvas).CamposList[2].Elemento.GetValue(TextBlock.FontFamilyProperty) as FontFamily).Source;
+            settings.RotacionPueblo = (CanvasView.Contenido as BisregCanvas).CamposList[2].Rotacion;
 
             settings.TamañoCantidad = (CanvasView.Contenido as BisregCanvas).CamposList[3].Tamaño;
             settings.CordCantidad = (CanvasView.Contenido as BisregCanvas).CamposList[3].Coordenadas;
             settings.FuenteCantidad = ((CanvasView.Contenido as BisregCanvas).CamposList[3].Elemento.GetValue(TextBlock.FontFamilyProperty) as FontFamily).Source;
+            settings.RotacionCantidad = (CanvasView.Contenido as BisregCanvas).CamposList[3].Rotacion;
 
 
             settings.Save();
@@ -159,11 +167,13 @@ namespace Referencias_Clientes.Vista
             try
             {
                 tbx_Tamaño.Text = (CanvasView.Contenido as BisregCanvas).GetUltimoCampo().Tamaño.ToString();
+                tbx_Rotacion.Text = ((CanvasView.Contenido as BisregCanvas)).GetUltimoCampo().Rotacion.ToString();
                 cbx_Fuente.Text = ((CanvasView.Contenido as BisregCanvas).GetUltimoCampo().Elemento.GetValue(TextBlock.FontFamilyProperty) as FontFamily).Source;
             }
             catch
             {
                 tbx_Tamaño.Text = "";
+                tbx_Rotacion.Text = "";
                 cbx_Fuente.Text = "";
             }
 
@@ -177,6 +187,21 @@ namespace Referencias_Clientes.Vista
                 try
                 {
                     (CanvasView.Contenido as BisregCanvas).GetUltimoCampo().Tamaño = Int32.Parse(tbx_Tamaño.Text);
+                }
+                catch
+                {
+                    //Excepcion por si no hay elemento seleccionado
+                }
+            }
+        }
+        //Evento para rotar campo
+        private void tbx_Rotacion_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Enter)
+            {
+                try
+                {
+                    (CanvasView.Contenido as BisregCanvas).GetUltimoCampo().Rotacion = Double.Parse(tbx_Rotacion.Text);
                 }
                 catch
                 {
@@ -378,5 +403,7 @@ namespace Referencias_Clientes.Vista
         {
             SalirDeCreacion();
         }
+
+       
     }
 }
