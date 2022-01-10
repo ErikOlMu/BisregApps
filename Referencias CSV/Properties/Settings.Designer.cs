@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace ModuloFacturas.Properties
+namespace Referencias_CSV.Properties
 {
 
 

@@ -22,7 +22,7 @@
         "Entry"
         {
         "MsmKey" = "8:_1FFC63C566124BF689913878E015459F"
-        "OwnerKey" = "8:_5BA5C2600A814C4CBDAD82F8FCC0A01C"
+        "OwnerKey" = "8:_7378F68FF4984131991ADFDC5C41C041"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -34,19 +34,13 @@
         "Entry"
         {
         "MsmKey" = "8:_3A348ACCD1056AE26CDBDEED7004019D"
-        "OwnerKey" = "8:_5BA5C2600A814C4CBDAD82F8FCC0A01C"
+        "OwnerKey" = "8:_7378F68FF4984131991ADFDC5C41C041"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
         "MsmKey" = "8:_5A0B8C0629967A74206A3B09294AC911"
-        "OwnerKey" = "8:_5BA5C2600A814C4CBDAD82F8FCC0A01C"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_5BA5C2600A814C4CBDAD82F8FCC0A01C"
-        "OwnerKey" = "8:_UNDEFINED"
+        "OwnerKey" = "8:_7378F68FF4984131991ADFDC5C41C041"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -57,8 +51,14 @@
         }
         "Entry"
         {
+        "MsmKey" = "8:_7378F68FF4984131991ADFDC5C41C041"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
         "MsmKey" = "8:_91F4C91B9A0C9A6B221B65256EC1A36A"
-        "OwnerKey" = "8:_5BA5C2600A814C4CBDAD82F8FCC0A01C"
+        "OwnerKey" = "8:_7378F68FF4984131991ADFDC5C41C041"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -70,7 +70,19 @@
         "Entry"
         {
         "MsmKey" = "8:_A18316B21CB1F06638E16BCAED38F377"
-        "OwnerKey" = "8:_5BA5C2600A814C4CBDAD82F8FCC0A01C"
+        "OwnerKey" = "8:_7378F68FF4984131991ADFDC5C41C041"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_E52D3A03AA30E3CF19BD0E112C2F6B10"
+        "OwnerKey" = "8:_A18316B21CB1F06638E16BCAED38F377"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_E52D3A03AA30E3CF19BD0E112C2F6B10"
+        "OwnerKey" = "8:_7378F68FF4984131991ADFDC5C41C041"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -82,13 +94,19 @@
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_5BA5C2600A814C4CBDAD82F8FCC0A01C"
+        "OwnerKey" = "8:_7378F68FF4984131991ADFDC5C41C041"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
         "OwnerKey" = "8:_A18316B21CB1F06638E16BCAED38F377"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_UNDEFINED"
+        "OwnerKey" = "8:_E52D3A03AA30E3CF19BD0E112C2F6B10"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -379,6 +397,37 @@
             "IsDependency" = "11:TRUE"
             "IsolateTo" = "8:"
             }
+            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_E52D3A03AA30E3CF19BD0E112C2F6B10"
+            {
+            "AssemblyRegister" = "3:1"
+            "AssemblyIsInGAC" = "11:FALSE"
+            "AssemblyAsmDisplayName" = "8:System.Data.SQLite, Version=1.0.115.5, Culture=neutral, PublicKeyToken=db937bc2d44ff139, processorArchitecture=MSIL"
+                "ScatterAssemblies"
+                {
+                    "_E52D3A03AA30E3CF19BD0E112C2F6B10"
+                    {
+                    "Name" = "8:System.Data.SQLite.dll"
+                    "Attributes" = "3:512"
+                    }
+                }
+            "SourcePath" = "8:System.Data.SQLite.dll"
+            "TargetName" = "8:"
+            "Tag" = "8:"
+            "Folder" = "8:_C1B64407EEA74ECEB7EEAF0143EAE0BC"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:TRUE"
+            "IsolateTo" = "8:"
+            }
         }
         "FileType"
         {
@@ -435,15 +484,15 @@
         {
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:Referencias Clientes"
-        "ProductCode" = "8:{FEE557FB-018A-4EF0-984E-97FE82466D13}"
-        "PackageCode" = "8:{835BA2FA-A7E7-4C4D-B45C-B59AB1A347C9}"
+        "ProductCode" = "8:{6F1AC9CD-AF4B-4BCD-A852-EF6A0C5B24F0}"
+        "PackageCode" = "8:{F47DCC5A-CAB9-4BEE-83B7-E97423086ADA}"
         "UpgradeCode" = "8:{D971A56A-9BD3-42A0-9CBD-8FEE43B51130}"
         "AspNetVersion" = "8:4.0.30319.0"
         "RestartWWWService" = "11:FALSE"
         "RemovePreviousVersions" = "11:TRUE"
         "DetectNewerInstalledVersion" = "11:TRUE"
         "InstallAllUsers" = "11:FALSE"
-        "ProductVersion" = "8:1.2.0"
+        "ProductVersion" = "8:1.3.0"
         "Manufacturer" = "8:Bisreg"
         "ARPHELPTELEPHONE" = "8:"
         "ARPHELPLINK" = "8:"
@@ -556,7 +605,7 @@
         }
         "Shortcut"
         {
-            "{970C0BB2-C7D0-45D7-ABFA-7EC378858BC0}:_F6E1D69EC8E44338B36FAD0169779550"
+            "{970C0BB2-C7D0-45D7-ABFA-7EC378858BC0}:_53A6E3AD021B4868A180D8768D5E58E7"
             {
             "Name" = "8:Referencias Clientes"
             "Arguments" = "8:"
@@ -564,7 +613,7 @@
             "ShowCmd" = "3:1"
             "IconIndex" = "3:0"
             "Transitive" = "11:FALSE"
-            "Target" = "8:_5BA5C2600A814C4CBDAD82F8FCC0A01C"
+            "Target" = "8:_7378F68FF4984131991ADFDC5C41C041"
             "Folder" = "8:_095115EB3CA2447095F43B48B08D131A"
             "WorkingFolder" = "8:_C1B64407EEA74ECEB7EEAF0143EAE0BC"
             "Icon" = "8:_6558226906944B959BB1668E584D43AA"
@@ -969,9 +1018,9 @@
         }
         "ProjectOutput"
         {
-            "{5259A561-127C-4D43-A0A1-72F10C7B3BF8}:_5BA5C2600A814C4CBDAD82F8FCC0A01C"
+            "{5259A561-127C-4D43-A0A1-72F10C7B3BF8}:_7378F68FF4984131991ADFDC5C41C041"
             {
-            "SourcePath" = "8:..\\Referencias Clientes\\obj\\Debug\\Referencias Clientes.exe"
+            "SourcePath" = "8:..\\Referencias Clientes\\obj\\Release\\Referencias Clientes.exe"
             "TargetName" = "8:"
             "Tag" = "8:"
             "Folder" = "8:_C1B64407EEA74ECEB7EEAF0143EAE0BC"
@@ -989,7 +1038,7 @@
             "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             "ProjectOutputGroupRegister" = "3:1"
-            "OutputConfiguration" = "8:"
+            "OutputConfiguration" = "8:Release|Any CPU"
             "OutputGroupCanonicalName" = "8:Built"
             "OutputProjectGuid" = "8:{BB22D371-721B-4192-B127-15A3B2DAB33A}"
             "ShowKeyOutput" = "11:TRUE"

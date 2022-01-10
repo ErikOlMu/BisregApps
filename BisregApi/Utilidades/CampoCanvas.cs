@@ -41,6 +41,9 @@ namespace BisregApi.Utilidades
                     break;
                 case 1:
                     Elemento = new TextBlock();
+                    (Elemento as TextBlock).TextAlignment = TextAlignment.Left;
+                    (Elemento as TextBlock).TextWrapping = TextWrapping.Wrap;
+
                     break;
                 case 2:
                     Elemento = new Image();
@@ -103,11 +106,11 @@ namespace BisregApi.Utilidades
                 {
                     if (Elemento is TextBlock)
                     {
-                        return (Elemento.GetValue(TextBlock.LayoutTransformProperty) as RotateTransform).Angle;
+                        return (Elemento.GetValue(TextBlock.RenderTransformProperty) as RotateTransform).Angle;
                     }
                     if (Elemento is Image)
                     {
-                        return (Elemento.GetValue(Image.LayoutTransformProperty) as RotateTransform).Angle;
+                        return (Elemento.GetValue(Image.RenderTransformProperty) as RotateTransform).Angle;
                     }
                     return 0.0;
                 }
@@ -121,11 +124,11 @@ namespace BisregApi.Utilidades
 
                 if (Elemento is TextBlock)
                 {
-                    Elemento.SetValue(TextBlock.LayoutTransformProperty, new RotateTransform(value));
+                    Elemento.SetValue(TextBlock.RenderTransformProperty, new RotateTransform(value, 0, 0));
                 }
                 if (Elemento is Image)
                 {
-                    Elemento.SetValue(Image.LayoutTransformProperty, new RotateTransform(value));
+                    Elemento.SetValue(Image.RenderTransformProperty, new RotateTransform(value,0,0));
                 }
 
             }

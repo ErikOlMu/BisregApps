@@ -58,7 +58,6 @@ namespace AltasBisreg.Controladores
             }
         }
 
-
         //Connexion SQL
         public static SQLiteConnection GetInstance()
         {
@@ -104,8 +103,6 @@ namespace AltasBisreg.Controladores
                     }
                 }
             }
-
-
             return Lista;
         }
         public static List<string> GetColumnas(string Tabla)
@@ -127,8 +124,6 @@ namespace AltasBisreg.Controladores
                     }
                 }
             }
-
-
             return Lista;
         }
 

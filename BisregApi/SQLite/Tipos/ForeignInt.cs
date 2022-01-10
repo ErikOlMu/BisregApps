@@ -4,9 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BisregApi.Utilidades
+namespace BisregApi.SQLite.Tipos
 {
-    class Sqlite
+    public class ForeignInt
     {
+        public int valor { get; set; }
+
     }
 }

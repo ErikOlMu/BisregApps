@@ -119,8 +119,12 @@ namespace Referencias_Clientes.Vista
         {
             try
             {
-                settings.Copias = Int32.Parse(tbx_Copias.Text);
-                settings.Save();
+                if(settings != null)
+                {
+                    settings.Copias = Int32.Parse(tbx_Copias.Text);
+                    settings.Save();
+                }
+                
                 
             }
             catch

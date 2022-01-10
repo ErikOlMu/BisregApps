@@ -8,5 +8,7 @@
              d:DesignHeight="450" d:DesignWidth="800">
 
 
-    <Canvas  x:Name="CanvasPrincipal" Background="White" MouseDown="CanvasPrincipal_MouseDown" MouseUp="CanvasPrincipal_MouseUp" MouseMove="CanvasPrincipal_MouseMove"/>
+    <Canvas  x:Name="CanvasPrincipal" Background="White" MouseDown="CanvasPrincipal_MouseDown" MouseUp="CanvasPrincipal_MouseUp" MouseMove="CanvasPrincipal_MouseMove">
+        
+    </Canvas>
 </UserControl>

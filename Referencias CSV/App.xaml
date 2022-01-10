@@ -1,8 +1,8 @@
-﻿<Application x:Class="ModuloFacturas.App"
+﻿<Application x:Class="Referencias_CSV.App"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:local="clr-namespace:ModuloFacturas"
-             StartupUri="MainWindow.xaml">
+             xmlns:local="clr-namespace:Referencias_CSV"
+             StartupUri="Vista/Principal.xaml">
     <Application.Resources>
          
     </Application.Resources>

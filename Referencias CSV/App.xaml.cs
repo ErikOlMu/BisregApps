@@ -6,7 +6,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
 
-namespace ModuloFacturas
+namespace Referencias_CSV
 {
     /// <summary>
     /// Lógica de interacción para App.xaml

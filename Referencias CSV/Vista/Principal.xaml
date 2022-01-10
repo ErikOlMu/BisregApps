@@ -1,22 +1,23 @@
-﻿<Window x:Class="ModuloFacturas.MainWindow"
+﻿<Window x:Class="Referencias_CSV.Vista.Principal"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:ModuloFacturas"
+        xmlns:local="clr-namespace:Referencias_CSV.Vista"
         mc:Ignorable="d"
-        Title="Modulo Facturas" Height="550" Width="480">
+        Title="Referencias CSV" Height="450" Width="800">
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="8*"/>
-            <RowDefinition Height="1*"/>
+            <RowDefinition Height="5*"/>
             <RowDefinition Height="1*"/>
         </Grid.RowDefinitions>
-        <Grid Grid.Row="0">
+        <DataGrid Grid.Row="0" x:Name="dtg_Relaciones" />
+        <Grid Grid.Row="1">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="1*"/>
                 <ColumnDefinition Width="1*"/>
             </Grid.ColumnDefinitions>
+            <Button Grid.Column="1" x:Name="btn_Save" Margin="10" Content="Guardar" Click="btn_Save_Click"/>
         </Grid>
     </Grid>
 </Window>
