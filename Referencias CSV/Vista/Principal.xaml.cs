@@ -11,12 +11,10 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
-using Referencias_CSV.Modulos;
 using BisregApi.Utilidades;
 using System.ComponentModel;
 using System.Reflection;
 using BisregApi.SQLite;
-using BisregApi.SQLite.Tipos;
 namespace Referencias_CSV.Vista
 {
     /// <summary>
@@ -24,68 +22,62 @@ namespace Referencias_CSV.Vista
     /// </summary>
     /// 
 
-    public class PUEBLO : DatabaseItem
-    {
-        public PrimaryString ID { get; set; }
-        public PrimaryInt IDN { get; set; }
-        public String Nombre { get; set; }
-        public Int64? Edad { get; set; }
-    }
 
-    public class PUEBLO2 : DatabaseItem
+    //Clase de objeto base de datos
+    public class Relacion
     {
-        public PrimaryString ID { get; set; }
-        public PrimaryInt IDN { get; set; }
-        public String Nombre { get; set; }
-        public Int64? Edad { get; set; }
+        [CampoSQL(PrimaryKey =true, NotNull = true)]
+        public string ID { get; set; }
+        [CampoSQL(NotNull = true)]
+        public string RefMokua { get; set; }
+        [CampoSQL(NotNull = true)]
+        public string RefProduccion { get; set; }
     }
 
     public partial class Principal : Window
     {
-        public string rutaxml = "Erik.xml";
-        ListaRelacion documento;
+        GestorBDD gestor;
+        List<Relacion> relaciones;
+
         public Principal()
         {
-            //importarDocumento();
-            PUEBLO item = new PUEBLO() {ID = "1", IDN = 1 };
+
             InitializeComponent();
 
-            GestorBDD gestor = new GestorBDD("erik.bdd");
+            gestor = new GestorBDD("erik.data");
 
-            gestor.GenerarSQL(typeof(PUEBLO), typeof(PUEBLO2));
 
-            //gestor.SelectDatabaseItem(item);
-            //gestor.DeleteDatabaseItem(item);
-                        
+            relaciones = gestor.SelectDatabaseItem(new Relacion());
 
-            //Obtengo la Lista de el xml de relaciones
-            //dtg_Relaciones.ItemsSource = documento.relaciones;
+
+            dtg_Relaciones.ItemsSource = relaciones;
 
         }
 
-        private void importarDocumento()
-        {
-            //Importo el documento
-            documento = XmlDocument.getDocument(rutaxml, typeof(ListaRelacion)) as ListaRelacion;
-        }
 
         private void btn_Save_Click(object sender, RoutedEventArgs e)
         {
-            documento.relaciones = dtg_Relaciones.ItemsSource as List<Relacion>;
-            documento.Save();
-            importarDocumento();
-
-            PropertyInfo[] properties = typeof(Relacion).GetProperties();
-
-            foreach (PropertyInfo property in properties)
+            gestor.UpdateDatabaseItem(dtg_Relaciones.ItemsSource as List<Relacion>);
+            
+        }
+        private bool _handle = true;
+        private void dtg_Relaciones_RowEditEnding(object sender, DataGridRowEditEndingEventArgs e)
+        {
+            if (_handle)
             {
-                string NombreAtributo = property.Name;
-                property.SetValue(documento.relaciones[0], "eRIK");
-                string Valor = property.GetValue(documento.relaciones[0]).ToString();
-                MessageBox.Show("El atributo " + NombreAtributo + " tiene el valor: " + Valor+ " "+ property.PropertyType.ToString());
-
+                _handle = false;
+                dtg_Relaciones.CommitEdit();
+                gestor.UpdateDatabaseItem(dtg_Relaciones.SelectedItem as Relacion);
+                _handle = true;
             }
+            
+        }
 
-        }   
+        private void dtg_Relaciones_AddingNewItem(object sender, AddingNewItemEventArgs e)
+        {
+            if (e.NewItem != null) gestor.UpdateDatabaseItem(e.NewItem as Relacion);
+        }
+
+     
     }
 }

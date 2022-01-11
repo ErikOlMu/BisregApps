@@ -7,91 +7,203 @@ using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
-using BisregApi.SQLite.Tipos;
 
 namespace BisregApi.SQLite
 {
-    public class Atributo
+    
+
+    //Clase Atributo para la Base de datos
+    public class CampoSQL
     {
-        public Atributo(string campo, object valor)
+        public CampoSQL(string campo, object valor)
         {
-            Campo = campo;
+            this.campo = campo;
             Valor = valor;
         }
 
-        public string Campo { get; set; }
+        public string campo { get; set; }
         public object Valor { get; set; }
     }
     public class GestorBDD
     {
         private string pathDB;
-        SQLiteConnection db;
 
-        //Generar las tablas apartir de los objectos
-        public void AutoGenerarTablasSQL(params Type[] tipos)
+        //Metodo para clonar objetos genericos
+        public static T Clone<T>(T original)
         {
-            string query = "";
-            string primaryquery = "";
+            T newObject = (T)Activator.CreateInstance(original.GetType());
 
-            foreach (Type tipo in tipos)
+            foreach (var originalProp in original.GetType().GetProperties())
             {
-                primaryquery = "PRIMARY KEY(";
-                query += "CREATE TABLE \"" + tipo.Name + "\" ( ";
-
-                foreach (PropertyInfo property in tipo.GetProperties())
-                {
-                    String Nombre = "";
-                    if (property.PropertyType.IsGenericType && property.PropertyType.GetGenericTypeDefinition() == typeof(Nullable<>))
-                    {
-                       Nombre = property.PropertyType.GetGenericArguments()[0].Name;
-                    }
-                    else
-                    {
-                        Nombre = property.PropertyType.Name;
-                    }
-                    switch (Nombre)
-                    {
-                        case nameof(PrimaryInt):
-                            query += '"' + property.Name +"\" NUMERIC NOT NULL,";
-                            primaryquery += '"' + property.Name + '"' + ",";
-                            break;
-                        case nameof(PrimaryString):
-                            query += '"' + property.Name + "\" TEXT NOT NULL,";
-                            primaryquery += '"' + property.Name + '"' + ",";
-                            break;
-                        case nameof(String):
-                            query += '"' + property.Name + "\" TEXT,";
-                            break;
-                        case nameof(Int64):
-                            query += ('"' + property.Name + "\" NUMERIC,");
-                            break;
-                        default:
-                            query += ('"' + property.Name + "\" BLOB,");
-                            break;
-                    }
-                }
-
-                primaryquery = primaryquery.TrimEnd(',');
-                primaryquery += "));";
-                query += primaryquery;
-
-
-
+                originalProp.SetValue(newObject, originalProp.GetValue(original));
             }
 
-            EjecutarSQL(query);
+            return newObject;
         }
 
+        //Constructor gestor
         public GestorBDD(string Path)
         {
             pathDB = Path;
             //Creo la base de datos si no existe
             CrearBDD();
 
-            //Obtengo la Instancia a la base de datos
-            db = GetInstance();
         }
-        
+        //Obtener campos
+        private List<CampoSQL> GetCampos<T>(T Item)
+        {
+            PropertyInfo[] properties = typeof(T).GetProperties();
+            List<CampoSQL> Campos = new List<CampoSQL>();
+            foreach (PropertyInfo property in properties)
+            {
+                //Obtengo el atributo SQLAtribute para comprobar si el campo es un campo SQL
+                CampoSQLAttribute Atributo = (CampoSQLAttribute)Attribute.GetCustomAttribute(property, typeof(CampoSQLAttribute));
+                if (Atributo != null) Campos.Add(new CampoSQL(property.Name, property.GetValue(Item)));
+            }
+            return Campos;
+        }
+        //Obtener campos primarios
+        private List<CampoSQL> GetCamposPrimarios<T>(T Item)
+        {
+            PropertyInfo[] properties = typeof(T).GetProperties();
+            List<CampoSQL> Campos = new List<CampoSQL>();
+            foreach (PropertyInfo property in properties)
+            {
+                //Obtengo el atributo SQLAtribute para comprobar si el campo es un campo SQL
+                CampoSQLAttribute Atributo = (CampoSQLAttribute)Attribute.GetCustomAttribute(property, typeof(CampoSQLAttribute));
+                if (Atributo != null && Atributo.PrimaryKey) Campos.Add(new CampoSQL(property.Name, property.GetValue(Item)));
+            }
+            return Campos;
+        }
+        //Obtener campos no primarios
+        private List<CampoSQL> GetCamposNoPrimarios<T>(T Item)
+        {
+            PropertyInfo[] properties = typeof(T).GetProperties();
+            List<CampoSQL> Campos = new List<CampoSQL>();
+            foreach (PropertyInfo property in properties)
+            {
+                //Obtengo el atributo SQLAtribute para comprobar si el campo es un campo SQL
+                CampoSQLAttribute Atributo = (CampoSQLAttribute)Attribute.GetCustomAttribute(property, typeof(CampoSQLAttribute));
+                if (Atributo != null && !Atributo.PrimaryKey) Campos.Add(new CampoSQL(property.Name, property.GetValue(Item)));
+            }
+            return Campos;
+        }
+        //Agregar Parametros al query
+        private void EjecutarQueryConParametrosSQL(List<CampoSQL> campos, string query, SQLiteConnection ctx)
+        {
+            //Agregar parametros al query
+            using (var command = new SQLiteCommand(query, ctx))
+            {
+                foreach (CampoSQL atributo in campos)
+                {
+                    command.Parameters.Add(new SQLiteParameter(atributo.campo, atributo.Valor));
+                }
+                try
+                {
+                    command.ExecuteNonQuery();
+                }
+                catch (Exception ex)
+                {
+                    //Excpcion por si no funciona el insert
+
+                    MessageBox.Show("Error de compatibilidad con Base de Datos:" + Environment.NewLine + ex.Message);
+                }
+
+            }
+        }
+        //Generar las tablas apartir de los objectos
+        public void AutoGenerarTablasSQL(params Type[] tipos)
+        {
+            string query = "";
+            string primaryquery = "";
+            string foreginquery = "";
+
+            //Bucle de Tipos que hay que añadir tablas
+            foreach (Type tipo in tipos)
+            {
+                //Iniciacion de los query
+                primaryquery = "PRIMARY KEY(";
+                query += "CREATE TABLE \"" + tipo.Name + "\" ( ";
+
+                //Query Foregin Key por si añado alguna clave Foranea
+                foreginquery = "";
+
+                //Bucle de propiedades de cada tipo
+                foreach (PropertyInfo property in tipo.GetProperties())
+                {
+                    //Obtengo el atributo SQLAtribute para comprobar si el campo es un campo SQL
+                    CampoSQLAttribute Atributo = (CampoSQLAttribute)Attribute.GetCustomAttribute(property, typeof(CampoSQLAttribute));
+
+                    //Compruebo que no sea null, en ese caso paso al siguiente campo
+                    if (Atributo != null)
+                    {
+                        //Obtengo el Nombre del tipo de campo, en caso que sea un int, tiene que ser notNull por las busquedas
+                        String Nombre = "";
+                        if (property.PropertyType.IsGenericType && property.PropertyType.GetGenericTypeDefinition() == typeof(Nullable<>))
+                        {
+                            Nombre = property.PropertyType.GetGenericArguments()[0].Name;
+                        }
+                        else
+                        {
+                            Nombre = property.PropertyType.Name;
+                        }
+
+
+                        //Miro si es ClavePrimaria
+                        if (Atributo.PrimaryKey)
+                        {
+                            //Y añado a la query de clave primaria
+                            primaryquery += '"' + property.Name + '"' + ",";
+
+                        }
+
+                        //Miro que tipo de campo es
+                        switch (Nombre)
+                        {
+                            case nameof(String):
+                                query += '"' + property.Name + "\" TEXT ";
+                                break;
+                            case nameof(Int64):
+                                query += '"' + property.Name + "\" NUMERIC ";
+                                break;
+                            default:
+                                //En caso que no sea ni int ni String intento añadirlo como blob
+                                query += '"' + property.Name + "\" BLOB ";
+                                break;
+                        }
+
+                        //Miro si tiene la opcion UNIQUE, NOTNULL, DEFAULT o CHECK
+                        if (Atributo.NotNull) query += "NOT NULL ";
+                        if (Atributo.Default != null) query += "DEFAULT " + Atributo.Default + " ";
+                        if (Atributo.Check != null) query += "CHECK(" + Atributo.Check + ") ";
+                        if (Atributo.Unique) query += "UNIQUE ";
+
+
+
+                        //Y añado la coma del final
+                        query += ",";
+
+
+                        //Compruebo que sea una clave Foranea
+                        if (Atributo.ForeginKey && Atributo.ForeginTable != null && Atributo.ForeginCampo != null)
+                        {
+                            //Si es una clave foranea añado el query ForeignKey
+                            foreginquery += "FOREIGN KEY(\"" + property.Name + "\") REFERENCES \"" + Atributo.ForeginTable.Name + "\"(\"" + Atributo.ForeginCampo + "\"), ";
+                        }
+                    }
+                }
+
+                    //Quito el final sobrante y concateno los dos query
+
+                    primaryquery = primaryquery.TrimEnd(',');
+                    primaryquery += "));";
+                    query += foreginquery;
+                    query += primaryquery;
+                
+            }
+
+            EjecutarSQL(query);
+        }
         //Ejecutar un Archivo SQL insertando la ruta 
         public void EjecutarArchivoSQL(string FilePath)
         {
@@ -111,7 +223,7 @@ namespace BisregApi.SQLite
         //Ejecutar Cadena SQL
         public void EjecutarSQL(string query)
         {
-            new SQLiteCommand(query, db).ExecuteNonQuery();
+            new SQLiteCommand(query, GetInstance()).ExecuteNonQuery();
         }
         //Crear el fichero sqlite
         public void CrearBDD()
@@ -139,85 +251,55 @@ namespace BisregApi.SQLite
             }
         }
         //Select a partir de un objeto database con los parametros de busqueda claves primarias
-        public List<DatabaseItem> SelectDatabaseItem(DatabaseItem ItemSelect)
+        public List<T> SelectDatabaseItem<T>(T ItemSelect)
         {
-            List<DatabaseItem> SelectList = new List<DatabaseItem>();
+            List<T> SelectList = new List<T>();
 
-            Type type = ItemSelect.GetType();
+            //Obtengo el nombre de la tabla y de los campos
+            string NombreTabla = typeof(T).Name;
+            List<CampoSQL> CamposSelect = GetCampos(ItemSelect);
 
-            DatabaseItem instance = (DatabaseItem)Activator.CreateInstance(type);
-
-            string NombreTabla = instance.GetType().Name;
-            List<Atributo> AtributosSelect = new List<Atributo>();
-            PropertyInfo[] properties = type.GetProperties();
-
-            foreach (PropertyInfo property in properties)
-            {
-                //Recojo los valores que no sean null
-                if (property.GetValue(ItemSelect) != null)
-                {
-                    //Si el tipo es una de las claves primarias recojo el valor
-                    switch (property.PropertyType.Name)
-                    {
-                        case nameof(PrimaryInt):
-                            AtributosSelect.Add(new Atributo(property.Name, (property.GetValue(ItemSelect) as PrimaryInt).valor));
-                            break;
-                        case nameof(PrimaryString):
-                            AtributosSelect.Add(new Atributo(property.Name, (property.GetValue(ItemSelect) as PrimaryString).valor));
-                            break;
-                        //Si es cualquier otro lo añado como atributos normales
-                        default:
-                            AtributosSelect.Add(new Atributo(property.Name, property.GetValue(ItemSelect)));
-                            break;
-                    }
-                }
-            }
 
             //Crear Query
-            using (var ctx = db)
+            using (var ctx = GetInstance())
             {
                 //Creo el query de insert
                 string query = "SELECT * FROM " + NombreTabla + " WHERE ";
 
                 //bool para controlar el primer AND
                 bool primerAND = true;
-                foreach (Atributo atributo in AtributosSelect)
+                foreach (CampoSQL atributo in CamposSelect)
                 {
                     if (!primerAND) query += " AND ";
-                    query += atributo.Campo + " = :"+atributo.Campo;
+                    query += atributo.campo + " = :" + atributo.campo;
                     if (primerAND) primerAND = false;
                 }
+
+                //Quito el WHERE por si no hay atributos y queremos toda la tabla
+                query = query.TrimEnd("WHERE ".ToCharArray());
+
                 query += ";";
 
 
                 using (var command = new SQLiteCommand(query, ctx))
                 {
-                    foreach (Atributo atributo in AtributosSelect)
+                    foreach (CampoSQL atributo in CamposSelect)
                     {
-                        command.Parameters.Add(new SQLiteParameter(atributo.Campo, atributo.Valor));
+                        command.Parameters.Add(new SQLiteParameter(atributo.campo, atributo.Valor));
                     }
                     try
                     {
-                        using(var reader = command.ExecuteReader())
+                        using (var reader = command.ExecuteReader())
                         {
                             while (reader.Read())
                             {
                                 //Clono el ItemSelect para tener las caracteristicas de su herencia
-                                DatabaseItem item = ItemSelect.Clone() as DatabaseItem;
-                                foreach(PropertyInfo property in properties)
+                                T item = Clone<T>(ItemSelect);
+                                foreach (PropertyInfo property in typeof(T).GetProperties())
                                 {
-                                    switch (property.PropertyType.Name)
-                                    {
-                                        case nameof(PrimaryInt):
-                                            property.SetValue(item, new PrimaryInt(Convert.ToInt32(reader[property.Name])));
-                                            break;
-                                        case nameof(PrimaryString):
-                                            property.SetValue(item, new PrimaryString(reader[property.Name].ToString()));
-                                            break;
-                                        default:
-                                            property.SetValue(item, reader[property.Name]);
-                                            break;
-                                    }
+                                    //Obtengo el atributo SQLAtribute para comprobar si el campo es un campo SQL
+                                    CampoSQLAttribute Atributo = (CampoSQLAttribute)Attribute.GetCustomAttribute(property, typeof(CampoSQLAttribute));
+                                    if (Atributo != null) property.SetValue(item, reader[property.Name]);   
                                 }
                                 SelectList.Add(item);
                             }
@@ -233,122 +315,52 @@ namespace BisregApi.SQLite
                 }
             }
 
-
             return SelectList;
-           
+
         }
         //Eliminar un ObjetoDatabase
-        public void DeleteDatabaseItem(DatabaseItem ItemSelect)
+        public void DeleteDatabaseItem<T>(T Item)
         {
-
-            Type type = ItemSelect.GetType();
-
-            DatabaseItem instance = (DatabaseItem)Activator.CreateInstance(type);
-
-            string NombreTabla = instance.GetType().Name;
-            List<Atributo> AtributosPrimarios = new List<Atributo>();
-            PropertyInfo[] properties = type.GetProperties();
-
-            foreach (PropertyInfo property in properties)
-            {
-                //Recojo los valores que no sean null
-                if (property.GetValue(ItemSelect) != null)
-                {
-                    //Si el tipo es una de las claves primarias recojo el valor
-                    switch (property.PropertyType.Name)
-                    {
-                        case nameof(PrimaryInt):
-                            AtributosPrimarios.Add(new Atributo(property.Name, (property.GetValue(ItemSelect) as PrimaryInt).valor));
-                            break;
-                        case nameof(PrimaryString):
-                            AtributosPrimarios.Add(new Atributo(property.Name, (property.GetValue(ItemSelect) as PrimaryString).valor));
-                            break;
-                        //Si es cualquier otro no lo añado
-                        default:
-                            break;
-                    }
-                }
-            }
+            //Obtengo los campos primarios y el nombre de la tabla
+            string NombreTabla = typeof(T).Name;
+            List<CampoSQL> CamposPrimarios = GetCamposPrimarios(Item);
 
             //Crear Query
-            using (var ctx = db)
+            using (var ctx = GetInstance())
             {
                 //Creo el query de insert
                 string query = "DELETE FROM " + NombreTabla + " WHERE ";
 
                 //bool para controlar el primer AND
                 bool primerAND = true;
-                foreach (Atributo atributo in AtributosPrimarios)
+                foreach (CampoSQL atributo in CamposPrimarios)
                 {
                     if (!primerAND) query += " AND ";
-                    query += atributo.Campo + " = :" + atributo.Campo;
+                    query += atributo.campo + " = :" + atributo.campo;
                     if (primerAND) primerAND = false;
                 }
                 query += ";";
 
 
-                using (var command = new SQLiteCommand(query, ctx))
-                {
-                    foreach (Atributo atributo in AtributosPrimarios)
-                    {
-                        command.Parameters.Add(new SQLiteParameter(atributo.Campo, atributo.Valor));
-                    }
-                    try
-                    {
-                        command.ExecuteNonQuery();
-                    }
-                    catch (Exception ex)
-                    {
-                        //Excpcion por si no funciona el insert
+                EjecutarQueryConParametrosSQL(CamposPrimarios, query, ctx);
 
-                        MessageBox.Show("Error de compatibilidad con Base de Datos:" + Environment.NewLine + ex.Message);
-                    }
-
-                }
             }
-
-
-
         }
         //Insert de un ObjetoDatabase
-        public void InsertDatabaseItem(DatabaseItem Item)
+        public void InsertDatabaseItem<T>(T Item)
         {
-            Type type = Item.GetType();
-            DatabaseItem instance = (DatabaseItem)Activator.CreateInstance(type);
 
-            string NombreTabla = instance.GetType().Name;
-            List<Atributo> Atributos = new List<Atributo>();
+            string NombreTabla = typeof(T).Name;
+            List<CampoSQL> Campos = GetCampos(Item);
 
-
-            PropertyInfo[] properties = type.GetProperties();
-
-            foreach (PropertyInfo property in properties)
-            {
-                //Si el tipo es una de las claves primarias recojo el valor
-                switch (property.PropertyType.Name)
-                {
-                    case nameof(PrimaryInt):
-                        Atributos.Add(new Atributo(property.Name, (property.GetValue(Item) as PrimaryInt).valor));
-                        break;
-                    case nameof(PrimaryString):
-                        Atributos.Add(new Atributo(property.Name, (property.GetValue(Item) as PrimaryString).valor));
-                        break;
-                //Si es cualquier otro lo añado como atributos normales
-                    default:
-                        Atributos.Add(new Atributo(property.Name, property.GetValue(Item)));
-                        break;
-                }
-            }
-
-
-            using(var ctx = db)
+            using (var ctx = GetInstance())
             {
                 //Creo el query de insert
                 string query = "INSERT INTO " + NombreTabla + " (";
                 string queryaux = "VALUES (";
-                foreach (Atributo atributo in Atributos)
+                foreach (CampoSQL atributo in Campos)
                 {
-                    query += atributo.Campo + ",";
+                    query += atributo.campo + ",";
                     queryaux += "?,";
                 }
 
@@ -361,67 +373,36 @@ namespace BisregApi.SQLite
                 //Y las concateno
                 query += queryaux;
 
-                using (var command = new SQLiteCommand(query, ctx))
-                {
-                    foreach (Atributo atributo in Atributos)
-                    {
-                        command.Parameters.Add(new SQLiteParameter(atributo.Campo, atributo.Valor));
-                    }
-                    try
-                    {
-                        command.ExecuteNonQuery();
-                    }
-                    catch(Exception ex)
-                    {
-                        //Excpcion por si no funciona el insert
-
-                        MessageBox.Show("Error de compatibilidad con Base de Datos:"+ Environment.NewLine + ex.Message);
-                    }
-
-                }
+                EjecutarQueryConParametrosSQL(Campos, query, ctx);
+               
             }
 
         }
-        //Update de un ObjetoDatabase
-        public void UpdateDatabaseItem(DatabaseItem Item)
+        public void InsertDatabaseItem<T>(List<T> Item)
         {
-            Type type = Item.GetType();
-            DatabaseItem instance = (DatabaseItem)Activator.CreateInstance(type);
-
-            string NombreTabla = instance.GetType().Name;
-            List<Atributo> AtributosPrimarios = new List<Atributo>();
-
-            List<Atributo> Atributos = new List<Atributo>();
-
-
-            PropertyInfo[] properties = type.GetProperties();
-
-            foreach (PropertyInfo property in properties)
+            foreach(T t in Item)
             {
-                //Si el tipo es una de las claves primarias lo añado a AtributosPrimarios
-                switch (property.PropertyType.Name)
-                {
-                    case nameof(PrimaryInt):
-                        AtributosPrimarios.Add(new Atributo(property.Name, (property.GetValue(Item) as PrimaryInt).valor));
-                        break;
-                    case nameof(PrimaryString):
-                        AtributosPrimarios.Add(new Atributo(property.Name, (property.GetValue(Item) as PrimaryString).valor));
-                        break;
-                    //Si es cualquier otro lo añado como atributos normales
-                    default:
-                        Atributos.Add(new Atributo(property.Name, property.GetValue(Item)));
-                        break;
-                }
+                UpdateDatabaseItem(t);
             }
+        }      
+        //Update de un ObjetoDatabase
+        public void UpdateDatabaseItem<T>(T Item)
+        {
 
+            //Obtengo los nombre de la tabla y de los campos primarios y no primarios
+            string NombreTabla = typeof(T).Name;
+            List<CampoSQL> CamposPrimarios = GetCamposPrimarios(Item);
+            List<CampoSQL> Campos = GetCamposNoPrimarios(Item);
 
-            using (var ctx = db)
+                                
+            //Crear Query Update
+            using (var ctx = GetInstance())
             {
                 //Creo el query de Update
                 string query = "UPDATE " + NombreTabla + " SET ";
-                foreach (Atributo atributo in Atributos)
+                foreach (CampoSQL atributo in Campos)
                 {
-                    query += atributo.Campo + " = :"+atributo.Campo+" ,";
+                    query += atributo.campo + " = :" + atributo.campo + " ,";
                 }
 
                 query = query.TrimEnd(',');
@@ -429,48 +410,43 @@ namespace BisregApi.SQLite
 
                 //bool para controlar el primer AND
                 bool primerAND = true;
-                foreach (Atributo atributo in AtributosPrimarios)
+                foreach (CampoSQL atributo in CamposPrimarios)
                 {
                     if (!primerAND) query += " AND ";
-                    query += atributo.Campo + " = :" + atributo.Campo;
+                    query += atributo.campo + " = :" + atributo.campo;
                     if (primerAND) primerAND = false;
                 }
 
                 query += ";";
 
-
-
-
-                using (var command = new SQLiteCommand(query, ctx))
-                {
-                    foreach (Atributo atributo in Atributos)
-                    {
-                        command.Parameters.Add(new SQLiteParameter(atributo.Campo, atributo.Valor));
-                    }
-                    foreach (Atributo atributo in AtributosPrimarios)
-                    {
-                        command.Parameters.Add(new SQLiteParameter(atributo.Campo, atributo.Valor));
-                    }
-                    try
-                    {
-                        command.ExecuteNonQuery();
-                    }
-                    catch (Exception ex)
-                    {
-                        //Excpcion por si no funciona el insert
-
-                        MessageBox.Show("Error de compatibilidad con Base de Datos:" + Environment.NewLine + ex.Message);
-                    }
-
-                }
+                //Añado los campos y ejecuto el query
+                EjecutarQueryConParametrosSQL(GetCampos(Item),query,ctx);
             }
+        }
+        //Bucle update DatabaseItemLista
+        public void UpdateDatabaseItem<T>(List<T> item)
+        {
+            foreach(T t in item)
+            {
+                UpdateDatabaseItem(t);
+            }
+        }
+        //Update or Insert
+        public void UpdateOrInsert<T>(T item)
+        {
+            
+        }
+        //Comprobar si existe
+        public bool ExistItem<T>(T item)
+        {
+            return false;
         }
         //Obtener nombres de tablas
         public List<string> GetTables()
         {
             List<string> Lista = new List<string>();
 
-            using (var ctx = db)
+            using (var ctx = GetInstance())
             {
                 //Selecciono todas las composiciones de la base 
                 var query = "SELECT name FROM sqlite_master WHERE type='table'; ";
@@ -491,7 +467,7 @@ namespace BisregApi.SQLite
         public List<string> GetColumnas(string Tabla)
         {
             List<string> Lista = new List<string>();
-            using (var ctx = db)
+            using (var ctx = GetInstance())
             {
                 //Selecciono todas las composiciones de la base 
                 var query = "PRAGMA TABLE_INFO(" + Tabla + ");";
@@ -513,7 +489,7 @@ namespace BisregApi.SQLite
         {
             List<List<string>> Lista = new List<List<string>>();
 
-            using (var ctx = db)
+            using (var ctx = GetInstance())
             {
                 //Selecciono todas las composiciones de la base 
                 var query = "SELECT * FROM " + Tabla;
@@ -537,6 +513,6 @@ namespace BisregApi.SQLite
 
             return Lista;
         }
-        
+
     }
 }

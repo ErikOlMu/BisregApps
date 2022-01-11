@@ -40,14 +40,14 @@ namespace Catalogos_Bisreg.Vista
         private void InicializarApp()
         {
             //Si no existe el fichero config lo creamos
-            if (!File.Exists(SettingsFile))
+            if (!File.Exists(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\" + AppDomain.CurrentDomain.FriendlyName.Replace(".exe", "") + "\\" + SettingsFile))
             {
                 settings = new Settings();
                 settings.file = SettingsFile;
             }
             else
             {
-                settings = (Settings)Config.getConfig("Config.conf", typeof(Settings));
+                settings = (Settings) Config.getConfig("Config.conf", typeof(Settings));
             }
 
             //Añado las configuraciones a la vista
@@ -187,7 +187,8 @@ namespace Catalogos_Bisreg.Vista
         {
             if(dtg.ItemsSource != null)
             {
-                new PDFView((dtg.ItemsSource as DataView).Table).Show();
+                //Mando los datos de la tabla y los campos que quiero añadir
+                new PDFView((dtg.ItemsSource as DataView).Table,lbx_Campos.Items.OfType<string>().ToList()).Show();
             }
             else
             {
