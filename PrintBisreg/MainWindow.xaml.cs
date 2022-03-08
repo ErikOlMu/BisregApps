@@ -24,7 +24,6 @@ namespace PrintBisreg
         {
             InitializeComponent();
 
-            
             dtg_CSV.ItemsSource = CSV.GetDataTable(Dialogos.OpenFile()).DefaultView;
 
         }
