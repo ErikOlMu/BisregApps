@@ -7,6 +7,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Documents;
 
+
 namespace BisregApi.Utilidades
 {
     public class PrintDoc
@@ -15,24 +16,22 @@ namespace BisregApi.Utilidades
         {
             PrintDialog printDialog = new PrintDialog();
             printDialog.UserPageRangeEnabled = true;
-            if (printDialog.ShowDialog().Value)
-            {
-
-                doc.PageHeight = printDialog.PrintableAreaHeight;
-                doc.PageWidth = printDialog.PrintableAreaWidth;
-                IDocumentPaginatorSource idocument = doc as IDocumentPaginatorSource;
-
+                
+                 IDocumentPaginatorSource idocument = doc as IDocumentPaginatorSource;
+               
 
                 DocumentPaginator paginator = idocument.DocumentPaginator;
                 paginator.ComputePageCount();
-                MessageBox.Show(paginator.PageCount+"");
+                MessageBox.Show(paginator.PageCount+""); 
                 if (printDialog.PageRangeSelection == PageRangeSelection.UserPages)
                 {
                    paginator = new PageRangeDocumentPaginator(idocument.DocumentPaginator, printDialog.PageRange);
                 }
 
-                printDialog.PrintDocument(paginator, "File");
-            }
+
+                if (printDialog.ShowDialog().Value) printDialog.PrintDocument(paginator, "File");
+                
+            
         }
     }
 

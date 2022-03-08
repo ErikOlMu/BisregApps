@@ -11,7 +11,7 @@
             <RowDefinition Height="5*"/>
             <RowDefinition Height="1*"/>
         </Grid.RowDefinitions>
-        <DataGrid Grid.Row="0" x:Name="dtg_Relaciones"  AutoGenerateColumns="False" RowEditEnding="dtg_Relaciones_RowEditEnding" AddingNewItem="dtg_Relaciones_AddingNewItem">
+        <DataGrid Grid.Row="0" x:Name="dtg_Relaciones"  AutoGenerateColumns="False" CanUserAddRows="False">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Referencia Mokua" Binding="{Binding RefMokua}" />
                 <DataGridTextColumn Header="Referencia Produccion" Binding="{Binding RefProduccion}" />
@@ -22,6 +22,7 @@
                 <ColumnDefinition Width="1*"/>
                 <ColumnDefinition Width="1*"/>
             </Grid.ColumnDefinitions>
+            <Button Grid.Column="0" x:Name="btn_AñadirElemento" Margin="10" Content="Añadir Referencia" Click="btn_AñadirElemento_Click"/>
             <Button Grid.Column="1" x:Name="btn_Save" Margin="10" Content="Guardar" Click="btn_Save_Click"/>
         </Grid>
     </Grid>

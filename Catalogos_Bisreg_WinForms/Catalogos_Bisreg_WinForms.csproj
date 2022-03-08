@@ -158,6 +158,210 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <None Include="Z:\Jairo\Catalogos Nuevos\016-BLANES\016-BLANES-CAT-DIEGO.xlsx">
+      <Link>Catalogos Nuevos\016-BLANES\016-BLANES-CAT-DIEGO.xlsx</Link>
+    </None>
+    <None Include="Z:\Jairo\Catalogos Nuevos\016-BLANES\016-BLANES-CAT-SILVIA-IMANES.xlsx">
+      <Link>Catalogos Nuevos\016-BLANES\016-BLANES-CAT-SILVIA-IMANES.xlsx</Link>
+    </None>
+    <None Include="Z:\Jairo\Catalogos Nuevos\016-BLANES\016-BLANES-CAT-SILVIA-OTROS.xlsx">
+      <Link>Catalogos Nuevos\016-BLANES\016-BLANES-CAT-SILVIA-OTROS.xlsx</Link>
+    </None>
+    <None Include="Z:\Jairo\Catalogos Nuevos\016-BLANES\016-BLANES-CAT-SILVIA-POSAOLLAS-VASOS.xlsx">
+      <Link>Catalogos Nuevos\016-BLANES\016-BLANES-CAT-SILVIA-POSAOLLAS-VASOS.xlsx</Link>
+    </None>
+    <None Include="Z:\Jairo\Catalogos Nuevos\016-BLANES\016-BLANES-CAT-SILVIA-ROPA.xlsx">
+      <Link>Catalogos Nuevos\016-BLANES\016-BLANES-CAT-SILVIA-ROPA.xlsx</Link>
+    </None>
+    <None Include="Z:\Jairo\Catalogos Nuevos\017-MALGRAT\017-MALGRAT-CAT-SILVIA-DIEGO.xlsx">
+      <Link>Catalogos Nuevos\017-MALGRAT\017-MALGRAT-CAT-SILVIA-DIEGO.xlsx</Link>
+    </None>
+    <None Include="Z:\Jairo\Catalogos Nuevos\017-MALGRAT\017-MALGRAT-CAT-SILVIA-IMANES.xlsx">
+      <Link>Catalogos Nuevos\017-MALGRAT\017-MALGRAT-CAT-SILVIA-IMANES.xlsx</Link>
+    </None>
+    <None Include="Z:\Jairo\Catalogos Nuevos\017-MALGRAT\017-MALGRAT-CAT-SILVIA-OTROS.xlsx">
+      <Link>Catalogos Nuevos\017-MALGRAT\017-MALGRAT-CAT-SILVIA-OTROS.xlsx</Link>
+    </None>
+    <None Include="Z:\Jairo\Catalogos Nuevos\017-MALGRAT\017-MALGRAT-CAT-SILVIA-POSAOLLA-VASOS.xlsx">
+      <Link>Catalogos Nuevos\017-MALGRAT\017-MALGRAT-CAT-SILVIA-POSAOLLA-VASOS.xlsx</Link>
+    </None>
+    <None Include="Z:\Jairo\Catalogos Nuevos\017-MALGRAT\017-MALGRAT-CAT-SILVIA-ROPA.xlsx">
+      <Link>Catalogos Nuevos\017-MALGRAT\017-MALGRAT-CAT-SILVIA-ROPA.xlsx</Link>
+    </None>
+    <None Include="Z:\Jairo\catEx\003-ROSES\003-ROSES-CAT- DIEGO.pdf">
+      <Link>catEx\003-ROSES\003-ROSES-CAT- DIEGO.pdf</Link>
+    </None>
+    <None Include="Z:\Jairo\catEx\003-ROSES\003-ROSES-CAT-SILVIA-POSAOLLAS-VASOS.pdf">
+      <Link>catEx\003-ROSES\003-ROSES-CAT-SILVIA-POSAOLLAS-VASOS.pdf</Link>
+    </None>
+    <None Include="Z:\Jairo\catEx\003-ROSES\003-ROSES-CAT-SILVIA-ROPA.pdf">
+      <Link>catEx\003-ROSES\003-ROSES-CAT-SILVIA-ROPA.pdf</Link>
+    </None>
+    <None Include="Z:\Jairo\catEx\003-ROSES\Excel\003-ROSES-CAT- DIEGO.xlsx">
+      <Link>catEx\003-ROSES\Excel\003-ROSES-CAT- DIEGO.xlsx</Link>
+    </None>
+    <None Include="Z:\Jairo\catEx\003-ROSES\Excel\003-ROSES-CAT- SILVIA -OTROS.xlsx">
+      <Link>catEx\003-ROSES\Excel\003-ROSES-CAT- SILVIA -OTROS.xlsx</Link>
+    </None>
+    <None Include="Z:\Jairo\catEx\003-ROSES\Excel\003-ROSES-CAT- SILVIA-IMANES.xlsx">
+      <Link>catEx\003-ROSES\Excel\003-ROSES-CAT- SILVIA-IMANES.xlsx</Link>
+    </None>
+    <None Include="Z:\Jairo\catEx\003-ROSES\Excel\003-ROSES-CAT-SILVIA-POSAOLLAS-VASOS.xlsx">
+      <Link>catEx\003-ROSES\Excel\003-ROSES-CAT-SILVIA-POSAOLLAS-VASOS.xlsx</Link>
+    </None>
+    <None Include="Z:\Jairo\catEx\003-ROSES\Excel\003-ROSES-CAT-SILVIA-ROPA.xlsx">
+      <Link>catEx\003-ROSES\Excel\003-ROSES-CAT-SILVIA-ROPA.xlsx</Link>
+    </None>
+    <None Include="Z:\Jairo\catEx\004-EMPURIABRAVA\004-EMPURIABRAVA-CAT- DIEGO.pdf">
+      <Link>catEx\004-EMPURIABRAVA\004-EMPURIABRAVA-CAT- DIEGO.pdf</Link>
+    </None>
+    <None Include="Z:\Jairo\catEx\004-EMPURIABRAVA\Excel\004-EMPURIABRAVA-CAT-SILVIA-IMANES.xlsx">
+      <Link>catEx\004-EMPURIABRAVA\Excel\004-EMPURIABRAVA-CAT-SILVIA-IMANES.xlsx</Link>
+    </None>
+    <None Include="Z:\Jairo\catEx\004-EMPURIABRAVA\Excel\004-EMPURIABRAVA-CAT-SILVIA-OTROS.xlsx">
+      <Link>catEx\004-EMPURIABRAVA\Excel\004-EMPURIABRAVA-CAT-SILVIA-OTROS.xlsx</Link>
+    </None>
+    <None Include="Z:\Jairo\catEx\004-EMPURIABRAVA\Excel\004-EMPURIABRAVA-CAT-SILVIA-POSAOLLAS-VASOS.xlsx">
+      <Link>catEx\004-EMPURIABRAVA\Excel\004-EMPURIABRAVA-CAT-SILVIA-POSAOLLAS-VASOS.xlsx</Link>
+    </None>
+    <None Include="Z:\Jairo\catEx\004-EMPURIABRAVA\Excel\004-EMPURIABRAVA-CAT-SILVIA-ROPA.xlsx">
+      <Link>catEx\004-EMPURIABRAVA\Excel\004-EMPURIABRAVA-CAT-SILVIA-ROPA.xlsx</Link>
+    </None>
+    <None Include="Z:\Jairo\catEx\004-EMPURIABRAVA\Excel\004-EMPURIABRAVA-CATALOGO- DIEGO.xlsx">
+      <Link>catEx\004-EMPURIABRAVA\Excel\004-EMPURIABRAVA-CATALOGO- DIEGO.xlsx</Link>
+    </None>
+    <None Include="Z:\Jairo\catEx\005-SANTA MARGARITA\005-SANTA MARGARITA-CAT-DIEGO.pdf">
+      <Link>catEx\005-SANTA MARGARITA\005-SANTA MARGARITA-CAT-DIEGO.pdf</Link>
+    </None>
+    <None Include="Z:\Jairo\catEx\005-SANTA MARGARITA\Excel\005-SANTA MARGARITA-CAT-DIEGO.xlsx">
+      <Link>catEx\005-SANTA MARGARITA\Excel\005-SANTA MARGARITA-CAT-DIEGO.xlsx</Link>
+    </None>
+    <None Include="Z:\Jairo\catEx\005-SANTA MARGARITA\Excel\005-SANTA MARGARITA-CAT-SILVIA-IMANES.xlsx">
+      <Link>catEx\005-SANTA MARGARITA\Excel\005-SANTA MARGARITA-CAT-SILVIA-IMANES.xlsx</Link>
+    </None>
+    <None Include="Z:\Jairo\catEx\005-SANTA MARGARITA\Excel\005-SANTA MARGARITA-CAT-SILVIA-OTROS.xlsx">
+      <Link>catEx\005-SANTA MARGARITA\Excel\005-SANTA MARGARITA-CAT-SILVIA-OTROS.xlsx</Link>
+    </None>
+    <None Include="Z:\Jairo\catEx\005-SANTA MARGARITA\Excel\005-SANTA MARGARITA-CAT-SILVIA-POSAOLLAS-VASOS.xlsx">
+      <Link>catEx\005-SANTA MARGARITA\Excel\005-SANTA MARGARITA-CAT-SILVIA-POSAOLLAS-VASOS.xlsx</Link>
+    </None>
+    <None Include="Z:\Jairo\catEx\005-SANTA MARGARITA\Excel\005-SANTA MARGARITA-CAT-SILVIA-ROPA.xlsx">
+      <Link>catEx\005-SANTA MARGARITA\Excel\005-SANTA MARGARITA-CAT-SILVIA-ROPA.xlsx</Link>
+    </None>
+    <None Include="Z:\Jairo\catEx\006-LESCALA\006-LESCALA-CAT-DIEGO.pdf">
+      <Link>catEx\006-LESCALA\006-LESCALA-CAT-DIEGO.pdf</Link>
+    </None>
+    <None Include="Z:\Jairo\catEx\006-LESCALA\Excel\006-LESCALA-CAT-DIEGO.xlsx">
+      <Link>catEx\006-LESCALA\Excel\006-LESCALA-CAT-DIEGO.xlsx</Link>
+    </None>
+    <None Include="Z:\Jairo\catEx\006-LESCALA\Excel\006-LESCALA-CAT-SILVIA-IMANES.xlsx">
+      <Link>catEx\006-LESCALA\Excel\006-LESCALA-CAT-SILVIA-IMANES.xlsx</Link>
+    </None>
+    <None Include="Z:\Jairo\catEx\006-LESCALA\Excel\006-LESCALA-CAT-SILVIA-OTROS.xlsx">
+      <Link>catEx\006-LESCALA\Excel\006-LESCALA-CAT-SILVIA-OTROS.xlsx</Link>
+    </None>
+    <None Include="Z:\Jairo\catEx\006-LESCALA\Excel\006-LESCALA-CAT-SILVIA-POSAOLLAS-VASOS.xlsx">
+      <Link>catEx\006-LESCALA\Excel\006-LESCALA-CAT-SILVIA-POSAOLLAS-VASOS.xlsx</Link>
+    </None>
+    <None Include="Z:\Jairo\catEx\006-LESCALA\Excel\006-LESCALA-CAT-SILVIA-ROPA.xlsx">
+      <Link>catEx\006-LESCALA\Excel\006-LESCALA-CAT-SILVIA-ROPA.xlsx</Link>
+    </None>
+    <None Include="Z:\Jairo\catEx\007-LESTARTIT\007-LESTARTIT-CAT-DIEGO.pdf">
+      <Link>catEx\007-LESTARTIT\007-LESTARTIT-CAT-DIEGO.pdf</Link>
+    </None>
+    <None Include="Z:\Jairo\catEx\007-LESTARTIT\Excel\007-LESTARTIT-CAT-DIEGO.xlsx">
+      <Link>catEx\007-LESTARTIT\Excel\007-LESTARTIT-CAT-DIEGO.xlsx</Link>
+    </None>
+    <None Include="Z:\Jairo\catEx\007-LESTARTIT\Excel\007-LESTARTIT-CAT-SILVIA-IMANES.xlsx">
+      <Link>catEx\007-LESTARTIT\Excel\007-LESTARTIT-CAT-SILVIA-IMANES.xlsx</Link>
+    </None>
+    <None Include="Z:\Jairo\catEx\007-LESTARTIT\Excel\007-LESTARTIT-CAT-SILVIA-OTROS.xlsx">
+      <Link>catEx\007-LESTARTIT\Excel\007-LESTARTIT-CAT-SILVIA-OTROS.xlsx</Link>
+    </None>
+    <None Include="Z:\Jairo\catEx\007-LESTARTIT\Excel\007-LESTARTIT-CAT-SILVIA-POSAOLLAS-VASOS.xlsx">
+      <Link>catEx\007-LESTARTIT\Excel\007-LESTARTIT-CAT-SILVIA-POSAOLLAS-VASOS.xlsx</Link>
+    </None>
+    <None Include="Z:\Jairo\catEx\007-LESTARTIT\Excel\007-LESTARTIT-CAT-SILVIA-ROPA.xlsx">
+      <Link>catEx\007-LESTARTIT\Excel\007-LESTARTIT-CAT-SILVIA-ROPA.xlsx</Link>
+    </None>
+    <None Include="Z:\Jairo\catEx\013-PLATJA DARO\013-PLATJA-CAT-DIEGO.pdf">
+      <Link>catEx\013-PLATJA DARO\013-PLATJA-CAT-DIEGO.pdf</Link>
+    </None>
+    <None Include="Z:\Jairo\catEx\013-PLATJA DARO\013-PLATJA-CAT-SILVIA-IMANES.pdf">
+      <Link>catEx\013-PLATJA DARO\013-PLATJA-CAT-SILVIA-IMANES.pdf</Link>
+    </None>
+    <None Include="Z:\Jairo\catEx\013-PLATJA DARO\013-PLATJA-CAT-SILVIA-OTROS.pdf">
+      <Link>catEx\013-PLATJA DARO\013-PLATJA-CAT-SILVIA-OTROS.pdf</Link>
+    </None>
+    <None Include="Z:\Jairo\catEx\013-PLATJA DARO\013-PLATJA-CAT-SILVIA-POSAOLLAS-POSAVASOS.pdf">
+      <Link>catEx\013-PLATJA DARO\013-PLATJA-CAT-SILVIA-POSAOLLAS-POSAVASOS.pdf</Link>
+    </None>
+    <None Include="Z:\Jairo\catEx\013-PLATJA DARO\013-PLATJA-CAT-SILVIA-ROPA.pdf">
+      <Link>catEx\013-PLATJA DARO\013-PLATJA-CAT-SILVIA-ROPA.pdf</Link>
+    </None>
+    <None Include="Z:\Jairo\catEx\013-PLATJA DARO\Excel\013-PLATJA-CAT-DIEGO.xlsx">
+      <Link>catEx\013-PLATJA DARO\Excel\013-PLATJA-CAT-DIEGO.xlsx</Link>
+    </None>
+    <None Include="Z:\Jairo\catEx\013-PLATJA DARO\Excel\013-PLATJA-CAT-SILVIA-IMANES.xlsx">
+      <Link>catEx\013-PLATJA DARO\Excel\013-PLATJA-CAT-SILVIA-IMANES.xlsx</Link>
+    </None>
+    <None Include="Z:\Jairo\catEx\013-PLATJA DARO\Excel\013-PLATJA-CAT-SILVIA-OTROS.xlsx">
+      <Link>catEx\013-PLATJA DARO\Excel\013-PLATJA-CAT-SILVIA-OTROS.xlsx</Link>
+    </None>
+    <None Include="Z:\Jairo\catEx\013-PLATJA DARO\Excel\013-PLATJA-CAT-SILVIA-POSAOLLAS-POSAVASOS.xlsx">
+      <Link>catEx\013-PLATJA DARO\Excel\013-PLATJA-CAT-SILVIA-POSAOLLAS-POSAVASOS.xlsx</Link>
+    </None>
+    <None Include="Z:\Jairo\catEx\013-PLATJA DARO\Excel\013-PLATJA-CAT-SILVIA-ROPA.xlsx">
+      <Link>catEx\013-PLATJA DARO\Excel\013-PLATJA-CAT-SILVIA-ROPA.xlsx</Link>
+    </None>
+    <None Include="Z:\Jairo\catEx\014-TOSSA\014-TOSSA-CAT-DIEGO.pdf">
+      <Link>catEx\014-TOSSA\014-TOSSA-CAT-DIEGO.pdf</Link>
+    </None>
+    <None Include="Z:\Jairo\catEx\014-TOSSA\014-TOSSA-CAT-SILVIA-IMANES.pdf">
+      <Link>catEx\014-TOSSA\014-TOSSA-CAT-SILVIA-IMANES.pdf</Link>
+    </None>
+    <None Include="Z:\Jairo\catEx\014-TOSSA\014-TOSSA-CAT-SILVIA-OTROS.pdf">
+      <Link>catEx\014-TOSSA\014-TOSSA-CAT-SILVIA-OTROS.pdf</Link>
+    </None>
+    <None Include="Z:\Jairo\catEx\014-TOSSA\014-TOSSA-CAT-SILVIA-POSAOLLAS-VASOS.pdf">
+      <Link>catEx\014-TOSSA\014-TOSSA-CAT-SILVIA-POSAOLLAS-VASOS.pdf</Link>
+    </None>
+    <None Include="Z:\Jairo\catEx\014-TOSSA\014-TOSSA-CAT-SILVIA-ROPA.pdf">
+      <Link>catEx\014-TOSSA\014-TOSSA-CAT-SILVIA-ROPA.pdf</Link>
+    </None>
+    <None Include="Z:\Jairo\catEx\014-TOSSA\Excel\014-TOSSA-CAT-DIEGO.xlsx">
+      <Link>catEx\014-TOSSA\Excel\014-TOSSA-CAT-DIEGO.xlsx</Link>
+    </None>
+    <None Include="Z:\Jairo\catEx\014-TOSSA\Excel\014-TOSSA-CAT-SILVIA-IMANES.xlsx">
+      <Link>catEx\014-TOSSA\Excel\014-TOSSA-CAT-SILVIA-IMANES.xlsx</Link>
+    </None>
+    <None Include="Z:\Jairo\catEx\014-TOSSA\Excel\014-TOSSA-CAT-SILVIA-OTROS.xlsx">
+      <Link>catEx\014-TOSSA\Excel\014-TOSSA-CAT-SILVIA-OTROS.xlsx</Link>
+    </None>
+    <None Include="Z:\Jairo\catEx\014-TOSSA\Excel\014-TOSSA-CAT-SILVIA-POSAOLLAS-VASOS.xlsx">
+      <Link>catEx\014-TOSSA\Excel\014-TOSSA-CAT-SILVIA-POSAOLLAS-VASOS.xlsx</Link>
+    </None>
+    <None Include="Z:\Jairo\catEx\014-TOSSA\Excel\014-TOSSA-CAT-SILVIA-ROPA.xlsx">
+      <Link>catEx\014-TOSSA\Excel\014-TOSSA-CAT-SILVIA-ROPA.xlsx</Link>
+    </None>
+    <None Include="Z:\Jairo\catEx\FotosFaltan.xlsx">
+      <Link>catEx\FotosFaltan.xlsx</Link>
+    </None>
+    <None Include="Z:\Jairo\catEx\viejos\005-SANTA MARGARITA-CATALOGO-SILVIA.xlsx">
+      <Link>catEx\viejos\005-SANTA MARGARITA-CATALOGO-SILVIA.xlsx</Link>
+    </None>
+    <None Include="Z:\Jairo\catEx\viejos\006-LESCALA-CATALOGO-DIEGO.xlsx">
+      <Link>catEx\viejos\006-LESCALA-CATALOGO-DIEGO.xlsx</Link>
+    </None>
+    <None Include="Z:\Jairo\catEx\viejos\006-LESCALA-CATALOGO-SILVIA.xlsx">
+      <Link>catEx\viejos\006-LESCALA-CATALOGO-SILVIA.xlsx</Link>
+    </None>
+    <None Include="Z:\Jairo\catEx\viejos\007-LESTARTIT-CATALOGO-DIEGO.xlsx">
+      <Link>catEx\viejos\007-LESTARTIT-CATALOGO-DIEGO.xlsx</Link>
+    </None>
+    <None Include="Z:\Jairo\catEx\viejos\007-LESTARTIT-CATALOGO-SILVIA.xlsx">
+      <Link>catEx\viejos\007-LESTARTIT-CATALOGO-SILVIA.xlsx</Link>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

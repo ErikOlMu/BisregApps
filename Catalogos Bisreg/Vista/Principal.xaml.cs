@@ -188,7 +188,7 @@ namespace Catalogos_Bisreg.Vista
             if(dtg.ItemsSource != null)
             {
                 //Mando los datos de la tabla y los campos que quiero añadir
-                new PDFView((dtg.ItemsSource as DataView).Table,lbx_Campos.Items.OfType<string>().ToList()).Show();
+               // new PDFView((dtg.ItemsSource as DataView).Table,lbx_Campos.Items.OfType<string>().ToList()).Show();
             }
             else
             {

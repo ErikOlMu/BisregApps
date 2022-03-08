@@ -13,9 +13,9 @@ namespace BisregApi.Utilidades
 
         //Obtener DataTable de Fichero excel
         public static DataTable GetDataTable(string ruta, List<string> Campos, int LimiteFilas)
-        {   
-                //Añado una fila mas al limite para despues controlar si se ha pasado
-                LimiteFilas = LimiteFilas + 1;
+        {
+            //Añado una fila mas al limite para despues controlar si se ha pasado
+            LimiteFilas = LimiteFilas + 1;
                 //Obtengo la Datatable
                 Workbook workbook = new Workbook(ruta);
                 Worksheet worksheet = workbook.Worksheets[0];
@@ -36,9 +36,9 @@ namespace BisregApi.Utilidades
                 
                 dt = dtResultado.CopyToDataTable();
 
-                //Compruebo si se a pasado el limite de filas en ese caso retorno null
-                if (dt.Rows.Count >= LimiteFilas) return null;
-                else return dt;
+            //Compruebo si se a pasado el limite de filas en ese caso retorno null
+            if (dt.Rows.Count >= LimiteFilas) return null;
+            else return dt;
 
         }
 

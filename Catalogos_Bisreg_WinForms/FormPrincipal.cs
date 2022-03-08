@@ -167,6 +167,7 @@ namespace Catalogos_Bisreg_WinForms
             }
 
             FormPDF frm = new FormPDF(Campos,Productos);
+            
             frm.Show();
         }
 

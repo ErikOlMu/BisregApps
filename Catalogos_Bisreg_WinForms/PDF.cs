@@ -49,55 +49,75 @@ namespace Catalogos_Bisreg_WinForms
             doc.Add(RecorridoPDF());
             GuardarPDF();
         }
-        public void generarImagenes()
-        {
-            foreach (Item i in Productos)
-            {
-                Ventana.Foto.Dispose();
 
+        public void GenerarImagen(Item i)
+        { 
+            
+
+                Ventana.Foto.Dispose();
                 try
                 {
                     Ventana.Foto = System.Drawing.Image.FromFile(Directory.GetFiles(Settings.Directorio_IMG, i.Referencia + "_0.*", SearchOption.TopDirectoryOnly)[0]);
                 }
-                catch (Exception ex)
+                catch (Exception)
                 {
                     try
                     {
                         Ventana.Foto = System.Drawing.Image.FromFile(Directory.GetFiles(Settings.Directorio_IMG, i.Referencia + ".*", SearchOption.TopDirectoryOnly)[0]);
                     }
-                    catch (Exception ex4)
+                    catch (Exception)
                     {
                         Ventana.Foto = System.Drawing.Image.FromFile("Imagen.jpg");
                     }
                 }
 
-                //Poner la foto
                 
 
-                //Poner la referencia
+
+            //Poner la foto
+
+
+
+                 //Poner la referencia
                 ((CampoPB)Ventana.Campos[1]).Texto = i.Referencia;
                 //Poner el Barcode
-                ((CampoPB)Ventana.Campos[2]).Texto = "*"+i.Referencia+"*";
+                ((CampoPB)Ventana.Campos[2]).Texto = "*" + i.Referencia + "*";
                 //Poner el texto de cada campo por item //Empiezo desde 3 por la imagen la referencia y el barcode
-                for (int y = 3; y < Ventana.Campos.Count ; y++)
+                for (int y = 3; y < Ventana.Campos.Count; y++)
                 {
                     if (Ventana.chbx_Nombrescampos.Checked)
                     {
-                        ((CampoPB)Ventana.Campos[y]).Texto = ((CampoPB)Ventana.Campos[y]).Nombre+" " + ((string)i.Valores[y - 3]);
+                  
+                        ((CampoPB)Ventana.Campos[y]).Texto = ((CampoPB)Ventana.Campos[y]).Nombre + " " + ((string)i.Valores[y - 3]);
                     }
                     else
                     {
                         ((CampoPB)Ventana.Campos[y]).Texto = ((string)i.Valores[y - 2]);
                     }
                 }
+
+
+
+                guardarimagen(Ventana.Celda_PDF, "temp\\" + i.Referencia + ".jpg");
+                Ventana.Foto.Dispose();
+
                 Ventana.Celda_PDF.Invalidate();
 
-                
-
-                
-                guardarimagen(Ventana.Celda_PDF, "temp\\"+ i.Referencia + ".jpg");
-            }
+                Ventana.Celda_PDF.Refresh();
             
+        }
+        public void generarImagenes()
+        {
+            foreach (Item i in Productos)
+            {
+                if (!File.Exists("temp\\" + i.Referencia + ".jpg"))
+                {
+                    GenerarImagen(i);
+                }
+
+
+            }
+
         }
 
         //Metodo para cerrar el PDF
@@ -119,23 +139,17 @@ namespace Catalogos_Bisreg_WinForms
         public void guardarimagen(PictureBox Celda_PDF, string ruta)
         {
 
-            try
-            {
-
+            
+                
                 Bitmap Imagen = new Bitmap(Celda_PDF.Width, Celda_PDF.Height);
                 
                 Celda_PDF.DrawToBitmap(Imagen, Celda_PDF.ClientRectangle);
-                
-
-                
-
                 Imagen.Save(ruta, ImageFormat.Jpeg);
-            }
-            catch (Exception ex)
-            {
-                //Solo para debug
-                //MessageBox.Show("No se ha podido guardar la imagen: " + ruta, "Fallo guardando imagenes", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }   
+                
+                Imagen.Dispose();
+                
+
+            
             
 
         }
@@ -149,7 +163,7 @@ namespace Catalogos_Bisreg_WinForms
 
             if (pic.Height > pic.Width)
             {
-                //Maximum height is 800 pixels.          -----Nota para Erik: Hacer respecto las columnas y filas del documento y el tamaño
+                //Maximum height is 800 pixels.          ----- Nota para Erik: Hacer respecto las columnas y filas del documento y el tamaño
                 float percentage = 0.0f;
                 percentage = 700 / pic.Height;
                 pic.ScalePercent(percentage * 100);
@@ -179,9 +193,7 @@ namespace Catalogos_Bisreg_WinForms
                 PdfPCell celda;
                 if (i < Productos.Count)
                 {
-                    try{
-                        
-                        
+                                          
                         //Colorespecial
                         //var color = new PdfSpotColor("CutContour",BaseColor.MAGENTA);
                         
@@ -202,11 +214,8 @@ namespace Catalogos_Bisreg_WinForms
 
                         table.AddCell(celda);
 
-                    }
-                    catch (Exception ex)
-                    {
-
-                    }
+                    
+                    
                 }
                 else
                 {

@@ -67,7 +67,6 @@ namespace Referencias_Clientes.Modulos
 
             //Creo los campos
             CampoCanvas CampoReferencia = new CampoCanvas(Referencia, settings.CordReferencia, settings.TamañoReferencia,settings.RotacionReferencia);
-            //CampoCanvas CampoReferenciaCliente = new CampoCanvas("CLIENTE", settings.CordReferenciaCliente, settings.TamañoReferenciaCliente);
             CampoCanvas CampoReferenciaCliente = new CampoCanvas(ReferenciaCliente, settings.CordReferenciaCliente, settings.TamañoReferenciaCliente,settings.RotacionReferenciaCliente);
             CampoCanvas CampoPueblo = new CampoCanvas(Pueblo, settings.CordPueblo, settings.TamañoPueblo,settings.RotacionPueblo);
             CampoCanvas CampoCantidad = new CampoCanvas(Cantidad, settings.CordCantidad, settings.TamañoCantidad,settings.RotacionCantidad);

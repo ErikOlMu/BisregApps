@@ -27,9 +27,12 @@ namespace Referencias_CSV.Vista
     public class Relacion
     {
         [CampoSQL(PrimaryKey =true, NotNull = true)]
-        public string ID { get; set; }
+        public Int64? ID { get; set; }
+
+
         [CampoSQL(NotNull = true)]
         public string RefMokua { get; set; }
+
         [CampoSQL(NotNull = true)]
         public string RefProduccion { get; set; }
     }
@@ -46,9 +49,7 @@ namespace Referencias_CSV.Vista
 
             gestor = new GestorBDD("erik.data");
 
-
             relaciones = gestor.SelectDatabaseItem(new Relacion());
-
 
             dtg_Relaciones.ItemsSource = relaciones;
 
@@ -72,12 +73,9 @@ namespace Referencias_CSV.Vista
             }
             
         }
-
-        private void dtg_Relaciones_AddingNewItem(object sender, AddingNewItemEventArgs e)
+        private void btn_AñadirElemento_Click(object sender, RoutedEventArgs e)
         {
-            if (e.NewItem != null) gestor.UpdateDatabaseItem(e.NewItem as Relacion);
+            dtg_Relaciones.Items.Add(new Relacion());
         }
-
-     
     }
 }

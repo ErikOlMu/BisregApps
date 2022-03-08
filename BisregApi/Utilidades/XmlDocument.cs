@@ -8,7 +8,7 @@ using System.Xml.Serialization;
 
 namespace BisregApi.Utilidades
 {
-    public class XmlDocument
+    public class XpsDocument
     {
         //Nombre del Archivo por defecto Config.conf
         public string file = "file.xml";
@@ -16,7 +16,7 @@ namespace BisregApi.Utilidades
         public void Save()
         {
             //Si no existe crearlo
-            if (!File.Exists(file));
+            if (!File.Exists(file)) File.Create(file);
 
             XmlSerializer serializer = new XmlSerializer(GetType());
 
@@ -39,7 +39,7 @@ namespace BisregApi.Utilidades
             }
             catch (Exception)
             {
-                return new XmlDocument();
+                return new XpsDocument();
             }
         }
     }

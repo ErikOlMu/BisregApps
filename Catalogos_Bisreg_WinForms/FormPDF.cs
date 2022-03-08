@@ -37,7 +37,14 @@ namespace Catalogos_Bisreg_WinForms
             txb_DirIMG.Text = Settings.Directorio_IMG;
             txb_Columnas.Text = Settings.Columnas_Pagina.ToString();
             tbxfilas.Text = Settings.Filas_Pagina.ToString();
-            cb_sizeSalida.SelectedIndex = 0;
+            try
+            {
+                cb_sizeSalida.SelectedIndex = 0;
+            }
+            catch (Exception)
+            {
+
+            }
             txb_Ruta_Salida.Text = Settings.Directorio_Salida_PDF;
 
         }

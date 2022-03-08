@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Data.SQLite;
 using System.IO;
 using System.Linq;
@@ -27,7 +28,6 @@ namespace BisregApi.SQLite
     public class GestorBDD
     {
         private string pathDB;
-
         //Metodo para clonar objetos genericos
         public static T Clone<T>(T original)
         {
@@ -40,7 +40,6 @@ namespace BisregApi.SQLite
 
             return newObject;
         }
-
         //Constructor gestor
         public GestorBDD(string Path)
         {
@@ -59,6 +58,18 @@ namespace BisregApi.SQLite
                 //Obtengo el atributo SQLAtribute para comprobar si el campo es un campo SQL
                 CampoSQLAttribute Atributo = (CampoSQLAttribute)Attribute.GetCustomAttribute(property, typeof(CampoSQLAttribute));
                 if (Atributo != null) Campos.Add(new CampoSQL(property.Name, property.GetValue(Item)));
+            }
+            return Campos;
+        }
+        private List<CampoSQL> GetCamposNoNull<T>(T Item)
+        {
+            PropertyInfo[] properties = typeof(T).GetProperties();
+            List<CampoSQL> Campos = new List<CampoSQL>();
+            foreach (PropertyInfo property in properties)
+            {
+                //Obtengo el atributo SQLAtribute para comprobar si el campo es un campo SQL
+                CampoSQLAttribute Atributo = (CampoSQLAttribute)Attribute.GetCustomAttribute(property, typeof(CampoSQLAttribute));
+                if (Atributo != null && property.GetValue(Item)!= null) Campos.Add(new CampoSQL(property.Name, property.GetValue(Item)));
             }
             return Campos;
         }
@@ -257,7 +268,7 @@ namespace BisregApi.SQLite
 
             //Obtengo el nombre de la tabla y de los campos
             string NombreTabla = typeof(T).Name;
-            List<CampoSQL> CamposSelect = GetCampos(ItemSelect);
+            List<CampoSQL> CamposSelect = GetCamposNoNull(ItemSelect);
 
 
             //Crear Query
@@ -353,6 +364,7 @@ namespace BisregApi.SQLite
             string NombreTabla = typeof(T).Name;
             List<CampoSQL> Campos = GetCampos(Item);
 
+
             using (var ctx = GetInstance())
             {
                 //Creo el query de insert
@@ -378,9 +390,9 @@ namespace BisregApi.SQLite
             }
 
         }
-        public void InsertDatabaseItem<T>(List<T> Item)
+        public void InsertDatabaseItem<T>(List<T> Items)
         {
-            foreach(T t in Item)
+            foreach(T t in Items)
             {
                 UpdateDatabaseItem(t);
             }
@@ -424,22 +436,26 @@ namespace BisregApi.SQLite
             }
         }
         //Bucle update DatabaseItemLista
-        public void UpdateDatabaseItem<T>(List<T> item)
+        public void UpdateDatabaseItem<T>(List<T> items)
         {
-            foreach(T t in item)
+            foreach(T t in items)
             {
                 UpdateDatabaseItem(t);
             }
         }
-        //Update or Insert
-        public void UpdateOrInsert<T>(T item)
-        {
-            
-        }
         //Comprobar si existe
         public bool ExistItem<T>(T item)
         {
-            return false;
+            bool algunnull = false;
+
+            //Comporuebo que no haya valores null
+            foreach (CampoSQL campo in GetCamposPrimarios(item))
+            {
+                if (campo.Valor == null) algunnull = true;
+            }
+
+            return SelectDatabaseItem(item).Count <= 0 && !algunnull;
+
         }
         //Obtener nombres de tablas
         public List<string> GetTables()
