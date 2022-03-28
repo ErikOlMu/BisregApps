@@ -13,5 +13,6 @@ namespace PrintBisreg
     /// </summary>
     public partial class App : Application
     {
+        
     }
 }

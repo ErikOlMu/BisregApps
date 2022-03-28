@@ -8,6 +8,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="itext7" Version="7.2.1" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Reference Include="BisregApi">
       <HintPath>..\BisregApi\bin\Debug\BisregApi.dll</HintPath>
     </Reference>

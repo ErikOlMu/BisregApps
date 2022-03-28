@@ -59,6 +59,7 @@ namespace AltasBisreg.Controladores
                         //Ya no se inserta la composicion
                         //InsertarComposicion(Libro, i);
                         InsertarAlmacen(Libro, i);
+                        InsertarCodigoBarras(Libro,i);
                         ultimafila = ultimafila + 1;
 
                     }
@@ -102,6 +103,7 @@ namespace AltasBisreg.Controladores
                         InsertarPRMMETO(Libro, p);
                         InsertarPRMETODO(Libro, p);
                         InsertarAlmacen(Libro, p);
+                        InsertarCodigoBarras(Libro, p);
                         ultimafila = ultimafila + 1;
 
                     }
@@ -596,6 +598,27 @@ namespace AltasBisreg.Controladores
             }
 
 
+        }
+
+        public void InsertarCodigoBarras(Workbook Libro, Item item)
+        {
+            Excel._Worksheet CBarras = Libro.Sheets["CODIGO DE BARRAS"];
+            //Referencia 
+            //A
+            CBarras.Cells[ultimafila, 1] = item.GetReferencia();
+            //Codigo de Barras
+            //B
+            CBarras.Cells[ultimafila, 2] = item.GetReferencia();
+        }
+        public void InsertarCodigoBarras(Workbook Libro, DocumentoProducto item)
+        {
+            Excel._Worksheet CBarras = Libro.Sheets["CODIGO DE BARRAS"];
+            //Referencia 
+            //A
+            CBarras.Cells[ultimafila, 1] = item.REFERENCIA;
+            //Codigo de Barras
+            //B
+            CBarras.Cells[ultimafila, 2] = item.REFERENCIA;
         }
         //[FILA][COLUMNA]
         public static List<List<string>> GetExcel(string rutaexcel)

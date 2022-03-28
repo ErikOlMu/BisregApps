@@ -12,7 +12,8 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-using BisregApi.Utilidades;
+
+using BisregApi.PDF;
 namespace PrintBisreg
 {
     /// <summary>
@@ -24,8 +25,10 @@ namespace PrintBisreg
         {
             InitializeComponent();
 
-            dtg_CSV.ItemsSource = CSV.GetDataTable(Dialogos.OpenFile()).DefaultView;
+            //dtg_CSV.ItemsSource = CSV.GetDataTable(Dialogos.OpenFile()).DefaultView;
+            //PDF.CombinarPDF(Dialogos.SaveFile(), Dialogos.OpenFiles(), 650.0, 200.0);
 
+            
         }
     }
 }
