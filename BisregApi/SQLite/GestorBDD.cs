@@ -529,6 +529,55 @@ namespace BisregApi.SQLite
 
             return Lista;
         }
+        //Obtener DataTable de una Tabla
+        public DataTable GetDataTable(string Tabla)
+        {
 
+            SQLiteConnection con = GetInstance();
+            SQLiteCommand cmd;
+            SQLiteDataAdapter adapter;
+
+            DataTable DT = new DataTable();
+            cmd = con.CreateCommand();
+            cmd.CommandText = string.Format("SELECT * FROM {0}", Tabla);
+            adapter = new SQLiteDataAdapter(cmd);
+
+            adapter.AcceptChangesDuringFill = false;
+            adapter.Fill(DT);
+            con.Close();
+            DT.TableName = Tabla;
+            foreach (DataRow row in DT.Rows)
+            {
+                row.AcceptChanges();
+            }
+            return DT;
+
+
+        }
+        //Guardar DataTable en SQLITE
+        public void SaveDataTable(DataTable DT)
+        {
+            try
+            {
+                SQLiteConnection con = GetInstance();
+                SQLiteCommand cmd;
+                SQLiteDataAdapter adapter;
+
+                cmd = con.CreateCommand();
+                cmd.CommandText = string.Format("SELECT * FROM {0}", DT.TableName);
+                adapter = new SQLiteDataAdapter(cmd);
+                SQLiteCommandBuilder builder = new SQLiteCommandBuilder(adapter);
+                adapter.Update(DT);
+                con.Close();
+
+                DT = null;
+            }
+            catch (Exception Ex)
+            {
+                MessageBox.Show("No se a Podido Guardar Error \n"+Ex.Message);
+            }
+
+        }
     }
+
 }

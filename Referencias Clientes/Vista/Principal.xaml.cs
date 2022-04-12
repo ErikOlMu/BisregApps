@@ -43,7 +43,7 @@ namespace Referencias_Clientes.Vista
             }
             else
             {
-                settings = (Settings) Config.getConfig(SettingsFile, typeof(Settings));
+                settings = (Settings)Config.getConfig(SettingsFile, typeof(Settings));
             }
 
             settings.Save();

@@ -176,10 +176,8 @@
     <Compile Include="Utilidades\CSV.cs" />
     <Compile Include="Utilidades\Dialogos.cs" />
     <Compile Include="Utilidades\Excel.cs" />
-    <Compile Include="Utilidades\ItemProduccion.cs" />
     <Compile Include="PDF\PDFPlotter.cs" />
     <Compile Include="Utilidades\PrintDoc.cs" />
-    <Compile Include="Utilidades\XmlDocument.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
