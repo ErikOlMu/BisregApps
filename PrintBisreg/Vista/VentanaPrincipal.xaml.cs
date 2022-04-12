@@ -59,8 +59,7 @@ namespace PrintBisreg.Vista
 
             lst_items.ItemsSource = Referencias;
 
-            ReloadImage();
-
+   
             //Inicio Settings
             StartSettings();
 
@@ -89,14 +88,13 @@ namespace PrintBisreg.Vista
             
         }
 
-        private void ReloadImage()
+        private static async Task ReloadImage(System.Windows.Controls.Image ContenedorImagen)
         {
             try
             {
-                pdfViewer.Source = null;
+                ContenedorImagen.Source = null;
                 
-
-                pdfViewer.Dispatcher.BeginInvoke(System.Windows.Threading.DispatcherPriority.Normal, (ThreadStart)delegate ()
+                 await ContenedorImagen.Dispatcher.BeginInvoke(System.Windows.Threading.DispatcherPriority.Normal, (ThreadStart)delegate ()
                 {
                     BitmapImage imagen = new BitmapImage();
 
@@ -111,12 +109,12 @@ namespace PrintBisreg.Vista
                     }
 
                     bi.Freeze();
-                    pdfViewer.Source = bi;
+                    ContenedorImagen.Source = bi;
                 });
             }
             catch
             {
-                pdfViewer.Source = null;
+                ContenedorImagen.Source = null;
             }
         }
         private void AñadirReferencia(string Referencia, int Copias,string Pedido)
@@ -163,7 +161,7 @@ namespace PrintBisreg.Vista
 
         
 
-        private void lst_items_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private async void lst_items_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             ItemProduccion? item = null;
             try
@@ -172,8 +170,10 @@ namespace PrintBisreg.Vista
                 if (item != null)
                 {
                     string file = item.GetRutaDiseño(settings.CarpetaDiseños);
-                    GuardarImagenPDF(file);
-                    ReloadImage();
+
+
+                    GuardarImagenPDF(file).Start();
+                    
                 }
             }
             catch
@@ -578,8 +578,9 @@ namespace PrintBisreg.Vista
 
 
 
-        public void GuardarImagenPDF(string ruta)
+        public async Task GuardarImagenPDF(string ruta)
         {
+
             using (var document = PdfDocument.Load(ruta))
             {
                 var pageCount = document.PageCount;
@@ -598,6 +599,8 @@ namespace PrintBisreg.Vista
                     image.Save(Directory.GetCurrentDirectory() + "//view.tmp", encoder, encParams);
                 }
             }
+            Task recargar = ReloadImage(pdfViewer);
+            recargar.Start();
 
         }
     }
