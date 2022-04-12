@@ -66,9 +66,7 @@ namespace PrintBisreg.Vista
 
 
 
-            GuardarImagenPDF(Dialogos.OpenFile());
-            ReloadImage();
-
+            
             
         }
         private void AñadirReferencia()
@@ -96,7 +94,22 @@ namespace PrintBisreg.Vista
             try
             {
                 pdfViewer.Source = null;
-                pdfViewer.Source = new BitmapImage(new Uri(Directory.GetCurrentDirectory() + "//view.tmp", UriKind.Absolute));
+                BitmapImage imagen = new BitmapImage();
+
+                var bi = new BitmapImage();
+
+                using (var fs = new FileStream(Directory.GetCurrentDirectory() + "//view.tmp", FileMode.Open))
+                {
+                    bi.BeginInit();
+                    bi.StreamSource = fs;
+                    bi.CacheOption = BitmapCacheOption.OnLoad;
+                    bi.EndInit();
+                }
+
+                bi.Freeze();
+
+
+                pdfViewer.Source = bi;
             }
             catch
             {
@@ -145,26 +158,7 @@ namespace PrintBisreg.Vista
         }
 
 
-        private void lst_items_SelectionChangedOld(object sender, SelectionChangedEventArgs e)
-        {
-            ItemProduccion? item = null;
-            try
-            {
-                item = e.AddedItems[0] as ItemProduccion;
-                if (item != null)
-                {
-                    string file = item.GetRutaDiseño(settings.CarpetaDiseños);
-                    GuardarImagenPDF(file);
-                    ReloadImage();
-                }
-            }
-            catch
-            {
-                pdfViewer.Source = null;
-                if (item != null) LogWrite("No se encuentra el diseño de '" + item.Codigo + "'.");
-            }
-        }
-
+        
 
         private void lst_items_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
@@ -175,6 +169,8 @@ namespace PrintBisreg.Vista
                 if (item != null)
                 {
                     string file = item.GetRutaDiseño(settings.CarpetaDiseños);
+                    GuardarImagenPDF(file);
+                    ReloadImage();
                 }
             }
             catch
@@ -595,6 +591,7 @@ namespace PrintBisreg.Vista
                     encParams.Param[0] = new EncoderParameter(
                         System.Drawing.Imaging.Encoder.Quality, 100L);
 
+                    File.Delete(Directory.GetCurrentDirectory() + "//view.tmp");
                     image.Save(Directory.GetCurrentDirectory() + "//view.tmp", encoder, encParams);
                 }
             }
