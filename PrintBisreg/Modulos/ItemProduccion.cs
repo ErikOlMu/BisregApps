@@ -69,7 +69,10 @@ namespace PrintBisreg.Modulos
         {
             get
             {
+                
+
                 return Code;
+
             }
             set
             {
@@ -203,7 +206,7 @@ namespace PrintBisreg.Modulos
         public string GetRutaDiseño(string ruta)
         {
             string Carpeta = Directory.GetDirectories(Directory.GetDirectories(ruta, Pueblo + "*")[0],Tipo + Pueblo + Base)[0];
-            string[] file = Directory.GetFiles(Carpeta, Tipo + Pueblo + Base + Diseño+".pdf");
+            string[] file = Directory.GetFiles(Carpeta, Code +".pdf");
             if (file.Length != 0)
             {
                 return file[0];
@@ -211,7 +214,7 @@ namespace PrintBisreg.Modulos
             else
             {
 
-                string filecantidad = Directory.GetFiles(Carpeta, Tipo + Pueblo + Base + Diseño + "_*.pdf")[0];
+                string filecantidad = Directory.GetFiles(Carpeta, Code + "_*.pdf")[0];
                 if (filecantidad.Length != 0)
                 {
                     bool caracter_ = false;
