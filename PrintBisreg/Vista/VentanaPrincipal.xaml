@@ -63,8 +63,9 @@
                             </Grid>
 
                         </Grid>
-                        <WebBrowser x:Name="pdfViewer" Grid.Column="1"/>
-                        
+                        <Image x:Name="pdfViewer" Grid.Column="1"/>
+
+
                     </Grid>
                     <ScrollViewer x:Name="slv_Log" Grid.Row="1" Grid.Column="0" >
                         <TextBlock x:Name="tbk_Log" Grid.Row="1" Grid.Column="0" Background="White" Margin="10" FontFamily="Trebuchet MS" FontSize="13" FontWeight="Bold" Padding="10,3"/>

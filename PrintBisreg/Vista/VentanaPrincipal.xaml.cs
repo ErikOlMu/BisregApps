@@ -18,6 +18,9 @@ using BisregApi.Utilidades;
 using PrintBisreg.Modulos;
 using System.Threading;
 using System.ComponentModel;
+using PdfiumViewer;
+using System.Drawing;
+using System.Drawing.Imaging;
 
 namespace PrintBisreg.Vista
 {
@@ -56,8 +59,15 @@ namespace PrintBisreg.Vista
 
             lst_items.ItemsSource = Referencias;
 
+            ReloadImage();
+
             //Inicio Settings
             StartSettings();
+
+
+
+            GuardarImagenPDF(Dialogos.OpenFile());
+            ReloadImage();
 
             
         }
@@ -81,6 +91,18 @@ namespace PrintBisreg.Vista
             
         }
 
+        private void ReloadImage()
+        {
+            try
+            {
+                pdfViewer.Source = null;
+                pdfViewer.Source = new BitmapImage(new Uri(Directory.GetCurrentDirectory() + "//view.tmp", UriKind.Absolute));
+            }
+            catch
+            {
+                pdfViewer.Source = null;
+            }
+        }
         private void AñadirReferencia(string Referencia, int Copias,string Pedido)
         {
             ItemProduccion item = new ItemProduccion(Referencia, Copias, Pedido);
@@ -122,6 +144,28 @@ namespace PrintBisreg.Vista
             AñadirReferencia();
         }
 
+
+        private void lst_items_SelectionChangedOld(object sender, SelectionChangedEventArgs e)
+        {
+            ItemProduccion? item = null;
+            try
+            {
+                item = e.AddedItems[0] as ItemProduccion;
+                if (item != null)
+                {
+                    string file = item.GetRutaDiseño(settings.CarpetaDiseños);
+                    GuardarImagenPDF(file);
+                    ReloadImage();
+                }
+            }
+            catch
+            {
+                pdfViewer.Source = null;
+                if (item != null) LogWrite("No se encuentra el diseño de '" + item.Codigo + "'.");
+            }
+        }
+
+
         private void lst_items_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             ItemProduccion? item = null;
@@ -131,7 +175,6 @@ namespace PrintBisreg.Vista
                 if (item != null)
                 {
                     string file = item.GetRutaDiseño(settings.CarpetaDiseños);
-                    pdfViewer.Source = new Uri(file);
                 }
             }
             catch
@@ -487,7 +530,7 @@ namespace PrintBisreg.Vista
                 {
                     throw new Exception("Error");
                 }
-                btn_RecargarDatos.Foreground = Brushes.Green;
+                btn_RecargarDatos.Foreground = System.Windows.Media.Brushes.Green;
                 //Hacemos Update de las Reglas
                 UpdateDataGridCantidades();
                 UpdateDataGridPMinimo();
@@ -498,7 +541,7 @@ namespace PrintBisreg.Vista
             }
             catch
             {
-                btn_RecargarDatos.Foreground = Brushes.Red;
+                btn_RecargarDatos.Foreground = System.Windows.Media.Brushes.Red;
                 MessageBox.Show("No se a podido cargar la Base de datos");
                 return false;
             }
@@ -532,6 +575,30 @@ namespace PrintBisreg.Vista
                 tbx_Salida.Text = Dialogos.OpenFolder();
             }
             catch { }
+        }
+
+
+
+        public void GuardarImagenPDF(string ruta)
+        {
+            using (var document = PdfDocument.Load(ruta))
+            {
+                var pageCount = document.PageCount;
+
+                var dpi = 300;
+
+                using (var image = document.Render(0, dpi, dpi, PdfRenderFlags.CorrectFromDpi))
+                {
+                    var encoder = ImageCodecInfo.GetImageEncoders()
+                        .First(c => c.FormatID == ImageFormat.Jpeg.Guid);
+                    var encParams = new EncoderParameters(1);
+                    encParams.Param[0] = new EncoderParameter(
+                        System.Drawing.Imaging.Encoder.Quality, 100L);
+
+                    image.Save(Directory.GetCurrentDirectory() + "//view.tmp", encoder, encParams);
+                }
+            }
+
         }
     }
 }

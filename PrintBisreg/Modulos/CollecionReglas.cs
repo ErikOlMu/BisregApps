@@ -10,6 +10,7 @@ using BisregApi.SQLite;
 using BisregApi.Utilidades;
 using System.Data.SQLite;
 
+
 namespace PrintBisreg.Modulos
 {
     public class CollecionReglas
@@ -82,7 +83,7 @@ namespace PrintBisreg.Modulos
             }
         }
         //Obtener la Cantidad de la Regla con mas Nivel
-        public int GetReglaCantidad(ItemProduccion item)
+        public int ConsultaReglaCantidad(ItemProduccion item)
         {
             List<ReglaCantidad> list = new List<ReglaCantidad>();
             using (var ctx = gestor.GetInstance())
@@ -119,8 +120,10 @@ namespace PrintBisreg.Modulos
         }
 
 
+        
+
         //Obtener la Cantidad de la Regla  ReglaPMinimo con mas Nivel
-        public int GetReglaPMinimo(ItemProduccion item)
+        public int ConsultaReglaPMinimo(ItemProduccion item)
         {
             List<ReglaPMinimo> list = new List<ReglaPMinimo>();
             using (var ctx = gestor.GetInstance())
@@ -173,10 +176,6 @@ namespace PrintBisreg.Modulos
         public string QueryRegla(ItemProduccion item, string Tabla)
         {
             return "SELECT * FROM " + Tabla + " WHERE(Tipo = '" + item.Tipo + "' or Tipo = 'A') and (Pueblo = '" + item.Pueblo + "' or Pueblo = 'A') and (Base = '" + item.Base + "' or Base = 'A') and (Diseño = '" + item.Diseño + "' or Diseño = 'A')";
-        }
-        public void ConsultaCantidad(ItemProduccion item)
-        {
-            
         }
 
     }
