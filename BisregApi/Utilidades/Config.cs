@@ -24,7 +24,11 @@ namespace BisregApi.Utilidades
         {
             string tmp = DirectorioAppData + file;
             //Si no existe crearlo
-            if (!File.Exists(tmp)) File.Create(tmp).Close();
+            if (!File.Exists(tmp))
+            {
+                Directory.CreateDirectory(Path.GetDirectoryName(tmp));
+                File.Create(tmp).Close();
+            }
 
             XmlSerializer serializer = new XmlSerializer(GetType());
 
