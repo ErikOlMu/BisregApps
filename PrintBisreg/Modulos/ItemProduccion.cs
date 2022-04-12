@@ -231,7 +231,7 @@ namespace PrintBisreg.Modulos
                         }
                         else
                         {
-                            caracter_ = c == '_';
+                            caracter_ = c == ' ';
                         }
 
                     }
