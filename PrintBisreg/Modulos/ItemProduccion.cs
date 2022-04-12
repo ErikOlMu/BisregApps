@@ -214,7 +214,7 @@ namespace PrintBisreg.Modulos
             else
             {
 
-                string filecantidad = Directory.GetFiles(Carpeta, Code + "_*.pdf")[0];
+                string filecantidad = Directory.GetFiles(Carpeta, Code + " *.pdf")[0];
                 if (filecantidad.Length != 0)
                 {
                     bool caracter_ = false;
