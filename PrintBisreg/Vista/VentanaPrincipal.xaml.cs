@@ -94,22 +94,25 @@ namespace PrintBisreg.Vista
             try
             {
                 pdfViewer.Source = null;
-                BitmapImage imagen = new BitmapImage();
+                
 
-                var bi = new BitmapImage();
-
-                using (var fs = new FileStream(Directory.GetCurrentDirectory() + "//view.tmp", FileMode.Open))
+                pdfViewer.Dispatcher.BeginInvoke(System.Windows.Threading.DispatcherPriority.Normal, (ThreadStart)delegate ()
                 {
-                    bi.BeginInit();
-                    bi.StreamSource = fs;
-                    bi.CacheOption = BitmapCacheOption.OnLoad;
-                    bi.EndInit();
-                }
+                    BitmapImage imagen = new BitmapImage();
 
-                bi.Freeze();
+                    var bi = new BitmapImage();
 
+                    using (var fs = new FileStream(Directory.GetCurrentDirectory() + "//view.tmp", FileMode.Open))
+                    {
+                        bi.BeginInit();
+                        bi.StreamSource = fs;
+                        bi.CacheOption = BitmapCacheOption.OnLoad;
+                        bi.EndInit();
+                    }
 
-                pdfViewer.Source = bi;
+                    bi.Freeze();
+                    pdfViewer.Source = bi;
+                });
             }
             catch
             {
