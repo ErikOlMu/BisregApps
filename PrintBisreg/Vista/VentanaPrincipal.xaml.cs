@@ -107,6 +107,7 @@ namespace PrintBisreg.Vista
                 }
 
 
+                img.MaxHeight = 100;
 
                 bi.Freeze();
 
@@ -132,7 +133,7 @@ namespace PrintBisreg.Vista
                     bi.CacheOption = BitmapCacheOption.OnLoad;
                     bi.EndInit();
                 }
-
+                img.MaxHeight = 1000;
                 bi.Freeze();
                 img.Source = bi;
             });
