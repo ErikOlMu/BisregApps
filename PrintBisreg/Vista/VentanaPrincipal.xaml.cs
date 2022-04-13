@@ -1,27 +1,21 @@
-﻿using System;
+﻿using BisregApi.Utilidades;
+using PdfiumViewer;
+using PrintBisreg.Modulos;
+using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Data;
+using System.Drawing.Imaging;
 using System.IO;
 using System.Linq;
-using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
-using BisregApi.PDF;
-using BisregApi.Utilidades;
-using PrintBisreg.Modulos;
-using System.Threading;
-using System.ComponentModel;
-using PdfiumViewer;
-using System.Drawing;
-using System.Drawing.Imaging;
-
+using WpfAnimatedGif;
 namespace PrintBisreg.Vista
 {
     /// <summary>
@@ -36,6 +30,8 @@ namespace PrintBisreg.Vista
         DataTable dataTableAgotados;
         DataTable dataTablePlotter;
         Settings settings;
+        Thread RecargaImagenes;
+        CancellationTokenSource TokenCancelar;
         public VentanaPrincipal()
         {
 
@@ -59,7 +55,6 @@ namespace PrintBisreg.Vista
 
             lst_items.ItemsSource = Referencias;
 
-            ReloadImage();
 
             //Inicio Settings
             StartSettings();
@@ -89,35 +84,60 @@ namespace PrintBisreg.Vista
             
         }
 
-        private void ReloadImage()
+
+        private static void StartReloadImage(System.Windows.Controls.Image img)
         {
-            try
-            {
-                pdfViewer.Source = null;
-                
 
-                pdfViewer.Dispatcher.BeginInvoke(System.Windows.Threading.DispatcherPriority.Normal, (ThreadStart)delegate ()
+            img.Source = null;
+
+            img.Dispatcher.BeginInvoke(System.Windows.Threading.DispatcherPriority.Normal, (ThreadStart)delegate ()
+            {
+                BitmapImage imagen = new BitmapImage();
+
+                var bi = new BitmapImage();
+
+                using (var fs = new FileStream(Directory.GetCurrentDirectory() + "//Reload.gif", FileMode.Open))
                 {
-                    BitmapImage imagen = new BitmapImage();
+                    bi.BeginInit();
+                    bi.StreamSource = fs;
+                    bi.CacheOption = BitmapCacheOption.OnLoad;
+                    bi.EndInit();
+                    ImageBehavior.SetAnimatedSource(img, bi);
 
-                    var bi = new BitmapImage();
+                }
 
-                    using (var fs = new FileStream(Directory.GetCurrentDirectory() + "//view.tmp", FileMode.Open))
-                    {
-                        bi.BeginInit();
-                        bi.StreamSource = fs;
-                        bi.CacheOption = BitmapCacheOption.OnLoad;
-                        bi.EndInit();
-                    }
 
-                    bi.Freeze();
-                    pdfViewer.Source = bi;
-                });
-            }
-            catch
+
+                bi.Freeze();
+
+            });
+
+
+        }
+        private static void ReloadImage(System.Windows.Controls.Image img)
+        {
+            ImageBehavior.SetAnimatedSource(img, null);
+            img.Source = null;
+
+            img.Dispatcher.BeginInvoke(System.Windows.Threading.DispatcherPriority.Normal, (ThreadStart)delegate ()
             {
-                pdfViewer.Source = null;
-            }
+                BitmapImage imagen = new BitmapImage();
+
+                var bi = new BitmapImage();
+
+                using (var fs = new FileStream(Directory.GetCurrentDirectory() + "//view.tmp", FileMode.Open))
+                {
+                    bi.BeginInit();
+                    bi.StreamSource = fs;
+                    bi.CacheOption = BitmapCacheOption.OnLoad;
+                    bi.EndInit();
+                }
+
+                bi.Freeze();
+                img.Source = bi;
+            });
+
+
         }
         private void AñadirReferencia(string Referencia, int Copias,string Pedido)
         {
@@ -160,9 +180,6 @@ namespace PrintBisreg.Vista
             AñadirReferencia();
         }
 
-
-        
-
         private void lst_items_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             ItemProduccion? item = null;
@@ -172,8 +189,14 @@ namespace PrintBisreg.Vista
                 if (item != null)
                 {
                     string file = item.GetRutaDiseño(settings.CarpetaDiseños);
-                    GuardarImagenPDF(file);
-                    ReloadImage();
+
+                    Thread? Anterior = RecargaImagenes;
+                    CancellationTokenSource? TokenAnterior = TokenCancelar;
+
+                    TokenCancelar = new CancellationTokenSource();
+                    RecargaImagenes = new Thread(() => GuardarAndReloadPDF(file, pdfViewer, Anterior,TokenCancelar.Token, TokenAnterior));
+                    RecargaImagenes.Start();
+
                 }
             }
             catch
@@ -578,7 +601,30 @@ namespace PrintBisreg.Vista
 
 
 
-        public void GuardarImagenPDF(string ruta)
+        private static void GuardarAndReloadPDF(string ruta, System.Windows.Controls.Image imagen, Thread? Anterior, CancellationToken cancellationToken, CancellationTokenSource? cancellationTokenAnterior)
+
+        {
+            
+            if (Anterior != null)
+            {
+                if (cancellationTokenAnterior !=  null ) cancellationTokenAnterior.Cancel();
+                Anterior.Join();
+            }
+            if (!cancellationToken.IsCancellationRequested)
+            {
+                Application.Current.Dispatcher.Invoke(new Action(() =>
+                {
+                    StartReloadImage(imagen);
+                }));
+                GuardarImagenPDF(ruta);
+                Application.Current.Dispatcher.Invoke(new Action(() =>
+                {
+                    ReloadImage(imagen);
+                }));
+            }
+        }
+
+        public static void GuardarImagenPDF(string ruta)
         {
             using (var document = PdfDocument.Load(ruta))
             {
