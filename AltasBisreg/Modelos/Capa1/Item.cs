@@ -346,7 +346,7 @@ namespace AltasBisreg.Modelos.Capa1
                         }
                         
                         this.pueblo = Pueblo.GetPueblo(pueblo);
-                        this.@base = Base.GetBase(@base, tipo);
+                        this.@base = Base.GetBase(@base, tipo,pueblo);
                         this.diseño = Diseño.GetDiseño(diseño);
                     }
                     

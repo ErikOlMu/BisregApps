@@ -195,6 +195,15 @@ namespace AltasBisreg.Modelos.Capa2
         {
             Controladores.ConnexionSQL.SetBase(this, Existe());
         }
+
+
+        //Metodo para obtener la Base, y si no existe no ver si esta em general
+        public static Base GetBaseNoGeneral(string id, string tipo, string pack = "GENERAL")
+        {
+            return Controladores.ConnexionSQL.GetBase(id, tipo, pack);
+            
+        }
+
         public static Base GetBase(string id, string tipo,string pack = "GENERAL")
         {
             Base b = Controladores.ConnexionSQL.GetBase(id, tipo,pack);
@@ -218,7 +227,7 @@ namespace AltasBisreg.Modelos.Capa2
         public bool Existe()
         {
             //Si la consulta de la base es null no existe
-            return (GetBase(this.id, this.tipo,this.pack) != null);
+            return (GetBaseNoGeneral(this.id, this.tipo,this.pack) != null);
         }
 
 

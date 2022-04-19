@@ -64,6 +64,7 @@ namespace PrintBisreg.Vista
             
             
         }
+
         private void AñadirReferencia()
         {
             ItemProduccion item = new ItemProduccion(tbx_Referencia.Text, int.Parse(tbx_Copias.Text));
@@ -84,7 +85,6 @@ namespace PrintBisreg.Vista
             
         }
 
-
         private static void StartReloadImage(System.Windows.Controls.Image img)
         {
 
@@ -102,7 +102,11 @@ namespace PrintBisreg.Vista
                     bi.StreamSource = fs;
                     bi.CacheOption = BitmapCacheOption.OnLoad;
                     bi.EndInit();
-                    ImageBehavior.SetAnimatedSource(img, bi);
+                    try
+                    {
+                        ImageBehavior.SetAnimatedSource(img, bi);
+                    }
+                    catch { }
 
                 }
 
@@ -115,31 +119,37 @@ namespace PrintBisreg.Vista
 
 
         }
-        private static void ReloadImage(System.Windows.Controls.Image img)
+
+        private static void ReloadImage(System.Windows.Controls.Image img)  
         {
-            ImageBehavior.SetAnimatedSource(img, null);
-            img.Source = null;
-
-            img.Dispatcher.BeginInvoke(System.Windows.Threading.DispatcherPriority.Normal, (ThreadStart)delegate ()
+            try
             {
-                BitmapImage imagen = new BitmapImage();
+                ImageBehavior.SetAnimatedSource(img, null);
+            }
+            catch { }
+                img.Source = null;
 
-                var bi = new BitmapImage();
-
-                using (var fs = new FileStream(Directory.GetCurrentDirectory() + "//view.tmp", FileMode.Open))
+                img.Dispatcher.BeginInvoke(System.Windows.Threading.DispatcherPriority.Normal, (ThreadStart)delegate ()
                 {
-                    bi.BeginInit();
-                    bi.StreamSource = fs;
-                    bi.CacheOption = BitmapCacheOption.OnLoad;
-                    bi.EndInit();
-                }
-                img.MaxHeight = 1000;
-                bi.Freeze();
-                img.Source = bi;
-            });
+                    BitmapImage imagen = new BitmapImage();
 
+                    var bi = new BitmapImage();
+
+                    using (var fs = new FileStream(Directory.GetCurrentDirectory() + "//view.tmp", FileMode.Open))
+                    {
+                        bi.BeginInit();
+                        bi.StreamSource = fs;
+                        bi.CacheOption = BitmapCacheOption.OnLoad;
+                        bi.EndInit();
+                    }
+                    img.MaxHeight = 1000;
+                    bi.Freeze();
+                    img.Source = bi;
+                });
+            
 
         }
+
         private void AñadirReferencia(string Referencia, int Copias,string Pedido)
         {
             ItemProduccion item = new ItemProduccion(Referencia, Copias, Pedido);
@@ -307,14 +317,10 @@ namespace PrintBisreg.Vista
             }
         }
 
+        //Metodo para generar plotter
         private void btn_Generar_Click(object sender, RoutedEventArgs e)
         {
-            //Metodo plara generar plotter
-
-
-
-
-
+            
         }
 
 
@@ -474,6 +480,21 @@ namespace PrintBisreg.Vista
             settings.Save();
 
         }
+        private void MasCantidad_Click(object sender, RoutedEventArgs e)
+        {
+            if (btn_MasCantidad.Content.ToString() == "On")
+            {
+                settings.MasCantidad = false;
+                btn_MasCantidad.Content = "Off";
+            }
+            else
+            {
+                settings.MasCantidad = true;
+                btn_MasCantidad.Content = "On";
+            }
+            settings.Save();
+
+        }
 
         private void StartSettings()
         {
@@ -488,6 +509,8 @@ namespace PrintBisreg.Vista
             else btn_Sentido.Content = "Horizontal";
             if (settings.Info) btn_Info.Content = "On";
             else btn_Info.Content = "Off";
+            if (settings.MasCantidad) btn_MasCantidad.Content = "On";
+            else btn_MasCantidad.Content = "Off";
 
             tbx_Datos.Text = settings.rutaBDD;
             tbx_Diseños.Text = settings.CarpetaDiseños;
@@ -600,29 +623,32 @@ namespace PrintBisreg.Vista
             catch { }
         }
 
-
-
         private static void GuardarAndReloadPDF(string ruta, System.Windows.Controls.Image imagen, Thread? Anterior, CancellationToken cancellationToken, CancellationTokenSource? cancellationTokenAnterior)
 
         {
             
-            if (Anterior != null)
-            {
-                if (cancellationTokenAnterior !=  null ) cancellationTokenAnterior.Cancel();
-                Anterior.Join();
-            }
-            if (!cancellationToken.IsCancellationRequested)
-            {
-                Application.Current.Dispatcher.Invoke(new Action(() =>
+                if (Anterior != null)
                 {
-                    StartReloadImage(imagen);
-                }));
-                GuardarImagenPDF(ruta);
-                Application.Current.Dispatcher.Invoke(new Action(() =>
+                    if (cancellationTokenAnterior != null) cancellationTokenAnterior.Cancel();
+                    Anterior.Join();
+                }
+                if (!cancellationToken.IsCancellationRequested)
                 {
-                    ReloadImage(imagen);
-                }));
-            }
+                    Application.Current.Dispatcher.Invoke(new Action(() =>
+                    {
+                        
+                            StartReloadImage(imagen);
+                        
+                    }));
+                    GuardarImagenPDF(ruta);
+                    Application.Current.Dispatcher.Invoke(new Action(() =>
+                    {
+                        
+                        ReloadImage(imagen);
+                        
+                    }));
+                }
+            
         }
 
         public static void GuardarImagenPDF(string ruta)
@@ -647,5 +673,7 @@ namespace PrintBisreg.Vista
             }
 
         }
+
+        
     }
 }

@@ -20,5 +20,6 @@ namespace PrintBisreg
         public double MargenAncho = 0.0;
         public bool Sentido = true;
         public bool Info = true;
+        public bool MasCantidad = true;
     }
 }

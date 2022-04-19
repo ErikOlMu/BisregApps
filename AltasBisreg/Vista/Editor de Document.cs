@@ -87,8 +87,7 @@ namespace AltasBisreg.Vista
                     {
                         Letra = "D";
                     }
-                    Item i = new Item();
-                    i.Referencia = cbx_Tipo.Text + Pueblo + tbx_Base.Text + Diseño + Letra;
+                    Item i = new Item(cbx_Tipo.Text + Pueblo + tbx_Base.Text + Diseño + Letra);
                     d.addItem(i);
                 }
             }
@@ -267,5 +266,7 @@ namespace AltasBisreg.Vista
 
 
         }
+
+        
     }
 }
