@@ -114,10 +114,11 @@ namespace BisregApi.PDF
             //Si quieres añadir la informacion al lado
             if (Info)
             {
-                Canvas tag = new Canvas(page, new Rectangle(0, 0, (float)TamañoInfo, page.GetPageSize().GetHeight()));
                 Paragraph p = new Paragraph().Add(TextInfo).SetTextAlignment(TextAlignment.LEFT);
                 p.SetFontSize((float)TamañoInfo/2);
                 p.SetRotationAngle(-1.571);
+                
+                Canvas tag = new Canvas(page, new Rectangle(0, 0, (float)TamañoInfo, page.GetPageSize().GetHeight()));
                 tag.Add(p);
                 tag.Close();
             }

@@ -79,7 +79,7 @@ namespace PrintBisreg.Modulos
             using (var ctx = gestor.GetInstance())
             {
                 string query = QueryReglaScalar(item, "ReglaAgotados");   
-                return Convert.ToInt32(new SQLiteCommand(query, ctx).ExecuteScalar()) == 0;
+                return !(Convert.ToInt32(new SQLiteCommand(query, ctx).ExecuteScalar()) == 0);
             }
         }
         //Obtener la Cantidad de la Regla con mas Nivel
@@ -165,7 +165,7 @@ namespace PrintBisreg.Modulos
             using (var ctx = gestor.GetInstance())
             {
                 string query = QueryReglaScalar(item, "ReglaPlotter");
-                return Convert.ToInt32(new SQLiteCommand(query, ctx).ExecuteScalar()) == 0;
+                return !(Convert.ToInt32(new SQLiteCommand(query, ctx).ExecuteScalar()) == 0);
             }
         }
 

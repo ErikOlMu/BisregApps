@@ -330,26 +330,36 @@ namespace PrintBisreg.Vista
                     //Miramos si esta agotado
                     if (!Reglas.ConsultaAgotado(item))
                     {
+                        string rutadiseño = item.GetRutaDiseño(settings.CarpetaDiseños);
+
+                        //Calculo las Copias
+                        int Copias = item.Copias;
+                        if (item.CopiasXArchivo == 1) Copias = (int)Math.Ceiling((decimal)Copias / (decimal)Reglas.ConsultaReglaCantidad(item));
+                        else Copias = (int)Math.Ceiling((decimal)Copias / (decimal)item.CopiasXArchivo);
+
+
                         //Miramos si es un plotter
                         if (!Reglas.ConsultaPlotter(item))
                         {
-                            int Copias = item.Copias;
-                            if (item.CopiasXArchivo == 1) Copias = Copias / Reglas.ConsultaReglaCantidad(item);
-                            else Copias = Copias / item.CopiasXArchivo;
-                            PDFPlotter.CrearPlancha(settings.CarpetaSalida + "\\" + item.Pedido + item.Codigo, item.Pedido, item.GetRutaDiseño(settings.CarpetaDiseños), "Prueba", settings.AnchoMaximo, settings.AltoMaximo, Copias, new Margin(settings.MargenAlto, settings.MargenAncho), new Margin(settings.PaddingAlto, settings.MargenAncho), settings.Sentido, settings.Info);
+                            
+                            PDFPlotter.CrearPlancha(settings.CarpetaSalida + "\\" + item.Pedido + item.Codigo, item.Pedido, rutadiseño, "Prueba", settings.AnchoMaximo, settings.AltoMaximo, Copias, new Margin(settings.MargenAlto, settings.MargenAncho), new Margin(settings.PaddingAlto, settings.MargenAncho), settings.Sentido, settings.Info);
                         }
                         else
                         {
                             
                             //Codigo Copiar Source X veces
 
-                            int Copias = item.Copias;
-                            if (item.CopiasXArchivo == 1) Copias = Copias / Reglas.ConsultaReglaCantidad(item);
-                            else Copias = Copias / item.CopiasXArchivo;
+                            
 
                             for (int i = 0; i < Copias; i++)
                             {
-                                File.Copy(item.GetRutaDiseño(settings.CarpetaDiseños), settings.CarpetaSalida + "\\" + item.Pedido + item.Codigo +"_"+i+ ".pdf");
+                                string RutaSalida = settings.CarpetaSalida + "\\" + item.Pedido + item.Codigo + "_" + i + ".pdf";
+                                if (!File.Exists(RutaSalida))
+                                {
+
+                                    File.Copy(rutadiseño, RutaSalida);
+                                }
+                                else LogWrite("Ya existe el Archivo " + RutaSalida + " (" + item.Codigo + ")");
 
                             }
                         }
