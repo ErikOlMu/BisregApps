@@ -16,6 +16,7 @@ using System.Windows.Data;
 using System.Windows.Input;
 using System.Windows.Media.Imaging;
 using WpfAnimatedGif;
+using BisregApi.PDF;
 namespace PrintBisreg.Vista
 {
     /// <summary>
@@ -320,7 +321,49 @@ namespace PrintBisreg.Vista
         //Metodo para generar plotter
         private void btn_Generar_Click(object sender, RoutedEventArgs e)
         {
-            
+            if (Referencias.Count != 0)
+            {
+
+                //-----------------Nota Erik Revisar Gestion de Copias
+                foreach(ItemProduccion item in Referencias)
+                {
+                    //Miramos si esta agotado
+                    if (!Reglas.ConsultaAgotado(item))
+                    {
+                        //Miramos si es un plotter
+                        if (!Reglas.ConsultaPlotter(item))
+                        {
+                            int Copias = item.Copias;
+                            if (item.CopiasXArchivo == 1) Copias = Copias / Reglas.ConsultaReglaCantidad(item);
+                            else Copias = Copias / item.CopiasXArchivo;
+                            PDFPlotter.CrearPlancha(settings.CarpetaSalida + "\\" + item.Pedido + item.Codigo, item.Pedido, item.GetRutaDiseño(settings.CarpetaDiseños), "Prueba", settings.AnchoMaximo, settings.AltoMaximo, Copias, new Margin(settings.MargenAlto, settings.MargenAncho), new Margin(settings.PaddingAlto, settings.MargenAncho), settings.Sentido, settings.Info);
+                        }
+                        else
+                        {
+                            
+                            //Codigo Copiar Source X veces
+
+                            int Copias = item.Copias;
+                            if (item.CopiasXArchivo == 1) Copias = Copias / Reglas.ConsultaReglaCantidad(item);
+                            else Copias = Copias / item.CopiasXArchivo;
+
+                            for (int i = 0; i < Copias; i++)
+                            {
+                                File.Copy(item.GetRutaDiseño(settings.CarpetaDiseños), settings.CarpetaSalida + "\\" + item.Pedido + item.Codigo +"_"+i+ ".pdf");
+
+                            }
+                        }
+                    }
+                    else
+                    {
+                        LogWrite("La referencia " + item.Codigo + " esta agotada");
+                    }
+                }
+            }
+            else
+            {
+                MessageBox.Show("Añade Referencias a la Lista");
+            }
         }
 
 
