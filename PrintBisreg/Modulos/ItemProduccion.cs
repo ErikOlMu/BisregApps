@@ -205,42 +205,49 @@ namespace PrintBisreg.Modulos
 
         public string GetRutaDiseño(string ruta)
         {
-            string Carpeta = Directory.GetDirectories(Directory.GetDirectories(ruta, Pueblo + "*")[0],Tipo + Pueblo + Base)[0];
-            string[] file = Directory.GetFiles(Carpeta, Code +".pdf");
-            if (file.Length != 0)
+            try
             {
-                return file[0];
-            }
-            else
-            {
-
-                string filecantidad = Directory.GetFiles(Carpeta, Code + " *.pdf")[0];
-                if (filecantidad.Length != 0)
+                string Carpeta = Directory.GetDirectories(Directory.GetDirectories(ruta, Pueblo + "*")[0], Tipo + Pueblo + Base)[0];
+                string[] file = Directory.GetFiles(Carpeta, Code + ".pdf");
+                if (file.Length != 0)
                 {
-                    bool caracter_ = false;
-                    string cantidad = "";
-                    foreach (char c in Path.GetFileName(filecantidad))
-                    {
-                        if (caracter_)
-                        {
-                            if (Char.IsDigit(c))
-                            {
-                                cantidad = cantidad + c;
-                            }
-                            else caracter_ = false;
-                        }
-                        else
-                        {
-                            caracter_ = c == ' ';
-                        }
-
-                    }
-
-                    CopiasXArchivo = int.Parse(cantidad);
-                    return filecantidad;
+                    return file[0];
                 }
-                else return "";
+                else
+                {
 
+                    string filecantidad = Directory.GetFiles(Carpeta, Code + " *.pdf")[0];
+                    if (filecantidad.Length != 0)
+                    {
+                        bool caracter_ = false;
+                        string cantidad = "";
+                        foreach (char c in Path.GetFileName(filecantidad))
+                        {
+                            if (caracter_)
+                            {
+                                if (Char.IsDigit(c))
+                                {
+                                    cantidad = cantidad + c;
+                                }
+                                else caracter_ = false;
+                            }
+                            else
+                            {
+                                caracter_ = c == ' ';
+                            }
+
+                        }
+
+                        CopiasXArchivo = int.Parse(cantidad);
+                        return filecantidad;
+                    }
+                    else return "";
+
+                }
+            }
+            catch
+            {
+                return "";
             }
         }
     }

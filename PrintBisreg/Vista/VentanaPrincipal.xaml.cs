@@ -177,6 +177,14 @@ namespace PrintBisreg.Vista
 
 
         }
+        private static void LogWrite(string Texto, TextBlock tbk_Log, ScrollViewer slv_Log)
+        {
+
+            tbk_Log.Text = tbk_Log.Text + "\n" + Texto;
+            slv_Log.ScrollToBottom();
+
+
+        }
 
         private void tbx_Referencia_KeyDown(object sender, KeyEventArgs e)
         {
@@ -318,15 +326,33 @@ namespace PrintBisreg.Vista
             }
         }
 
+        
         //Metodo para generar plotter
         private void btn_Generar_Click(object sender, RoutedEventArgs e)
         {
+            Thread GenerarThread = new Thread(() => Generar(Referencias, Reglas, settings, tbk_Log, slv_Log,lbl_Process, pbr_Generar));
+            GenerarThread.Start();
+        }
+
+        public static void Generar(List<ItemProduccion> Referencias,CollecionReglas Reglas,Settings settings, TextBlock tbk_Log, ScrollViewer slv_Log,Label lbl_Process, ProgressBar pbr_Generar)
+        {
             if (Referencias.Count != 0)
             {
-
-                //-----------------Nota Erik Revisar Gestion de Copias
-                foreach(ItemProduccion item in Referencias)
+                Application.Current.Dispatcher.Invoke(new Action(() =>
                 {
+                    pbr_Generar.Maximum = Referencias.Count;
+                    pbr_Generar.Value = 0;
+
+                }));
+            //-----------------Nota Erik Revisar Gestion de Copias
+            foreach (ItemProduccion item in Referencias)
+                {
+                    Application.Current.Dispatcher.Invoke(new Action(() =>
+                    {
+                        lbl_Process.Content = "Generando " + item.Codigo;
+                        
+
+                    }));
                     //Miramos si esta agotado
                     if (!Reglas.ConsultaAgotado(item))
                     {
@@ -334,14 +360,14 @@ namespace PrintBisreg.Vista
                         //revisamos si existe el diseño
                         if (rutadiseño != "")
                         {
-                            
+
 
                             //Calculo las Copias
                             int Copias = item.Copias;
 
                             //Si es  menos que el pedido minimo lo paso a Pedido Minimo
                             int PedidoMinimo = Reglas.ConsultaReglaPMinimo(item);
-                            if (Copias < PedidoMinimo ) Copias = PedidoMinimo;
+                            if (Copias < PedidoMinimo) Copias = PedidoMinimo;
 
                             //Calculo las Copias que necesito
                             if (item.CopiasXArchivo == 1) Copias = (int)Math.Ceiling((decimal)Copias / (decimal)Reglas.ConsultaReglaCantidad(item));
@@ -351,7 +377,7 @@ namespace PrintBisreg.Vista
                             //Miramos si es un plotter
                             if (!Reglas.ConsultaPlotter(item))
                             {
-                                PDFPlotter.CrearPlancha(settings.CarpetaSalida + "\\" + item.Pedido + item.Codigo, item.Pedido, rutadiseño, item.Codigo+" "+item.Pedido, settings.AnchoMaximo, settings.AltoMaximo, Copias, new Margin(settings.MargenAlto, settings.MargenAncho), new Margin(settings.PaddingAlto, settings.MargenAncho), settings.Sentido, settings.Info);
+                                PDFPlotter.CrearPlancha(settings.CarpetaSalida + "\\" + item.Pedido + item.Codigo, item.Pedido, rutadiseño, item.Codigo + " " + item.Pedido, settings.AnchoMaximo, settings.AltoMaximo, Copias, new Margin(settings.MargenAlto, settings.MargenAncho), new Margin(settings.PaddingAlto, settings.MargenAncho), settings.Sentido, settings.Info);
                             }
                             else
                             {
@@ -360,33 +386,67 @@ namespace PrintBisreg.Vista
                                 for (int i = 0; i < Copias; i++)
                                 {
                                     string RutaSalida = settings.CarpetaSalida + "\\" + item.Pedido + item.Codigo + "_" + i + ".pdf";
+
                                     if (!File.Exists(RutaSalida))
                                     {
 
                                         File.Copy(rutadiseño, RutaSalida);
                                     }
-                                    else LogWrite("Ya existe el Archivo " + RutaSalida + " (" + item.Codigo + ")");
+                                    else
+                                    {
+                                        Application.Current.Dispatcher.Invoke(new Action(() =>
+                                        {
+
+                                            LogWrite("Ya existe el Archivo " + RutaSalida + " (" + item.Codigo + ")",tbk_Log,slv_Log);
+
+                                        }));
+                                    }
 
                                 }
                             }
                         }
                         else
                         {
-                            LogWrite("No se encuentra el diseño de '" + item.Codigo + "'.");
+                            Application.Current.Dispatcher.Invoke(new Action(() =>
+                            {
+
+                                LogWrite("No se encuentra el diseño de '" + item.Codigo + "'.", tbk_Log, slv_Log);
+
+                            }));
+                          
                         }
                     }
                     else
                     {
-                        LogWrite("La referencia " + item.Codigo + " esta agotada");
+                        Application.Current.Dispatcher.Invoke(new Action(() =>
+                        {
+
+                            LogWrite("La referencia " + item.Codigo + " esta agotada", tbk_Log, slv_Log);
+
+                        }));
                     }
-                }
+                    Application.Current.Dispatcher.Invoke(new Action(() =>
+                    { 
+                        pbr_Generar.Value = pbr_Generar.Value + 1;
+                    }));
+
+            }
             }
             else
             {
                 MessageBox.Show("Añade Referencias a la Lista");
             }
-        }
 
+            MessageBox.Show("Generado");
+
+            Application.Current.Dispatcher.Invoke(new Action(() =>
+            {
+                lbl_Process.Content = null;
+
+                pbr_Generar.Value = 0;
+
+            }));
+        }
 
         //Settings
         private void tbx_AltoMaximo_TextChanged(object sender, TextChangedEventArgs e)
