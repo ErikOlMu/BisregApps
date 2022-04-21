@@ -45,7 +45,7 @@ namespace BisregApi.PDF
 
 
             //Creo el pdf de Destino de la Plancha
-            PdfDocument pdf = new PdfDocument(new PdfWriter(dirdest+Comanda+"-"+Contador+".pdf"));
+            PdfDocument pdf = new PdfDocument(new PdfWriter(dirdest+ "\\" + Comanda+"-"+Contador+".pdf"));
 
 
             //Copio la primera pagina

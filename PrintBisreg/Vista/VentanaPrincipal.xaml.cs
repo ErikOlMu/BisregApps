@@ -350,8 +350,6 @@ namespace PrintBisreg.Vista
                     Application.Current.Dispatcher.Invoke(new Action(() =>
                     {
                         lbl_Process.Content = "Generando " + item.Codigo;
-                        
-
                     }));
                     //Miramos si esta agotado
                     if (!Reglas.ConsultaAgotado(item))
@@ -377,7 +375,7 @@ namespace PrintBisreg.Vista
                             //Miramos si es un plotter
                             if (!Reglas.ConsultaPlotter(item))
                             {
-                                PDFPlotter.CrearPlancha(settings.CarpetaSalida + "\\" + item.Pedido + item.Codigo, item.Pedido, rutadiseño, item.Codigo + " " + item.Pedido, settings.AnchoMaximo, settings.AltoMaximo, Copias, new Margin(settings.MargenAlto, settings.MargenAncho), new Margin(settings.PaddingAlto, settings.MargenAncho), settings.Sentido, settings.Info);
+                                PDFPlotter.CrearPlancha(settings.CarpetaSalida, item.Pedido + item.Codigo, rutadiseño, item.Codigo + " " + item.Pedido, settings.AnchoMaximo, settings.AltoMaximo, Copias, new Margin(settings.MargenAlto, settings.MargenAncho), new Margin(settings.PaddingAlto, settings.MargenAncho), settings.Sentido, settings.Info);
                             }
                             else
                             {
