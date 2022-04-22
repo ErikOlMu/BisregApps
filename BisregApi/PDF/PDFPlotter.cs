@@ -125,7 +125,8 @@ namespace BisregApi.PDF
             if (Info)
             {
                 Paragraph p = new Paragraph();
-                
+                p.SetMaxWidth((float)TamañoInfo);
+
                 while (getRealParagraphWidth(tag,p) < page.GetPageSize().GetHeight())
                 {
                     p.Add(item.Tipo+"-"+item.Pueblo+"-").SetTextAlignment(TextAlignment.LEFT);

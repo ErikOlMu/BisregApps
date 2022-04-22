@@ -343,7 +343,6 @@ namespace PrintBisreg.Vista
                 {
                     pbr_Generar.Maximum = Referencias.Count;
                     pbr_Generar.Value = 0;
-
                 }));
             //-----------------Nota Erik Revisar Gestion de Copias
             foreach (ItemProduccion item in Referencias)
@@ -359,8 +358,6 @@ namespace PrintBisreg.Vista
                         //revisamos si existe el diseño
                         if (rutadiseño != "")
                         {
-
-
                             //Calculo las Copias
                             int Copias = item.Copias;
 
