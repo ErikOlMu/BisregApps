@@ -165,6 +165,7 @@
     <Compile Include="ControlesWPF\CanvasViewer.xaml.cs">
       <DependentUpon>CanvasViewer.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Diseño\ItemProduccion.cs" />
     <Compile Include="Estructuras\Sizes.cs" />
     <Compile Include="PDF\Margin.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

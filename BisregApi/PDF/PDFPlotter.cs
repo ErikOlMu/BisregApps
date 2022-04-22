@@ -10,6 +10,9 @@ using iText.Kernel.Font;
 using iText.IO.Font.Constants;
 using iText.Layout;
 using iText.Layout.Properties;
+using BisregApi.Diseño;
+using iText.Layout.Renderer;
+using iText.Layout.Layout;
 
 namespace BisregApi.PDF
 {
@@ -30,8 +33,14 @@ namespace BisregApi.PDF
         //Contador es el contador de Plancha que lleva ya que al haber mas copias de las que caben en una plancha este metodo es recursivo y se invoca a si mismo
 
         //Metodo para crear una plancha Genero Personalizado
-        public static int CrearPlancha(string dirdest,string Comanda, string Source,string TextInfo, double MaxWidth, double MaxHeight, int Copias , Margin MarginObject , Margin PaddingPlotter , bool Vertical = true , bool Info = true,double TamañoInfo = 20 , int Contador = 0)
+        public static int CrearPlancha(ItemProduccion item ,string dirdest, string Source, double MaxWidth, double MaxHeight, int Copias , Margin MarginObject , Margin PaddingPlotter , bool Vertical = true , bool Info = true,double TamañoInfo = 20 , int Contador = 0)
         {
+
+            string Comanda = item.Pedido + item.Codigo;
+            string TextInfo = item.Codigo + " " + item.Pedido;
+
+
+
             //Si no esta activada la Info le quitamos el tamaño
             if (!Info) TamañoInfo = 0;
 
@@ -66,7 +75,7 @@ namespace BisregApi.PDF
             if (Columnas * Filas < Copias)
             {
                 //Volvemos a sumar el padding a la hora de crear otra plancha
-                if (Columnas != 0 || Filas != 0) CrearPlancha(dirdest,Comanda, Source,TextInfo, MaxWidth + (PaddingPlotter.MarginWidth* 2) + TamañoInfo, MaxHeight + (PaddingPlotter.MarginHeight* 2), (Copias - (Columnas * Filas)), MarginObject, PaddingPlotter, Vertical,Info,TamañoInfo,Contador+1);
+                if (Columnas != 0 || Filas != 0) CrearPlancha(item,dirdest, Source, MaxWidth + (PaddingPlotter.MarginWidth* 2) + TamañoInfo, MaxHeight + (PaddingPlotter.MarginHeight* 2), (Copias - (Columnas * Filas)), MarginObject, PaddingPlotter, Vertical,Info,TamañoInfo,Contador+1);
                 //Error 0002 No cabe ningun objeto, Aumente el tamaño maximo o reduzca el origen
                 else return 2;
                //Y dejo al que esta creandose completo
@@ -108,17 +117,30 @@ namespace BisregApi.PDF
 
             PdfPage page = pdf.AddNewPage(new PageSize(((float)origWidth * Columnas)-((float)MarginObject.MarginWidth) + ((float)PaddingPlotter.MarginWidth * 2)+ (float)TamañoInfo, ((float)origHeight * Filas) - ((float)MarginObject.MarginHeight)+((float)PaddingPlotter.MarginHeight* 2)));
             Canvas = new PdfCanvas(page);
+            Canvas tag = new Canvas(page, new Rectangle(0, 0, (float)TamañoInfo, page.GetPageSize().GetHeight()));
 
 
 
             //Si quieres añadir la informacion al lado
             if (Info)
             {
-                Paragraph p = new Paragraph().Add(TextInfo).SetTextAlignment(TextAlignment.LEFT);
-                p.SetFontSize((float)TamañoInfo/2);
-                p.SetRotationAngle(-1.571);
+                Paragraph p = new Paragraph();
                 
-                Canvas tag = new Canvas(page, new Rectangle(0, 0, (float)TamañoInfo, page.GetPageSize().GetHeight()));
+                while (getRealParagraphWidth(tag,p) < page.GetPageSize().GetHeight())
+                {
+                    p.Add(item.Tipo+"-"+item.Pueblo+"-").SetTextAlignment(TextAlignment.LEFT);
+
+
+                    p.Add(new Text(item.Base).SetBold());
+
+                    p.Add("-"+item.Diseño+" "+item.Pedido).SetTextAlignment(TextAlignment.LEFT);
+                    p.SetFontSize((float)TamañoInfo / 2);
+
+                }
+
+                p.SetRotationAngle(-1.571);
+
+
                 tag.Add(p);
                 tag.Close();
             }
@@ -163,6 +185,19 @@ namespace BisregApi.PDF
             
 
 
+        }
+
+        private static float getRealParagraphWidth(Canvas doc, Paragraph paragraph)
+        {
+
+                // Create renderer tree
+                IRenderer paragraphRenderer = paragraph.CreateRendererSubTree();
+                // Do not forget setParent(). Set the dimensions of the viewport as needed
+                LayoutResult result = paragraphRenderer.SetParent(doc.GetRenderer()).
+                        Layout(new LayoutContext(new LayoutArea(1, new Rectangle(1000, 100))));
+                // LayoutResult#getOccupiedArea() contains the information you need
+                //return result.getOccupiedArea().getBBox().getWidth();
+                return ((ParagraphRenderer)paragraphRenderer).GetMinMaxWidth().GetMaxWidth();
         }
 
     }

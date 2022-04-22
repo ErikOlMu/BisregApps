@@ -9,6 +9,7 @@ using System.Windows;
 using BisregApi.SQLite;
 using BisregApi.Utilidades;
 using System.Data.SQLite;
+using BisregApi.Diseño;
 
 
 namespace PrintBisreg.Modulos

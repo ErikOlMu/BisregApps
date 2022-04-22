@@ -26,7 +26,21 @@ namespace BisregApi.Utilidades
         {
             return Math.Round((cm / PixelUnitFactor.Cm), 2) + "cm";
         }
-        
-
+        public static double Px2cm(double px, double ppp)
+        {
+            return (px * 2.54) / ppp;
+        }
+        public static double cm2Px(double cm, double ppp)
+        {
+            return (cm * ppp) / 2.54;
+        }
+        public static double Px2mm(double px, double ppp)
+        {
+            return Px2cm(px, ppp)*10;
+        }
+        public static double mm2Px(double mm, double ppp)
+        {
+            return cm2Px(mm/10,ppp);
+        }
     }
 }
