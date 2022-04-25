@@ -29,9 +29,11 @@ namespace BisregApi.Utilidades
                 }
 
 
-                if (printDialog.ShowDialog().Value) printDialog.PrintDocument(paginator, "File");
-                
-            
+#pragma warning disable CS8629 // Un tipo que acepta valores NULL puede ser nulo.
+            if (printDialog.ShowDialog().Value) printDialog.PrintDocument(paginator, "File");
+#pragma warning restore CS8629 // Un tipo que acepta valores NULL puede ser nulo.
+
+
         }
     }
 

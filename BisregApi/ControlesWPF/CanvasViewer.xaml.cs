@@ -141,7 +141,9 @@ namespace BisregApi.ControlesWPF
 
                 if (targetBefore.HasValue)
                 {
+#pragma warning disable CS8629 // Un tipo que acepta valores NULL puede ser nulo.
                     double dXInTargetPixels = targetNow.Value.X - targetBefore.Value.X;
+#pragma warning restore CS8629 // Un tipo que acepta valores NULL puede ser nulo.
                     double dYInTargetPixels = targetNow.Value.Y - targetBefore.Value.Y;
 
                     double multiplicatorX = e.ExtentWidth / grid.Width;

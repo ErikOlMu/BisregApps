@@ -17,6 +17,11 @@ using iText.Layout.Borders;
 using iText.Kernel.Pdf.Colorspace;
 using iText.Kernel.Pdf.Function;
 using iText.Kernel.Colors;
+using iText.Pdfoptimizer;
+using iText.Pdfoptimizer.Handlers;
+using iText.Pdfoptimizer.Handlers.Imagequality.Processors;
+using iText.Pdfoptimizer.Handlers.Converters;
+using System.IO;
 
 namespace BisregApi.PDF
 {
@@ -201,13 +206,18 @@ namespace BisregApi.PDF
         {
 
                 IRenderer paragraphRenderer = paragraph.CreateRendererSubTree();
-
+            try
+            {
                 paragraphRenderer.SetParent(doc.GetRenderer()).
-                        Layout(new LayoutContext(new LayoutArea(1, new Rectangle(1000, 100))));
+                                        Layout(new LayoutContext(new LayoutArea(1, new Rectangle(1000, 100))));
+            }
+            catch
+            {
+                //Excepcion por null, no afecta al funcionamiento del metodo
+            }
 
                 return ((ParagraphRenderer)paragraphRenderer).GetMinMaxWidth().GetMaxWidth();
         }
-
         private static PdfSpecialCs.Separation getCutContour()
         {
 
