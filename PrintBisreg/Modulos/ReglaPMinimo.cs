@@ -10,6 +10,15 @@ namespace PrintBisreg.Modulos
 {
     internal class ReglaPMinimo
     {
+        public ReglaPMinimo(string tipo, string pueblo, string @base, string diseño, long? cantidad)
+        {
+            Tipo = tipo;
+            Pueblo = pueblo;
+            Base = @base;
+            Diseño = diseño;
+            Cantidad = cantidad;
+        }
+
         [CampoSQL(PrimaryKey = true, NotNull = true, Default = "A")]
         public string Tipo { get; set; }
 

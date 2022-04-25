@@ -9,6 +9,14 @@ namespace PrintBisreg.Modulos
 {
     internal class ReglaPlotter
     {
+        public ReglaPlotter(string tipo, string pueblo, string @base, string diseño)
+        {
+            Tipo = tipo;
+            Pueblo = pueblo;
+            Base = @base;
+            Diseño = diseño;
+        }
+
         [CampoSQL(PrimaryKey = true, NotNull = true, Default = "A")]
         public string Tipo { get; set; }
 

@@ -46,7 +46,6 @@ namespace PrintBisreg.Modulos
 
 
         }
-
         public bool DBValida()
         {
 
@@ -57,14 +56,10 @@ namespace PrintBisreg.Modulos
         {
             return gestor.GetDataTable(table);
         }
-
-
-
         public void SaveDataTable(DataTable table)
         {
             gestor.SaveDataTable(table);
         }
-
         public void GenerarTablas()
         {
             gestor.AutoGenerarTablasSQL(typeof(ReglaCantidad));
@@ -72,8 +67,6 @@ namespace PrintBisreg.Modulos
             gestor.AutoGenerarTablasSQL(typeof(ReglaAgotados));
             gestor.AutoGenerarTablasSQL(typeof(ReglaPlotter));
         }
-
-
         //Consulta si le afecta la regla de agotados
         public bool ConsultaAgotado(ItemProduccion item)
         {
@@ -96,18 +89,19 @@ namespace PrintBisreg.Modulos
                     {
                         while (reader.Read())
                         {
-                            ReglaCantidad regla = new ReglaCantidad();
-                            regla.Tipo = reader["Tipo"].ToString();
-                            regla.Pueblo = reader["Pueblo"].ToString();
-                            regla.Base = reader["Base"].ToString();
-                            regla.Diseño = reader["Diseño"].ToString();
-                            regla.Cantidad = Int64.Parse(reader["Cantidad"].ToString());
+                            ReglaCantidad regla = new ReglaCantidad(
+                            reader["Tipo"].ToString() ?? "",
+                            reader["Pueblo"].ToString() ?? "",
+                            reader["Base"].ToString() ?? "",
+                            reader["Diseño"].ToString() ?? "",
+                            Int64.Parse(reader["Cantidad"].ToString() ?? "0"));
                             list.Add(regla);
                         }
                         if (list.Count != 0)
                         {
                             var max = list.Max(x => x.Nivel());
-                            return (int)list.First(x => x.Nivel() == max).Cantidad;
+                            int cantidad = ((int?)list.First(x => x.Nivel() == max).Cantidad) ?? 1;
+                            return cantidad;
                         }
                         else
                         {
@@ -119,10 +113,6 @@ namespace PrintBisreg.Modulos
 
             
         }
-
-
-        
-
         //Obtener la Cantidad de la Regla  ReglaPMinimo con mas Nivel
         public int ConsultaReglaPMinimo(ItemProduccion item)
         {
@@ -136,18 +126,18 @@ namespace PrintBisreg.Modulos
                     {
                         while (reader.Read())
                         {
-                            ReglaPMinimo regla = new ReglaPMinimo();
-                            regla.Tipo = reader["Tipo"].ToString();
-                            regla.Pueblo = reader["Pueblo"].ToString();
-                            regla.Base = reader["Base"].ToString();
-                            regla.Diseño = reader["Diseño"].ToString();
-                            regla.Cantidad = Int64.Parse(reader["Cantidad"].ToString());
+                            ReglaPMinimo regla = new ReglaPMinimo(
+                            reader["Tipo"].ToString() ?? "",
+                            reader["Pueblo"].ToString() ?? "",
+                            reader["Base"].ToString() ?? "",
+                            reader["Diseño"].ToString() ?? "",
+                            Int64.Parse(reader["Cantidad"].ToString() ?? ""));
                             list.Add(regla);
                         }
                         if (list.Count != 0)
                         {
                             var max = list.Max(x => x.Nivel());
-                            return (int)list.First(x => x.Nivel() == max).Cantidad;
+                            return (int?)list.First(x => x.Nivel() == max).Cantidad ?? 1;
                         }
                         else
                         {
@@ -159,8 +149,7 @@ namespace PrintBisreg.Modulos
 
 
         }
-
-        //Cpnsulta si le afecta la Regla de No Plotter
+        //Consulta si le afecta la Regla de No Plotter
         public bool ConsultaPlotter(ItemProduccion item)
         {
             using (var ctx = gestor.GetInstance())
@@ -169,7 +158,6 @@ namespace PrintBisreg.Modulos
                 return !(Convert.ToInt32(new SQLiteCommand(query, ctx).ExecuteScalar()) == 0);
             }
         }
-
         public string QueryReglaScalar(ItemProduccion item, string Tabla)
         {
             return "SELECT COUNT() FROM "+Tabla+" WHERE(Tipo = '" + item.Tipo + "' or Tipo = 'A') and (Pueblo = '" + item.Pueblo + "' or Pueblo = 'A') and (Base = '" + item.Base + "' or Base = 'A') and (Diseño = '" + item.Diseño + "' or Diseño = 'A')";

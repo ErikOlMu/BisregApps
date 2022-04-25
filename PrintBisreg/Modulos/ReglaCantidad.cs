@@ -9,6 +9,14 @@ namespace PrintBisreg.Modulos
 {
     public class ReglaCantidad
     {
+        public ReglaCantidad(string tipo, string pueblo, string @base, string diseño, long? cantidad)
+        {
+            Tipo = tipo;
+            Pueblo = pueblo;
+            Base = @base;
+            Diseño = diseño;
+            Cantidad = cantidad;
+        }
 
         [CampoSQL(PrimaryKey = true, NotNull = true, Default ="A")]
         public string Tipo { get; set; }
@@ -24,6 +32,7 @@ namespace PrintBisreg.Modulos
 
         [CampoSQL(PrimaryKey = false, NotNull = true, Default = "1")]
         public Int64? Cantidad { get; set; }
+
 
 
         public int Nivel()

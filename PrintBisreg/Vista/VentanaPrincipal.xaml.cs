@@ -9,7 +9,6 @@ using System.Drawing.Imaging;
 using System.IO;
 using System.Linq;
 using System.Threading;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -53,8 +52,12 @@ namespace PrintBisreg.Vista
             
             InitializeComponent();
 
+
+            //Cargamos los Datos de las rteglas
             ReloadBDD();
 
+
+            //enlazamos el objeto Referencias con el list_items
             lst_items.ItemsSource = Referencias;
 
 
@@ -67,6 +70,8 @@ namespace PrintBisreg.Vista
             
         }
 
+
+        //Metodo para añadir referencia desde el tbx_Referencia
         private void AñadirReferencia()
         {
             ItemProduccion item = new ItemProduccion(tbx_Referencia.Text, int.Parse(tbx_Copias.Text));
@@ -86,7 +91,25 @@ namespace PrintBisreg.Vista
             }
             
         }
+        //Añadir referencia al ListView
+        private void AñadirReferencia(string Referencia, int Copias, string Pedido)
+        {
+            ItemProduccion item = new ItemProduccion(Referencia, Copias, Pedido);
+            if (item.Valido)
+            {
+                Referencias.Add(item);
+                //Refresh el ItemSource
+                CollectionViewSource.GetDefaultView(lst_items.ItemsSource).Refresh();
 
+            }
+            else
+            {
+                LogWrite("El item '" + Referencia + "' no es valido");
+
+            }
+
+        }
+        //Metodo para poner la imagen de Recarga temporal al pdfviewer
         private static void StartReloadImage(System.Windows.Controls.Image img)
         {
 
@@ -121,7 +144,7 @@ namespace PrintBisreg.Vista
 
 
         }
-
+        //Recargar la Imagen por la que esta generada en el pdfviewer
         private static void ReloadImage(System.Windows.Controls.Image img)  
         {
             try
@@ -151,25 +174,54 @@ namespace PrintBisreg.Vista
             
 
         }
+        //Metodo principal para recargar el la imagen del pdfviewer en un Thread aparte
+        private static void GuardarAndReloadPDF(string ruta, Image imagen, Thread? Anterior, CancellationToken cancellationToken, CancellationTokenSource? cancellationTokenAnterior)
 
-        private void AñadirReferencia(string Referencia, int Copias,string Pedido)
         {
-            ItemProduccion item = new ItemProduccion(Referencia, Copias, Pedido);
-            if (item.Valido)
-            {
-                Referencias.Add(item);
-                //Refresh el ItemSource
-                CollectionViewSource.GetDefaultView(lst_items.ItemsSource).Refresh();
 
+            if (Anterior != null)
+            {
+                if (cancellationTokenAnterior != null) cancellationTokenAnterior.Cancel();
+                Anterior.Join();
             }
-            else
+            if (!cancellationToken.IsCancellationRequested)
             {
-                LogWrite("El item '" + Referencia + "' no es valido");
+                Application.Current.Dispatcher.Invoke(new Action(() =>
+                {
 
+                    StartReloadImage(imagen);
+
+                }));
+                GuardarImagenPDF(ruta);
+                Application.Current.Dispatcher.Invoke(new Action(() =>
+                {
+
+                    ReloadImage(imagen);
+
+                }));
             }
 
         }
+        //Guardar la primera pagina de un PDF como una imagen
+        public static void GuardarImagenPDF(string ruta)
+        {
+            var document = PdfDocument.Load(ruta);
+                var pageCount = document.PageCount;
 
+                var dpi = 300;
+
+            var image = document.Render(0, dpi, dpi, PdfRenderFlags.CorrectFromDpi);
+                
+                    var encoder = ImageCodecInfo.GetImageEncoders()
+                        .First(c => c.FormatID == ImageFormat.Jpeg.Guid);
+                    var encParams = new EncoderParameters(1);
+                    encParams.Param[0] = new EncoderParameter(Encoder.Quality, 100L);
+
+                    File.Delete(Directory.GetCurrentDirectory() + "//view.tmp");
+                    image.Save(Directory.GetCurrentDirectory() + "//view.tmp", encoder, encParams);
+
+        }
+        //Esxribir en el Log 
         private void LogWrite(string Texto)
         {
 
@@ -178,6 +230,7 @@ namespace PrintBisreg.Vista
 
 
         }
+        //Escribir en el Log desde otro Thread
         private static void LogWrite(string Texto, TextBlock tbk_Log, ScrollViewer slv_Log)
         {
 
@@ -186,47 +239,31 @@ namespace PrintBisreg.Vista
 
 
         }
-
-        private void tbx_Referencia_KeyDown(object sender, KeyEventArgs e)
+        //Metodo para cambiar la foto del pdfViewer, Usando Threads
+        private void CambiarFoto(ItemProduccion item)
         {
-            if (e.Key == Key.Enter)
+            if (item != null)
             {
-                AñadirReferencia();
-
-            }
-        }
-
-        private void btn_AñadirReferencia_Click(object sender, RoutedEventArgs e)
-        {
-            AñadirReferencia();
-        }
-
-        private void lst_items_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            ItemProduccion? item = null;
-            try
-            {
-                item = e.AddedItems[0] as ItemProduccion;
-                if (item != null)
+                string file = item.GetRutaDiseño(settings.CarpetaDiseños);
+                //Compruebo que exista el archivo y lo creo
+                if (File.Exists(file))
                 {
-                    string file = item.GetRutaDiseño(settings.CarpetaDiseños);
-
                     Thread? Anterior = RecargaImagenes;
                     CancellationTokenSource? TokenAnterior = TokenCancelar;
-
                     TokenCancelar = new CancellationTokenSource();
-                    RecargaImagenes = new Thread(() => GuardarAndReloadPDF(file, pdfViewer, Anterior,TokenCancelar.Token, TokenAnterior));
+                    RecargaImagenes = new Thread(() => GuardarAndReloadPDF(file, pdfViewer, Anterior, TokenCancelar.Token, TokenAnterior));
                     RecargaImagenes.Start();
-
+                }
+                else
+                {
+                    pdfViewer.Source = null;
+                    if (item != null) LogWrite("No se encuentra el diseño de '" + item.Codigo + "'.");
                 }
             }
-            catch
-            {
-                pdfViewer.Source = null;
-                if (item != null) LogWrite("No se encuentra el diseño de '" + item.Codigo + "'.");
-            }
+            
         }
-        private void btn_Importar_Click(object sender, RoutedEventArgs e)
+        //Metodo para importar uno o varios CSV al programa
+        private void ImportarCSV()
         {
             List<string> Files = Dialogos.OpenFiles();
             foreach (string file in Files)
@@ -238,9 +275,9 @@ namespace PrintBisreg.Vista
                     {
                         try
                         {
-                            string Referencia = dtRow[data.Columns[1]].ToString().Replace("\"", "");
-                            int Copias = int.Parse(dtRow[data.Columns[0]].ToString().Replace("\"", ""));
-                            AñadirReferencia(Referencia, Copias, System.IO.Path.GetFileNameWithoutExtension(file));
+                            string Referencia = (dtRow[data.Columns[1]].ToString() ?? "").Replace("\"", "");
+                            int Copias = int.Parse((dtRow[data.Columns[0]].ToString()?? "").Replace("\"", ""));
+                            AñadirReferencia(Referencia, Copias, Path.GetFileNameWithoutExtension(file));
                         }
                         catch
                         {
@@ -252,72 +289,91 @@ namespace PrintBisreg.Vista
                 {
                     LogWrite("El Archivo '" + file + "' no es un '.csv'");
                 }
-                
+
             }
         }
+        //Eventos de los Controles WPF
+        private void tbx_Referencia_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Enter)
+            {
+                AñadirReferencia();
 
+            }
+        }
+        private void btn_AñadirReferencia_Click(object sender, RoutedEventArgs e)
+        {
+            AñadirReferencia();
+        }
+        private void lst_items_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            var item = e.AddedItems[0] as ItemProduccion;
+            if (item != null) CambiarFoto(item);
+        }
+        private void btn_Importar_Click(object sender, RoutedEventArgs e)
+        {
+            ImportarCSV();
+        }
+        //Eventos Controles WPF de las Reglas
         private void btnGuardarReglasCantidad_Click(object sender, RoutedEventArgs e)
         {
             Reglas.SaveDataTable(dataTableCantidades);
             UpdateDataGridCantidades();
         }
-
         private void UpdateDataGridCantidades()
         {
             dataTableCantidades = Reglas.GetDataTable("ReglaCantidad");
             dtg_ReglasCantidad.ItemsSource = dataTableCantidades.DefaultView;
         }
-
         private void btnGuardarReglasPMinimo_Click(object sender, RoutedEventArgs e)
         {
             Reglas.SaveDataTable(dataTablePMinimo);
             UpdateDataGridPMinimo();
         }
-
         private void UpdateDataGridPMinimo()
         {
             dataTablePMinimo = Reglas.GetDataTable("ReglaPMinimo");
             dtg_ReglasPMinimo.ItemsSource = dataTablePMinimo.DefaultView;
         }
-
         private void btnGuardarReglasAgotados_Click(object sender, RoutedEventArgs e)
         {
             Reglas.SaveDataTable(dataTableAgotados);
             UpdateDataGridAgotados();
         }
-
         private void UpdateDataGridAgotados()
         {
             dataTableAgotados = Reglas.GetDataTable("ReglaAgotados");
             dtg_ReglasAgotados.ItemsSource = dataTableAgotados.DefaultView;
         }
-
         private void btnGuardarReglasPlotter_Click(object sender, RoutedEventArgs e)
         {
             Reglas.SaveDataTable(dataTablePlotter);
             UpdateDataGridPlotter();
         }
-
         private void UpdateDataGridPlotter()
         {
             dataTablePlotter = Reglas.GetDataTable("ReglaPlotter");
             dtg_ReglasPlotter.ItemsSource = dataTablePlotter.DefaultView;
         }
 
+        //Evento para eliminar las selecciones de el listview
         private void lst_items_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.Key == Key.Delete)
             {
-                try
-                {
-                    int index = (sender as ListView).SelectedIndex;
-                    string referencia = Referencias[index].Codigo;
-                    Referencias.RemoveAt(index);
+                try { 
+
+                    foreach(ItemProduccion item in (sender as ListView ?? new ListView()).SelectedItems)
+                    {
+
+                        Referencias.Remove(item);
+                        LogWrite("Se a eliminado la Referencia: " + item.Codigo);
+                    }
+
 
                     ICollectionView view = CollectionViewSource.GetDefaultView(Referencias);
                     view.Refresh();
 
-                    LogWrite("Se a eliminado la Referencia: " + referencia);
                 }
                 catch
                 {
@@ -334,7 +390,7 @@ namespace PrintBisreg.Vista
             Thread GenerarThread = new Thread(() => Generar(Referencias, Reglas, settings, tbk_Log, slv_Log,lbl_Process, pbr_Generar));
             GenerarThread.Start();
         }
-
+        //Thread para generar el plotter
         public static void Generar(List<ItemProduccion> Referencias,CollecionReglas Reglas,Settings settings, TextBlock tbk_Log, ScrollViewer slv_Log,Label lbl_Process, ProgressBar pbr_Generar)
         {
             if (Referencias.Count != 0)
@@ -464,7 +520,6 @@ namespace PrintBisreg.Vista
                 }
             }
         }
-
         private void tbx_AnchoMaximo_TextChanged(object sender, TextChangedEventArgs e)
         {
             if (tbx_AnchoMaximo.Text == "")
@@ -484,7 +539,6 @@ namespace PrintBisreg.Vista
                 }
             }
         }
-
         private void tbx_PaddingAlto_TextChanged(object sender, TextChangedEventArgs e)
         {
             if (tbx_PaddingAlto.Text == "")
@@ -505,7 +559,6 @@ namespace PrintBisreg.Vista
             }
 
         }
-
         private void tbx_PaddingAncho_TextChanged(object sender, TextChangedEventArgs e)
         {
             if (tbx_PaddingAncho.Text == "")
@@ -525,7 +578,6 @@ namespace PrintBisreg.Vista
                 }
             }
         }
-
         private void tbx_MargenAlto_TextChanged(object sender, TextChangedEventArgs e)
         {
             if (tbx_MargenAlto.Text == "")
@@ -545,7 +597,6 @@ namespace PrintBisreg.Vista
                 }
             }
         }
-
         private void tbx_MargenAncho_TextChanged(object sender, TextChangedEventArgs e)
         {
             if (tbx_MargenAncho.Text == "")
@@ -566,7 +617,21 @@ namespace PrintBisreg.Vista
             }
 
         }
-
+        private void tbx_Datos_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            settings.rutaBDD = tbx_Datos.Text;
+            settings.Save();
+        }
+        private void tbx_Diseños_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            settings.CarpetaDiseños = tbx_Diseños.Text;
+            settings.Save();
+        }
+        private void tbx_Salida_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            settings.CarpetaSalida = tbx_Salida.Text;
+            settings.Save();
+        }
         private void btn_Sentido_Click(object sender, RoutedEventArgs e)
         {
 
@@ -584,7 +649,6 @@ namespace PrintBisreg.Vista
             settings.Save();
 
         }
-
         private void btn_Info_Click(object sender, RoutedEventArgs e)
         {
             if (btn_Info.Content.ToString() == "On")
@@ -615,7 +679,36 @@ namespace PrintBisreg.Vista
             settings.Save();
 
         }
+        private void btn_Datos_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                tbx_Datos.Text = Dialogos.OpenFile();
+            }
+            catch { }
+        }
+        private void btn_RecargarDatos_Click(object sender, RoutedEventArgs e)
+        {
+            if (ReloadBDD()) MessageBox.Show("Datos Cargados Correctamente");
+        }
+        private void btn_Diseños_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                tbx_Diseños.Text = Dialogos.OpenFolder();
+            }
+            catch { }
+        }
+        private void btn_Salida_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                tbx_Salida.Text = Dialogos.OpenFolder();
+            }
+            catch { }
+        }
 
+        //Añado los datos a las Pestaña settings
         private void StartSettings()
         {
             tbx_AltoMaximo.Text = settings.AltoMaximo.ToString();
@@ -639,6 +732,7 @@ namespace PrintBisreg.Vista
 
         }
 
+        //Evento para solo permitir numeros y comas
         private void tbx_PuntoXComa_KeyDown(object sender, KeyEventArgs e)
         {
             Key newKey = e.Key;
@@ -666,31 +760,11 @@ namespace PrintBisreg.Vista
         
         }
 
-        private void tbx_Datos_TextChanged(object sender, TextChangedEventArgs e)
-        {   
-            settings.rutaBDD = tbx_Datos.Text;
-            settings.Save();
-        }
-
-        private void btn_Datos_Click(object sender, RoutedEventArgs e)
-        {
-            try
-            {
-                tbx_Datos.Text = Dialogos.OpenFile();
-            }
-            catch{}
-        }
-
-        private void btn_RecargarDatos_Click(object sender, RoutedEventArgs e)
-        {
-            if (ReloadBDD()) MessageBox.Show("Datos Cargados Correctamente");
-        }
-
+        //Compruebo que la Base de Datos SQLite sea valida
         private bool ReloadBDD()
         {
             try
             {
-                Reglas = null;
                 Reglas = new CollecionReglas();
                 if (!Reglas.DBValida())
                 {
@@ -713,86 +787,10 @@ namespace PrintBisreg.Vista
             }
         }
 
-        private void tbx_Diseños_TextChanged(object sender, TextChangedEventArgs e)
-        {
-            settings.CarpetaDiseños = tbx_Diseños.Text;
-            settings.Save();
-        }
 
-        private void btn_Diseños_Click(object sender, RoutedEventArgs e)
-        {
-            try
-            {
-                tbx_Diseños.Text = Dialogos.OpenFolder();
-            }
-            catch { }
-        }
+        
 
-        private void tbx_Salida_TextChanged(object sender, TextChangedEventArgs e)
-        {
-            settings.CarpetaSalida = tbx_Salida.Text;
-            settings.Save();
-        }
 
-        private void btn_Salida_Click(object sender, RoutedEventArgs e)
-        {
-            try
-            {
-                tbx_Salida.Text = Dialogos.OpenFolder();
-            }
-            catch { }
-        }
-
-        private static void GuardarAndReloadPDF(string ruta, System.Windows.Controls.Image imagen, Thread? Anterior, CancellationToken cancellationToken, CancellationTokenSource? cancellationTokenAnterior)
-
-        {
-            
-                if (Anterior != null)
-                {
-                    if (cancellationTokenAnterior != null) cancellationTokenAnterior.Cancel();
-                    Anterior.Join();
-                }
-                if (!cancellationToken.IsCancellationRequested)
-                {
-                    Application.Current.Dispatcher.Invoke(new Action(() =>
-                    {
-                        
-                            StartReloadImage(imagen);
-                        
-                    }));
-                    GuardarImagenPDF(ruta);
-                    Application.Current.Dispatcher.Invoke(new Action(() =>
-                    {
-                        
-                        ReloadImage(imagen);
-                        
-                    }));
-                }
-            
-        }
-
-        public static void GuardarImagenPDF(string ruta)
-        {
-            using (var document = PdfDocument.Load(ruta))
-            {
-                var pageCount = document.PageCount;
-
-                var dpi = 300;
-
-                using (var image = document.Render(0, dpi, dpi, PdfRenderFlags.CorrectFromDpi))
-                {
-                    var encoder = ImageCodecInfo.GetImageEncoders()
-                        .First(c => c.FormatID == ImageFormat.Jpeg.Guid);
-                    var encParams = new EncoderParameters(1);
-                    encParams.Param[0] = new EncoderParameter(
-                        System.Drawing.Imaging.Encoder.Quality, 100L);
-
-                    File.Delete(Directory.GetCurrentDirectory() + "//view.tmp");
-                    image.Save(Directory.GetCurrentDirectory() + "//view.tmp", encoder, encParams);
-                }
-            }
-
-        }
 
         
     }
