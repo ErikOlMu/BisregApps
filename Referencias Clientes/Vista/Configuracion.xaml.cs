@@ -38,19 +38,19 @@ namespace Referencias_Clientes.Vista
         //Inicializar Vista
         private void InicializarApp()
         {
-            //Si no existe el fichero config lo creamos
-            if (!File.Exists(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\" + AppDomain.CurrentDomain.FriendlyName.Replace(".exe", "") + "\\" + SettingsFile))
+            //Inicializamos Settings
+            // Si no existe el fichero config lo creamos
+            if (!File.Exists(Settings.DirectorioAppData + Settings.file))
             {
                 settings = new Settings();
-                settings.file = SettingsFile;
             }
             else
             {
-                settings = (Settings)Config.getConfig(SettingsFile, typeof(Settings));
+                settings = (Settings)Config.getConfig(Settings.file, typeof(Settings));
             }
+            settings.Save();
 
-            
-            
+
             //Cargar Datos de Settings
             cbx_Fuente.ItemsSource = Fonts.SystemFontFamilies;
             tbx_Columnas.Text = settings.Columnas.ToString();
