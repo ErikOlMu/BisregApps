@@ -63,6 +63,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Modulos\PerfilCatalogo.cs" />
     <Compile Include="Modulos\Settings.cs" />
     <Compile Include="Vista\Principal.xaml.cs">
       <DependentUpon>Principal.xaml</DependentUpon>

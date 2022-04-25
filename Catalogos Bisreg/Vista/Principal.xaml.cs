@@ -39,16 +39,17 @@ namespace Catalogos_Bisreg.Vista
         //Inicializar Vista
         private void InicializarApp()
         {
-            //Si no existe el fichero config lo creamos
-            if (!File.Exists(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\" + AppDomain.CurrentDomain.FriendlyName.Replace(".exe", "") + "\\" + SettingsFile))
+            //Inicializamos Settings
+            // Si no existe el fichero config lo creamos
+            if (!File.Exists(Settings.DirectorioAppData + Settings.file))
             {
                 settings = new Settings();
-                settings.file = SettingsFile;
             }
             else
             {
-                settings = (Settings) Config.getConfig("Config.conf", typeof(Settings));
+                settings = (Settings)Config.getConfig(Settings.file, typeof(Settings));
             }
+            settings.Save();
 
             //Añado las configuraciones a la vista
             tbx_DirectorioImagenes.Text = settings.Directorio_IMG;
