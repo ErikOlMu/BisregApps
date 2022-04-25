@@ -7,6 +7,11 @@
     <UseWPF>true</UseWPF>
     <ApplicationIcon>Vista\IMG\logo.ico</ApplicationIcon>
     <Version>1.0.0</Version>
+    <DebugType>embedded</DebugType>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <Optimize>True</Optimize>
   </PropertyGroup>
 
   <ItemGroup>
@@ -14,6 +19,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <EmbeddedResource Include="Reload.gif">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+      <CustomToolNamespace></CustomToolNamespace>
+    </EmbeddedResource>
     <Content Include="Vista\IMG\logo.ico" />
   </ItemGroup>
 
@@ -30,7 +39,7 @@
 
   <ItemGroup>
     <Reference Include="BisregApi">
-      <HintPath>..\BisregApi\bin\Debug\BisregApi.dll</HintPath>
+      <HintPath>..\BisregApi\bin\Release\BisregApi.dll</HintPath>
     </Reference>
   </ItemGroup>
 
@@ -39,8 +48,29 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Update="Reload.gif">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    <Compile Update="Properties\Resources.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Update="Properties\Settings.Designer.cs">
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+    </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Update="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
   </ItemGroup>
 

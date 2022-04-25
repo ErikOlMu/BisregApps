@@ -17,6 +17,8 @@ using System.Windows.Media.Imaging;
 using WpfAnimatedGif;
 using BisregApi.PDF;
 using BisregApi.Diseño;
+using System.Reflection;
+
 namespace PrintBisreg.Vista
 {
     /// <summary>
@@ -121,7 +123,9 @@ namespace PrintBisreg.Vista
 
                 var bi = new BitmapImage();
 
-                using (var fs = new FileStream(Directory.GetCurrentDirectory() + "//Reload.gif", FileMode.Open))
+                var assembly = Assembly.GetExecutingAssembly();
+                var resourcename = "PrintBisreg.Reload.gif";
+                using (var fs = assembly.GetManifestResourceStream(resourcename))
                 {
                     bi.BeginInit();
                     bi.StreamSource = fs;
