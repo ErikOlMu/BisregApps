@@ -373,7 +373,7 @@ namespace PrintBisreg.Vista
                             //Miramos si es un plotter
                             if (!Reglas.ConsultaPlotter(item))
                             {
-                                PDFPlotter.CrearPlancha(item,settings.CarpetaSalida, rutadiseño, Conversor.mm2Px(settings.AnchoMaximo,72), Conversor.mm2Px(settings.AltoMaximo, 72), Copias, new Margin(Conversor.mm2Px(settings.MargenAlto, 72), Conversor.mm2Px(settings.MargenAncho, 72)), new Margin(Conversor.mm2Px(settings.PaddingAlto, 72), Conversor.mm2Px(settings.MargenAncho, 72)), settings.Sentido, settings.Info);
+                                PDFPlotter.CrearPlancha(item,settings.CarpetaSalida, rutadiseño, Conversor.mm2Px(settings.AnchoMaximo,72), Conversor.mm2Px(settings.AltoMaximo, 72), Copias, new Margin(Conversor.mm2Px(settings.MargenAlto, 72), Conversor.mm2Px(settings.MargenAncho, 72)), new Margin(Conversor.mm2Px(settings.PaddingAlto, 72), Conversor.mm2Px(settings.MargenAncho, 72)), settings.Sentido, settings.Info,CutContour:true);
                             }
                             else
                             {

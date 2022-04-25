@@ -13,6 +13,10 @@ using iText.Layout.Properties;
 using BisregApi.Diseño;
 using iText.Layout.Renderer;
 using iText.Layout.Layout;
+using iText.Layout.Borders;
+using iText.Kernel.Pdf.Colorspace;
+using iText.Kernel.Pdf.Function;
+using iText.Kernel.Colors;
 
 namespace BisregApi.PDF
 {
@@ -33,7 +37,7 @@ namespace BisregApi.PDF
         //Contador es el contador de Plancha que lleva ya que al haber mas copias de las que caben en una plancha este metodo es recursivo y se invoca a si mismo
 
         //Metodo para crear una plancha Genero Personalizado
-        public static int CrearPlancha(ItemProduccion item ,string dirdest, string Source, double MaxWidth, double MaxHeight, int Copias , Margin MarginObject , Margin PaddingPlotter , bool Vertical = true , bool Info = true,double TamañoInfo = 20 , int Contador = 0)
+        public static int CrearPlancha(ItemProduccion item ,string dirdest, string Source, double MaxWidth, double MaxHeight, int Copias , Margin MarginObject , Margin PaddingPlotter , bool Vertical = true , bool Info = true,double TamañoInfo = 20 ,bool CutContour = false, int Contador = 0)
         {
 
             string Comanda = item.Pedido + item.Codigo;
@@ -75,7 +79,7 @@ namespace BisregApi.PDF
             if (Columnas * Filas < Copias)
             {
                 //Volvemos a sumar el padding a la hora de crear otra plancha
-                if (Columnas != 0 || Filas != 0) CrearPlancha(item,dirdest, Source, MaxWidth + (PaddingPlotter.MarginWidth* 2) + TamañoInfo, MaxHeight + (PaddingPlotter.MarginHeight* 2), (Copias - (Columnas * Filas)), MarginObject, PaddingPlotter, Vertical,Info,TamañoInfo,Contador+1);
+                if (Columnas != 0 || Filas != 0) CrearPlancha(item,dirdest, Source, MaxWidth + (PaddingPlotter.MarginWidth* 2) + TamañoInfo, MaxHeight + (PaddingPlotter.MarginHeight* 2), (Copias - (Columnas * Filas)), MarginObject, PaddingPlotter, Vertical,Info,TamañoInfo,CutContour,Contador+1);
                 //Error 0002 No cabe ningun objeto, Aumente el tamaño maximo o reduzca el origen
                 else return 2;
                //Y dejo al que esta creandose completo
@@ -117,31 +121,40 @@ namespace BisregApi.PDF
 
             PdfPage page = pdf.AddNewPage(new PageSize(((float)origWidth * Columnas)-((float)MarginObject.MarginWidth) + ((float)PaddingPlotter.MarginWidth * 2)+ (float)TamañoInfo, ((float)origHeight * Filas) - ((float)MarginObject.MarginHeight)+((float)PaddingPlotter.MarginHeight* 2)));
             Canvas = new PdfCanvas(page);
-            Canvas tag = new Canvas(page, new Rectangle(0, 0, (float)TamañoInfo, page.GetPageSize().GetHeight()));
 
+            //Posicion Canvas, Tamaño es 20
+            Canvas tag = new Canvas(page, new Rectangle((float)(0-(TamañoInfo/4)), 0,(float) TamañoInfo/2, page.GetPageSize().GetHeight()));
 
-
+            
             //Si quieres añadir la informacion al lado
             if (Info)
             {
-                Paragraph p = new Paragraph();
-                p.SetMaxWidth((float)TamañoInfo);
+                
+                //Añadir CutContour
+                if (CutContour)
+                {
+                    Canvas.Rectangle(0.5f, 0.5f, (float)TamañoInfo * 0.7f, page.GetPageSize().GetHeight() - 1f).SetStrokeColor(new Separation(getCutContour())).Stroke();
+                    Canvas.SetStrokeColor(new DeviceCmyk(0f, 0f, 0f, 1f));
+                }
+                
 
+                Paragraph p = new Paragraph();
+                p.SetFontSize((float)TamañoInfo/2);
+                p.SetTextAlignment(TextAlignment.LEFT);
+                p.SetVerticalAlignment(VerticalAlignment.MIDDLE);
                 while (getRealParagraphWidth(tag,p) < page.GetPageSize().GetHeight())
                 {
-                    p.Add(item.Tipo+"-"+item.Pueblo+"-").SetTextAlignment(TextAlignment.LEFT);
-
+                    p.Add(" "+item.Tipo+"-"+item.Pueblo+"-");
 
                     p.Add(new Text(item.Base).SetBold());
 
-                    p.Add("-"+item.Diseño+" "+item.Pedido).SetTextAlignment(TextAlignment.LEFT);
-                    p.SetFontSize((float)TamañoInfo / 2);
+                    p.Add("-"+item.Diseño+"-"+item.Pedido);
+
 
                 }
-
                 p.SetRotationAngle(-1.571);
 
-
+                
                 tag.Add(p);
                 tag.Close();
             }
@@ -182,23 +195,36 @@ namespace BisregApi.PDF
             }
             //Todo OK
             return 0;
-
-            
-
-
         }
 
         private static float getRealParagraphWidth(Canvas doc, Paragraph paragraph)
         {
 
-                // Create renderer tree
                 IRenderer paragraphRenderer = paragraph.CreateRendererSubTree();
-                // Do not forget setParent(). Set the dimensions of the viewport as needed
-                LayoutResult result = paragraphRenderer.SetParent(doc.GetRenderer()).
+
+                paragraphRenderer.SetParent(doc.GetRenderer()).
                         Layout(new LayoutContext(new LayoutArea(1, new Rectangle(1000, 100))));
-                // LayoutResult#getOccupiedArea() contains the information you need
-                //return result.getOccupiedArea().getBBox().getWidth();
+
                 return ((ParagraphRenderer)paragraphRenderer).GetMinMaxWidth().GetMaxWidth();
+        }
+
+        private static PdfSpecialCs.Separation getCutContour()
+        {
+
+            //Color CMYK
+            float c = 0.0f;
+            float m = 1.0f;
+            float y = 0.0f;
+            float k = 0.0f;
+
+            float[] c0 = new float[] { 0, 0, 0, 0 };
+            float[] c1 = new float[] { c, m, y, k };
+            PdfFunction pdfFunction = new PdfFunction.Type2(new PdfArray(new float[] { 0, 1 }), null, new PdfArray(c0),
+                    new PdfArray(c1), new PdfNumber(1));
+            PdfSpecialCs.Separation cs = new PdfSpecialCs.Separation("CutContour",
+                    new DeviceCmyk(c, m, y, k).GetColorSpace(), pdfFunction);
+
+            return cs;
         }
 
     }
