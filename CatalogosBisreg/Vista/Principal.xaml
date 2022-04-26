@@ -1,0 +1,86 @@
+﻿<Window x:Class="CatalogosBisreg.Vista.Principal"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:CatalogosBisreg.Vista"
+        xmlns:uc="clr-namespace:BisregApi.ControlesWPF;assembly=BisregApi"
+        mc:Ignorable="d"
+        Title="Catalogos Bisreg" Height="470" Width="800" MinHeight="470" MinWidth="800" Icon="pack://application:,,/BisregApi;Component/IMG/Foto72px.ico">
+    <Window.Resources>
+        
+        <Style x:Key="ImagenTrigger" TargetType="DataGridRow">
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding IMG}" Value="True">
+                    <Setter Property="Background" Value="Green"/>
+                </DataTrigger>
+                <DataTrigger Binding="{Binding IMG}" Value="False">
+                    <Setter Property="Background" Value="Red"/>
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
+    </Window.Resources>
+
+    <TabControl>
+        
+        <TabItem Header="Generar Catalogo">
+            <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="150"/>
+            <RowDefinition Height="1*"/>
+        </Grid.RowDefinitions>
+        <Grid Grid.Row="0" VerticalAlignment="Top">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="1*" MaxWidth="300"/>
+                <ColumnDefinition Width="1*" MaxWidth="300"/>
+                <ColumnDefinition Width="0.1*"/>
+                <ColumnDefinition Width="1*" MaxWidth="300"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="2*"/>
+                <RowDefinition Height="3*"/>
+            </Grid.RowDefinitions>
+            <Grid Grid.Row="0" Grid.Column="0" MaxHeight="60">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="1*"/>
+                    <RowDefinition Height="1*"/>
+                </Grid.RowDefinitions>
+                <Label Content="Directorio Imagenes" Grid.Row="0"/>
+                <Grid Grid.Row="1">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="4*"/>
+                        <ColumnDefinition Width="1*"/>
+                    </Grid.ColumnDefinitions>
+                    <TextBox x:Name="tbx_DirectorioImagenes" Grid.Column="0" Margin="5,5,0,5" MaxHeight="20" TabIndex="0" TextChanged="tbx_DirectorioImagenes_TextChanged" />
+                    <Button x:Name="btn_DirectorioImagenes" Grid.Column="1" Margin="0,5,5,5" MaxHeight="20" MaxWidth="45" HorizontalAlignment="Left" Width="45" Content="···" TabIndex="1" Click="btn_DirectorioImagenes_Click"/>
+                </Grid>
+            </Grid>
+            <Grid Grid.Row="0" Grid.Column="3" MaxHeight="60">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="1*"/>
+                    <RowDefinition Height="1*"/>
+                </Grid.RowDefinitions>
+                <Label Content="Añadir Campo" Grid.Row="0"/>
+                <TextBox x:Name="tbx_AñadirCampo" Grid.Row="1" Margin="5,5,5,5" MaxHeight="20" TabIndex="2" KeyDown="tbx_AñadirCampo_KeyDown" />
+            </Grid>
+                    <ListBox x:Name="lbx_Campos" Grid.Row="1" Grid.Column="3" Margin="5" KeyDown="lbx_Campos_KeyDown"/>
+            <uc:BotonImagen Grid.Column="0" Grid.Row="1" Margin="30,10,30,10" x:Name="btn_ImportarExcel" Click="btn_ImportarExcel_Click" Titulo="Importar Excel" Imagen="pack://application:,,/BisregApi;Component/IMG/Excel96px.png"/>
+            <Grid Grid.Column="1" Grid.Row="1">
+                
+                <uc:BotonImagen Grid.Column="0" Grid.Row="1" Margin="30,5" x:Name="btn_VistaPrevia"  Titulo="VistaPrevia" Imagen="pack://application:,,/BisregApi;Component/IMG/DocPreview128px.png"/>
+
+            </Grid>
+
+            <uc:BotonImagen Grid.Column="1" Grid.Row="0" Margin="30,10,30,10" x:Name="btn_RecargarFotos" Click="btn_RecargarFotos_Click" Titulo="Actualizar Fotos" Imagen="pack://application:,,/BisregApi;Component/IMG/Foto72px.png"/>
+
+        </Grid>
+        <DataGrid x:Name="dtg" Grid.Row="1" Margin="10" RowStyle="{StaticResource ImagenTrigger}"/>
+            </Grid>
+
+        </TabItem>
+        <TabItem Header="Gestion Perfiles">
+                        
+        </TabItem>
+    </TabControl>
+
+</Window>

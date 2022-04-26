@@ -54,8 +54,9 @@
     <ApplicationIcon>CatalogoLogo256px.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="BisregApi">
-      <HintPath>..\BisregApi\bin\Debug\BisregApi.dll</HintPath>
+    <Reference Include="BisregApi, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\BisregApi\bin\Debug\net6.0-windows\BisregApi.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />

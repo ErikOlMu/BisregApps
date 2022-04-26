@@ -17,10 +17,7 @@ using iText.Layout.Borders;
 using iText.Kernel.Pdf.Colorspace;
 using iText.Kernel.Pdf.Function;
 using iText.Kernel.Colors;
-using iText.Pdfoptimizer;
-using iText.Pdfoptimizer.Handlers;
-using iText.Pdfoptimizer.Handlers.Imagequality.Processors;
-using iText.Pdfoptimizer.Handlers.Converters;
+
 using System.IO;
 
 namespace BisregApi.PDF

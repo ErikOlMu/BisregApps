@@ -59,6 +59,7 @@
     <PackageReference Include="Aspose.Cells" Version="22.4.0" />
     <PackageReference Include="itext7" Version="7.2.2" />
     <PackageReference Include="System.Data.SQLite" Version="1.0.115.5" />
+    <PackageReference Include="UniversalSerializer" Version="3.18.4.15" />
     <PackageReference Include="WindowsAPICodePack-Shell" Version="1.1.1" />
   </ItemGroup>
 

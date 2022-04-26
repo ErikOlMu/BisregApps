@@ -97,6 +97,10 @@ namespace BisregApi.Utilidades
         {
             Elemento = elemento;
         }
+        public CampoCanvas()
+        {
+            Elemento = new UIElement();
+        }
 
         public double Rotacion
         {
@@ -189,8 +193,10 @@ namespace BisregApi.Utilidades
                     Elemento.SetValue(Image.HeightProperty, Convert.ToDouble(value));
                 }
             }
-        }       
-        public UIElement Elemento { get; set;}
+        }
+
+        public UIElement Elemento { get;set;}
+        
         public Point Coordenadas 
         {
             get
