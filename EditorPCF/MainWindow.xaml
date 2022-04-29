@@ -1,0 +1,190 @@
+﻿<Window x:Class="EditorPCF.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:EditorPCF"
+        xmlns:uc="clr-namespace:BisregApi.ControlesWPF;assembly=BisregApi"
+        mc:Ignorable="d"
+        Title="Editor " Height="450" Width="800">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="30"/>
+            <RowDefinition Height="1*"/>
+        </Grid.RowDefinitions>
+        <Menu VerticalAlignment="Top" Grid.Row="0" >
+            <MenuItem Header="Archivo">
+                <MenuItem Header="Nuevo" Click="Nuevo_Click"/>
+                <MenuItem Header="Abrir" Click="Abrir_Click"/>
+                <MenuItem Header="Guardar" Click="Guardar_Click"/>
+            </MenuItem>
+        </Menu>
+        <ToolBarTray Grid.Row="1" Background="#FFEEF5FD">
+            <ToolBar>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="1*"/>
+                        <ColumnDefinition Width="1*"/>
+                    </Grid.ColumnDefinitions>
+                    <Label Content="Nombre Perfil :" Grid.Column="0"/>
+                    <TextBox x:Name="tbx_Name" Grid.Column="1" Width="200" TextChanged="tbx_Name_TextChanged"/>
+                </Grid>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="1*"/>
+                        <ColumnDefinition Width="1*"/>
+                    </Grid.ColumnDefinitions>
+                    <Label Content="Columnas :" Grid.Column="0"/>
+                    <TextBox x:Name="tbx_Columnas" Grid.Column="1" Width="30" TextChanged="tbx_Columnas_TextChanged"/>
+                </Grid>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="1*"/>
+                        <ColumnDefinition Width="1*"/>
+                    </Grid.ColumnDefinitions>
+                    <Label Content="Filas :" Grid.Column="0"/>
+                    <TextBox x:Name="tbx_Filas" Grid.Column="1" Width="30" TextChanged="tbx_Filas_TextChanged"/>
+                </Grid>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="1*"/>
+                        <ColumnDefinition Width="1*"/>
+                    </Grid.ColumnDefinitions>
+                    <Label Content="Ancho :" Grid.Column="0"/>
+                    <TextBox x:Name="tbx_Ancho" Grid.Column="1" Width="30" TextChanged="tbx_Ancho_TextChanged" PreviewKeyDown="tbx_PuntoXComa_KeyDown"/>
+                </Grid>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="1*"/>
+                        <ColumnDefinition Width="1*"/>
+                    </Grid.ColumnDefinitions>
+                    <Label Content="Alto :" Grid.Column="0"/>
+                    <TextBox x:Name="tbx_Alto" Grid.Column="1" Width="30" TextChanged="tbx_Alto_TextChanged" PreviewKeyDown="tbx_PuntoXComa_KeyDown"/>
+                </Grid>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="1*"/>
+                        <ColumnDefinition Width="1*"/>
+                    </Grid.ColumnDefinitions>
+                    <Label Content="Tamaños :" Grid.Column="0"/>
+                    <ComboBox x:Name="cbx_Tamaño" Grid.Column="1" Width="100"/>
+                </Grid>
+            </ToolBar>
+        </ToolBarTray>
+        <Grid Grid.Row="2">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="1*"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+            <ToolBarTray Orientation="Vertical" Grid.Column="0">
+
+                <ToolBar >
+                    <Label Content="Añadir" />
+                    <Button x:Name="btn_AddImg" Click="btn_AddImg_Click">
+                        <Image Source="pack://application:,,/BisregApi;Component/IMG/Foto72px.png" Height="35" Width="35"/>
+                    </Button>
+                    <Button x:Name="btn_AddTxt" Click="btn_AddTxt_Click">
+                        <Image Source="pack://application:,,/BisregApi;Component/IMG/A72px.png" Height="35" Width="35"/>
+                    </Button>
+                </ToolBar>
+            </ToolBarTray>
+            <uc:CanvasViewer Grid.Column="1" x:Name="CanvasView" >
+                <uc:CanvasViewer.Contenido>
+                    <uc:BisregCanvas MouseLeftButtonUp="Canvas_MouseLeftButtonUp" />
+                </uc:CanvasViewer.Contenido>
+            </uc:CanvasViewer>
+            <ToolBarTray x:Name="Toolbar_IMG" Grid.Column="2" Width="Auto" Orientation="Vertical" Visibility="Hidden">
+                <ToolBar >
+                    <Label Content="Imagen"/>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="1*"/>
+                            <ColumnDefinition Width="100"/>
+                        </Grid.ColumnDefinitions>
+                        <Label Content="Nombre :" Grid.Column="0"/>
+                        <TextBox x:Name="tbx_Nombre_IMG" Grid.Column="1" TextChanged="tbx_Nombre_IMG_TextChanged"/>
+                    </Grid>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="1*"/>
+                            <ColumnDefinition Width="40"/>
+                        </Grid.ColumnDefinitions>
+                        <Label Content="Tamaño :" Grid.Column="0"/>
+                        <TextBox x:Name="tbx_Tamaño_IMG" Grid.Column="1" TextChanged="tbx_Tamaño_IMG_TextChanged" />
+                    </Grid>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="1*"/>
+                            <ColumnDefinition Width="40"/>
+                        </Grid.ColumnDefinitions>
+                        <Label Content="Rotacion :" Grid.Column="0"/>
+                        <TextBox x:Name="tbx_Rotacion_IMG" Grid.Column="1" TextChanged="tbx_Rotacion_IMG_TextChanged" PreviewKeyDown="tbx_PuntoXComa_KeyDown"/>
+                    </Grid>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="1*"/>
+                            <ColumnDefinition Width="40"/>
+                        </Grid.ColumnDefinitions>
+                        <Label Content="Columna Excel :" Grid.Column="0"/>
+                        <TextBox x:Name="tbx_Columna_IMG" Grid.Column="1" TextChanged="tbx_Columna_IMG_TextChanged"/>
+                    </Grid>
+                </ToolBar>
+            </ToolBarTray>
+            <ToolBarTray x:Name="Toolbar_Txt" Grid.Column="2" Width="Auto" Orientation="Vertical" >
+                <ToolBar >
+                    <Label Content="Texto"/>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="1*"/>
+                            <ColumnDefinition Width="100"/>
+                        </Grid.ColumnDefinitions>
+                        <Label Content="Nombre :" Grid.Column="0"/>
+                        <TextBox x:Name="tbx_Nombre_Txt" Grid.Column="1" TextChanged="tbx_Nombre_Txt_TextChanged"/>
+                    </Grid>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="1*"/>
+                            <ColumnDefinition Width="100"/>
+                        </Grid.ColumnDefinitions>
+                        <Label Content="Fuente :" Grid.Column="0"/>
+                        <ComboBox x:Name="cbx_Fuente_Txt" Grid.Column="1" SelectionChanged="cbx_Fuente_Txt_SelectionChanged"/>
+                    </Grid>
+                    
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="1*"/>
+                            <ColumnDefinition Width="40"/>
+                        </Grid.ColumnDefinitions>
+                        <Label Content="Tamaño :" Grid.Column="0"/>
+                        <TextBox x:Name="tbx_Tamaño_Txt" Grid.Column="1" TextChanged="tbx_Tamaño_Txt_TextChanged" />
+                    </Grid>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="1*"/>
+                            <ColumnDefinition Width="40"/>
+                        </Grid.ColumnDefinitions>
+                        <Label Content="Rotacion :" Grid.Column="0"/>
+                        <TextBox x:Name="tbx_Rotacion_Txt" Grid.Column="1" PreviewKeyDown="tbx_PuntoXComa_KeyDown" TextChanged="tbx_Rotacion_Txt_TextChanged"/>
+                    </Grid>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="1*"/>
+                            <ColumnDefinition Width="40"/>
+                        </Grid.ColumnDefinitions>
+                        <Label Content="Columna Excel :" Grid.Column="0"/>
+                        <TextBox x:Name="tbx_Columna_Txt" Grid.Column="1" TextChanged="tbx_Columna_Txt_TextChanged"/>
+                    </Grid>
+                </ToolBar>
+            </ToolBarTray>
+            
+
+
+        </Grid>
+        
+        
+        
+    </Grid>
+    
+</Window>

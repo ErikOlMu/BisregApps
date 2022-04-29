@@ -53,6 +53,7 @@ namespace BisregApi.ControlesWPF
             {
                 CamposList.Clear();
                 CamposList.AddRange(value);
+                UpdateCampos();
             }
         }
 
@@ -103,7 +104,10 @@ namespace BisregApi.ControlesWPF
             }
         }
 
-
+        public void DeleteCampos()
+        {
+            CanvasPrincipal.Children.Clear();
+        }
         public void UpdateCampos()
         {
             CanvasPrincipal.Children.Clear();

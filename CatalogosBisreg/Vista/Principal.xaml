@@ -21,9 +21,7 @@
         </Style>
     </Window.Resources>
 
-    <TabControl>
         
-        <TabItem Header="Generar Catalogo">
             <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="150"/>
@@ -77,10 +75,5 @@
         <DataGrid x:Name="dtg" Grid.Row="1" Margin="10" RowStyle="{StaticResource ImagenTrigger}"/>
             </Grid>
 
-        </TabItem>
-        <TabItem Header="Gestion Perfiles">
-                        
-        </TabItem>
-    </TabControl>
 
 </Window>

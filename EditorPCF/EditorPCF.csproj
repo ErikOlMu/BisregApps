@@ -1,0 +1,29 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net6.0-windows</TargetFramework>
+    <Nullable>enable</Nullable>
+    <UseWPF>true</UseWPF>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="DefaultIMG512px.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="UniversalSerializer" Version="3.18.4.15" />
+    <PackageReference Include="WindowsAPICodePack-Shell" Version="1.1.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="BisregApi">
+      <HintPath>..\BisregApi\bin\Debug\net6.0-windows\BisregApi.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="DefaultIMG512px.png" />
+  </ItemGroup>
+
+</Project>

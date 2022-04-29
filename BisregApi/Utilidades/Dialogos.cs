@@ -46,6 +46,25 @@ namespace BisregApi.Utilidades
             }
 
         }
+        public static string SaveFile(string extension)
+        {
+            string Carpeta = "";
+            try
+            {
+                var dialog = new CommonSaveFileDialog();
+                dialog.DefaultExtension = extension;
+                if (dialog.ShowDialog() == CommonFileDialogResult.Ok)
+                {
+                    Carpeta = dialog.FileName;
+                }
+                return Carpeta;
+            }
+            catch (Exception)
+            {
+                return Carpeta;
+            }
+
+        }
 
         public static List<string> OpenFiles()
         {
@@ -67,7 +86,6 @@ namespace BisregApi.Utilidades
             }
 
         }
-
         public static string OpenFile()
         {
             string Carpeta = "";
@@ -76,6 +94,27 @@ namespace BisregApi.Utilidades
                 var dialog = new CommonOpenFileDialog();
                 dialog.IsFolderPicker = false;
                 dialog.Multiselect = false;
+                if (dialog.ShowDialog() == CommonFileDialogResult.Ok)
+                {
+                    Carpeta = dialog.FileName;
+                }
+                return Carpeta;
+            }
+            catch (Exception)
+            {
+                return Carpeta;
+            }
+
+        }
+        public static string OpenFile(string predef)
+        {
+            string Carpeta = "";
+            try
+            {
+                var dialog = new CommonOpenFileDialog();
+                dialog.IsFolderPicker = false;
+                dialog.Multiselect = false;
+                dialog.DefaultFileName = predef;
                 if (dialog.ShowDialog() == CommonFileDialogResult.Ok)
                 {
                     Carpeta = dialog.FileName;

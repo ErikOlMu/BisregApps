@@ -7,6 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="IMG\A72px.png" />
     <None Remove="IMG\Add256px.png" />
     <None Remove="IMG\CatalogoLogo256px.ico" />
     <None Remove="IMG\CatalogoLogo48px.ico" />
@@ -14,6 +15,7 @@
     <None Remove="IMG\Configuracion64px.ico" />
     <None Remove="IMG\Configuracion64px.png" />
     <None Remove="IMG\Configuracion96px.png" />
+    <None Remove="IMG\DeafultIMG512px.png" />
     <None Remove="IMG\Delete256px.png" />
     <None Remove="IMG\DocPreview128px.png" />
     <None Remove="IMG\DocPreview48px.png" />
@@ -64,6 +66,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Resource Include="IMG\A72px.png" />
     <Resource Include="IMG\Add256px.png" />
     <Resource Include="IMG\CatalogoLogo256px.ico" />
     <Resource Include="IMG\CatalogoLogo48px.ico" />
@@ -75,6 +78,7 @@
     <Resource Include="IMG\Configuracion96px.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
+    <Resource Include="IMG\DeafultIMG512px.png" />
     <Resource Include="IMG\Delete256px.png" />
     <Resource Include="IMG\DocPreview128px.png" />
     <Resource Include="IMG\DocPreview48px.png" />

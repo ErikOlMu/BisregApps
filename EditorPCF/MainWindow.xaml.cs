@@ -1,0 +1,553 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Data;
+using System.Windows.Documents;
+using System.Windows.Input;
+using System.Windows.Media;
+using System.Windows.Media.Imaging;
+using System.Windows.Navigation;
+using System.Windows.Shapes;
+using BisregApi.ControlesWPF;
+using BisregApi.Utilidades;
+namespace EditorPCF
+{
+    /// <summary>
+    /// Interaction logic for MainWindow.xaml
+    /// </summary>
+    public partial class MainWindow : Window
+    {
+
+        private string FuenteTextoDefecto = "Arial";
+        private PerfilCatalogo? Perfil;
+        private CampoCanvas? ceditable;
+        private CampoCanvas? CampoEditable { 
+            get
+            {
+                return ceditable;
+            }
+            set
+            {
+                ceditable = value;
+
+                if (value == null)
+                {
+                    VisibilityToolbarIMG(false);
+                    VisibilityToolbarTxt(false);
+                }
+                else
+                {
+                    if (value.Elemento is TextBlock)
+                    {
+                        VisibilityToolbarIMG(false);
+                        VisibilityToolbarTxt(true);
+                        CargarCampoTxt(value);
+
+                    }
+                    if (value.Elemento is Image)
+                    {
+                        VisibilityToolbarIMG(true);
+                        VisibilityToolbarTxt(false);
+                        CargarCampoIMG(value);
+
+                    }
+                }
+                
+                
+                
+            }
+        }
+        public MainWindow()
+        {
+            InitializeComponent();
+            RecargarEditor();
+        }
+
+
+        public void CrearDocumento()
+        {
+            //Creamos un Perfil en Blanco
+            Perfil = new PerfilCatalogo();
+            //Recargamos el Editor con el perfil Nuevo
+            RecargarEditor();
+        }
+        //Iniciamos El Documento
+        public void CargarDocumento(PerfilCatalogo perfilCatalogo)
+        {
+            //Añadimos el Perfil al Objeto
+            Perfil = perfilCatalogo;
+            //Recargamos el Editor con el perfil añadido
+            RecargarEditor();
+        }
+        //Cerramos el Documento
+        public void CerrarDocumento()
+        {
+            //Cerramos el Perfil
+            Perfil = null;
+            //Recargamos el Editor con El perfil null
+            RecargarEditor();
+
+        }
+        //Recargamos el Editor con el Perfil
+        public void RecargarEditor()
+        {
+            bool NoNull = Perfil != null;
+
+            //Activamos o Desactivamos las Herramientas
+            OnOfHerramientasTop(NoNull);
+            OnOfHerramientasLeft(NoNull);
+            //Cargamos datos en Herramientas Top si Perfil no es null
+            CargarHerramientasTop();
+            //Ocultamos las Herramientas de Campos
+            VisibilityToolbarIMG(false);
+            VisibilityToolbarTxt(false);
+            //Cargamos el Canvas con el Perfil
+            CargarCanvas();
+        }  
+        //Activar o desactivar Toolbar Superior
+        public void OnOfHerramientasTop(bool enable)
+        {
+            tbx_Name.IsEnabled = enable;
+            tbx_Columnas.IsEnabled = enable;
+            tbx_Filas.IsEnabled = enable;
+            tbx_Ancho.IsEnabled = enable;
+            tbx_Alto.IsEnabled = enable;
+            cbx_Tamaño.IsEnabled = enable;
+        }
+        //Borrar datos Toolbar Superior
+        public void DeleteHerramientasTop()
+        {
+            tbx_Name.Text = "";
+            tbx_Columnas.Text = "";
+            tbx_Filas.Text = "";
+            tbx_Ancho.Text = "";
+            tbx_Alto.Text = "";
+            cbx_Tamaño.Text = "";
+        }
+        //Cargar datos Toolbar Superior
+        public void CargarHerramientasTop()
+        {
+            if (Perfil != null)
+            {
+                tbx_Name.Text = Perfil.NombrePerfil;
+                tbx_Columnas.Text = Perfil.Columnas.ToString();
+                tbx_Filas.Text = Perfil.Filas.ToString();
+                tbx_Ancho.Text = Perfil.Ancho.ToString();
+                tbx_Alto.Text = Perfil.Ancho.ToString();
+                cbx_Tamaño.Text = "";
+            }
+            else
+            {
+                DeleteHerramientasTop();
+            }
+        }
+        //Activar o desactivar Toolbar Lateral Izquierdo
+        public void OnOfHerramientasLeft(bool enable)
+        {
+            btn_AddImg.IsEnabled = enable;
+            btn_AddTxt.IsEnabled = enable;
+        }
+        //Cargar Edicion IMG
+        public void CargarCampoIMG(CampoCanvas campo)
+        {
+            if (campo != null)
+            {
+                //Si la Imagen no es la que esta por defecto, penemos el valor vacio
+                string Nombre = campo.Valor;
+                if (Nombre != "pack://application:,,/EditorPCF;Component/DefaultIMG512px.png") tbx_Nombre_IMG.Text = campo.Valor;
+                else tbx_Nombre_IMG.Text = "";
+                tbx_Tamaño_IMG.Text = campo.Tamaño.ToString();
+                tbx_Rotacion_IMG.Text = campo.Rotacion.ToString();
+                tbx_Columna_IMG.Text = campo.ColumnaExcel;
+            }
+            else
+            {
+                tbx_Nombre_IMG.Text = "";
+                tbx_Tamaño_IMG.Text = "";
+                tbx_Rotacion_IMG.Text = "";
+                tbx_Columna_IMG.Text = "";
+            }
+        }
+        //Cargar Edicion Txt
+        public void CargarCampoTxt(CampoCanvas campo)
+        {
+            if (campo != null)
+            {
+                tbx_Nombre_Txt.Text = campo.Valor;
+                cbx_Fuente_Txt.Text = (campo.Elemento.GetValue(TextBlock.FontFamilyProperty) as FontFamily ?? new FontFamily()).Source;
+                tbx_Tamaño_Txt.Text = campo.Tamaño.ToString();
+                tbx_Rotacion_Txt.Text = campo.Rotacion.ToString();
+                tbx_Columna_Txt.Text = campo.ColumnaExcel;
+            }
+            else
+            {
+                tbx_Nombre_Txt.Text = "";
+                cbx_Fuente_Txt.Text = "";
+                tbx_Tamaño_Txt.Text = "";
+                tbx_Rotacion_Txt.Text = "";
+                tbx_Columna_Txt.Text = "";
+            }
+        }
+        //Mostar o Ocultar Toolbar IMG
+        public void VisibilityToolbarIMG(bool visible)
+        {
+            if (visible) Toolbar_IMG.Visibility = Visibility.Visible;
+            else Toolbar_IMG.Visibility = Visibility.Hidden;
+        }
+        //Mostar o Ocultar Toolbar Txt
+        public void VisibilityToolbarTxt(bool visible)
+        {
+            if (visible) Toolbar_Txt.Visibility = Visibility.Visible;
+            else Toolbar_Txt.Visibility = Visibility.Hidden;
+        }
+
+        
+
+        
+
+
+
+
+
+
+
+        //-------------Metodos Canvas------------
+        //Cargar Perfil en Canvas
+        public void CargarCanvas()
+        { 
+            //Pongo el Tamaño del Canvas segun las Filas y Columnas
+            CargarTamañoCanvas();
+            //Actualizo los Elementos del Canvas
+            UpdateElementosCanvas();
+
+        }
+        //Metodo para cargar Tamaño Canvas
+        public void CargarTamañoCanvas()
+        {
+            //Pongo el Tamaño del Canvas segun las Filas y columnas
+            if (Perfil != null)
+            {
+                (CanvasView.Contenido as BisregCanvas).Width = Perfil.Ancho / Perfil.Columnas;
+                (CanvasView.Contenido as BisregCanvas).Height = Perfil.Alto / Perfil.Filas;
+            }
+            else
+            {
+                //Si no hay perfil ponemos el tamaño a 0
+                (CanvasView.Contenido as BisregCanvas).Height = 0;
+                (CanvasView.Contenido as BisregCanvas).Width = 0;
+            }
+        }
+        //Metodo para Actualizar los campos del Perfil al Canvas
+        public void UpdateElementosCanvas()
+        {
+            if (Perfil != null)
+            {
+                (CanvasView.Contenido as BisregCanvas).CamposList = Perfil.CamposPerfil;   
+            }
+            //Si no hay Perfil eliminamos los campos que esten
+            else
+            {
+                (CanvasView.Contenido as BisregCanvas).DeleteCampos();
+            }
+        }
+
+        //Eventos del Programa
+        private void btn_AddImg_Click(object sender, RoutedEventArgs e)
+        {
+            if (Perfil != null)
+            {
+                Perfil.CamposPerfil.Add(new CampoCanvas("pack://application:,,/EditorPCF;Component/DefaultIMG512px.png", new Point(0, 0), 100,CamposCanvas.Imagen));
+                UpdateElementosCanvas();
+            }
+        }
+        private void btn_AddTxt_Click(object sender, RoutedEventArgs e)
+        {
+            if(Perfil != null)
+            {
+                Perfil.CamposPerfil.Add(new CampoCanvas("Text", new Point(0, 0), 20));
+                UpdateElementosCanvas();
+            }
+            
+        }
+
+        //Eventos para Abrir Guardar o Crear Archivos
+        private void Abrir_Click(object sender, RoutedEventArgs e)
+        {
+            CargarDocumento(PerfilCatalogo.GetPerfilCatalogo(Dialogos.OpenFile()));
+
+        }
+        private void Nuevo_Click(object sender, RoutedEventArgs e)
+        {
+            CrearDocumento();
+        }
+        private void Guardar_Click(object sender, RoutedEventArgs e)
+        {
+            PerfilCatalogo.SavePerfilCatalogo(Perfil,Dialogos.SaveFile());
+            CerrarDocumento();
+        }
+
+        private void Canvas_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        {
+            //Evento interaccion con Canvas
+            try
+            {
+                CampoEditable = Perfil.GetCampoCanvas((CanvasView.Contenido as BisregCanvas).GetUltimoCampo().Uid);
+            }
+            catch
+            {
+                CampoEditable = null;
+            }
+
+        }
+        
+        //Evento para solo permitir numeros y comas
+        private void tbx_PuntoXComa_KeyDown(object sender, KeyEventArgs e)
+        {
+            Key newKey = e.Key;
+
+            if (e.Key == Key.OemPeriod || e.Key == Key.Decimal)
+            {
+                //handle the event and cancel the original key
+                e.Handled = true;
+
+                //get caret position
+                int tbPos = ((TextBox)sender).SelectionStart;
+
+                //insert the new text at the caret position
+                ((TextBox)sender).Text = ((TextBox)sender).Text.Insert(tbPos, ",");
+
+                newKey = Key.OemComma;
+
+                //replace the caret back to where it should be 
+                //otherwise the insertion call above will reset the position
+                ((TextBox)sender).Select(tbPos + 1, 0);
+            }
+
+
+            base.OnKeyDown(new KeyEventArgs(e.KeyboardDevice, e.InputSource, e.Timestamp, newKey));
+
+        }
+        
+        //Eventos de Barra de Herramientas superior
+        private void tbx_Name_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            //Guardamos el Nombre en el Perfil
+            Perfil.NombrePerfil = tbx_Name.Text;
+        }
+        private void tbx_Columnas_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            if (tbx_Columnas.Text != "")
+            {
+                try
+                {
+                    //Guardamos las columnas en el perfil y actualizamos el tamaño del canvas
+                    Perfil.Columnas = int.Parse(tbx_Columnas.Text);
+                    CargarTamañoCanvas();
+                }
+                catch
+                {
+                    int tbPos = ((TextBox)sender).SelectionStart;
+                    tbx_Columnas.Text = Perfil.Columnas.ToString();
+                    ((TextBox)sender).Select(tbPos, 0);
+                }
+            }
+            
+        }
+        private void tbx_Filas_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            if (tbx_Filas.Text != "")
+            {
+                try
+                {
+                    //Guardamos las fila en el perfil y actualizamos el tamaño del canvas
+                    Perfil.Filas = int.Parse(tbx_Filas.Text);
+                    CargarTamañoCanvas();
+                }
+                catch
+                {
+                    int tbPos = ((TextBox)sender).SelectionStart;
+                    tbx_Filas.Text = Perfil.Filas.ToString();
+                    ((TextBox)sender).Select(tbPos, 0);
+
+                }
+            }
+        }
+        private void tbx_Ancho_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            if (tbx_Ancho.Text != "")
+            {
+                try
+                {
+                    //Guardamos el ancho en el perfil y actualizamos el tamaño del canvas
+                    Perfil.Ancho = double.Parse(tbx_Ancho.Text);
+                    CargarTamañoCanvas();
+                }
+                catch
+                {
+                    int tbPos = ((TextBox)sender).SelectionStart;
+                    tbx_Ancho.Text = Perfil.Ancho.ToString();
+                    ((TextBox)sender).Select(tbPos, 0);
+
+                }
+            }
+        }
+        private void tbx_Alto_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            if (tbx_Alto.Text != "")
+            {
+                try
+                {
+                    //Guardamos el alto en el perfil y actualizamos el tamaño del canvas
+                    Perfil.Alto = double.Parse(tbx_Alto.Text);
+                    CargarTamañoCanvas();
+                }
+                catch
+                {
+                    int tbPos = ((TextBox)sender).SelectionStart;
+                    tbx_Alto.Text = Perfil.Alto.ToString();
+                    ((TextBox)sender).Select(tbPos, 0);
+
+                }
+            }
+
+        }
+
+        //Eventos Editor de Texto
+        private void tbx_Nombre_Txt_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            CampoEditable.Valor = tbx_Nombre_Txt.Text;
+        }
+        private void cbx_Fuente_Txt_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            try
+            {
+                CampoEditable.Elemento.SetValue(TextBlock.FontFamilyProperty, new FontFamily(cbx_Fuente_Txt.Text));
+            }
+            catch
+            {
+                CampoEditable.Elemento.SetValue(TextBlock.FontFamilyProperty, new FontFamily(FuenteTextoDefecto));
+            }
+        }
+        private void tbx_Tamaño_Txt_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            if (tbx_Tamaño_Txt.Text != "")
+            {
+                try
+                {
+                    CampoEditable.Tamaño = int.Parse(tbx_Tamaño_Txt.Text);
+                }
+                catch
+                {
+                    int tbPos = ((TextBox)sender).SelectionStart;
+                    tbx_Tamaño_Txt.Text = CampoEditable.Tamaño.ToString();
+                    ((TextBox)sender).Select(tbPos, 0);
+
+                }
+            }
+
+        }
+        private void tbx_Rotacion_Txt_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            if (tbx_Rotacion_Txt.Text != "")
+            {
+                try
+                {
+                    CampoEditable.Rotacion = int.Parse(tbx_Rotacion_Txt.Text);
+                }
+                catch
+                {
+                    int tbPos = ((TextBox)sender).SelectionStart;
+                    tbx_Rotacion_Txt.Text = CampoEditable.Rotacion.ToString();
+                    ((TextBox)sender).Select(tbPos, 0);
+
+                }
+            }
+        }
+        private void tbx_Columna_Txt_TextChanged(object sender, TextChangedEventArgs e)
+        {
+                try
+                {
+                    CampoEditable.ColumnaExcel = tbx_Columna_Txt.Text;
+                }
+                catch
+                {
+                    int tbPos = ((TextBox)sender).SelectionStart;
+                    tbx_Columna_Txt.Text = CampoEditable.ColumnaExcel;
+                    ((TextBox)sender).Select(tbPos, 0);
+
+                }
+        }
+
+        //Eventos Editor Imagen
+        private void tbx_Nombre_IMG_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            if (tbx_Nombre_IMG.Text != "")
+            {
+                try
+                {
+                    CampoEditable.Valor = tbx_Nombre_IMG.Text;
+
+                }
+                catch
+                {
+                    CampoEditable.Valor = "pack://application:,,/EditorPCF;Component/DefaultIMG512px.png";
+                }
+            }
+
+        }
+        private void tbx_Tamaño_IMG_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            if (tbx_Tamaño_IMG.Text != "")
+            {
+                try
+                {
+                    CampoEditable.Tamaño = int.Parse(tbx_Tamaño_IMG.Text);
+                }
+                catch
+                {
+                    int tbPos = ((TextBox)sender).SelectionStart;
+                    tbx_Tamaño_IMG.Text = CampoEditable.Tamaño.ToString();
+                    ((TextBox)sender).Select(tbPos, 0);
+
+                }
+            }
+        }
+        private void tbx_Rotacion_IMG_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            if (tbx_Rotacion_IMG.Text != "")
+            {
+                try
+                {
+                    CampoEditable.Rotacion = int.Parse(tbx_Rotacion_IMG.Text);
+                }
+                catch
+                {
+                    int tbPos = ((TextBox)sender).SelectionStart;
+                    tbx_Rotacion_IMG.Text = CampoEditable.Rotacion.ToString();
+                    ((TextBox)sender).Select(tbPos, 0);
+
+                }
+            }
+        }
+        private void tbx_Columna_IMG_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            try
+            {
+                CampoEditable.ColumnaExcel = tbx_Columna_IMG.Text;
+            }
+            catch
+            {
+                int tbPos = ((TextBox)sender).SelectionStart;
+                tbx_Columna_IMG.Text = CampoEditable.ColumnaExcel;
+                ((TextBox)sender).Select(tbPos, 0);
+
+            }
+        }
+
+        
+    }
+}

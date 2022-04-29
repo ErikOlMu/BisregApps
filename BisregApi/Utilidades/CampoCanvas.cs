@@ -21,7 +21,7 @@ namespace BisregApi.Utilidades
     }
     public class CampoCanvas
     {
-
+        
         //Constructores del Campos Canvas
         public CampoCanvas(string valor, Point coordenadas, int tamaño)
         {
@@ -30,6 +30,9 @@ namespace BisregApi.Utilidades
             Coordenadas = coordenadas;
             Tamaño = tamaño;
             Rotacion = 0;
+
+            //Añadimos Uid al Elemento
+            Elemento.Uid = Elemento.GetHashCode().ToString();
         }
         public CampoCanvas(string valor,Point coordenadas, int tamaño, byte Tipo)
         {
@@ -58,6 +61,9 @@ namespace BisregApi.Utilidades
             Coordenadas = coordenadas;
             Tamaño = tamaño;
             Rotacion = 0;
+
+            //Añadimos Uid al Elemento
+            Elemento.Uid = Elemento.GetHashCode().ToString();
         }
         public CampoCanvas(string valor,Point coordenadas, int tamaño, double rotacion, byte Tipo)
         {
@@ -83,6 +89,9 @@ namespace BisregApi.Utilidades
             Coordenadas = coordenadas;
             Tamaño = tamaño;
             Rotacion = rotacion;
+
+            //Añadimos Uid al Elemento
+            Elemento.Uid = Elemento.GetHashCode().ToString();
         }
         //Constructor que no hace falta indicar el tipo (Por defecto sera un Texto
         public CampoCanvas(string valor, Point coordenadas, int tamaño, double rotacion)
@@ -92,16 +101,28 @@ namespace BisregApi.Utilidades
             Coordenadas = coordenadas;
             Tamaño = tamaño;
             Rotacion = rotacion;
+
+            //Añadimos Uid al Elemento
+            Elemento.Uid = Elemento.GetHashCode().ToString();
         }
         public CampoCanvas(UIElement elemento)
         {
+            
             Elemento = elemento;
+
+            if (elemento != null)
+            {
+                //Añadimos Uid al Elemento
+                Elemento.Uid = Elemento.GetHashCode().ToString();
+            }
+            
         }
         public CampoCanvas()
         {
             Elemento = new UIElement();
+            //Añadimos Uid al Elemento
+            Elemento.Uid = Elemento.GetHashCode().ToString();
         }
-
         public double Rotacion
         {
             get
@@ -147,7 +168,7 @@ namespace BisregApi.Utilidades
                 }
                 if (Elemento is Image)
                 {
-                    return (string) Elemento.GetValue(Image.SourceProperty);
+                    return (string) Elemento.GetValue(Image.SourceProperty).ToString();
                 }
                 return null;
             } 
@@ -195,6 +216,13 @@ namespace BisregApi.Utilidades
             }
         }
 
+        public string Uid
+        {
+            get {
+                if (Elemento == null) return "";
+                else return Elemento.Uid; }
+            set { Elemento.Uid = value; }
+        }
         public UIElement Elemento { get;set;}
         
         public Point Coordenadas 
@@ -213,7 +241,7 @@ namespace BisregApi.Utilidades
         //Metodo para obtener el tipo que es el Elemento
         public byte getTipo()
         {
-
+            
             if (Elemento is TextBlock) return CamposCanvas.Texto;
             if (Elemento is Image) return CamposCanvas.Imagen;
 
@@ -232,5 +260,11 @@ namespace BisregApi.Utilidades
             }
 
         }
+
+        // Elementos Extras
+        public string ColumnaExcel { get; set; }
+        public string TextoAnterior { get; set; }
+        public string TextoPosterior { get; set; }
+
     }
 }

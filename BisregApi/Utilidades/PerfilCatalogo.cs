@@ -13,12 +13,20 @@ namespace BisregApi.Utilidades
     //Clase para guardar los perfiles de catalogos en archivos binarios
 
     public class PerfilCatalogo
-    { 
-        public string NombrePerfil { get; set; }
-        public int Filas { get; set; }
-        public int Columnas { get; set; }
-        public double Ancho { get; set; }
-        public double Alto { get; set; }
+    {
+        public string NombrePerfil { get; set; } = "";
+        public int Filas { get; set; } = 1;
+        public int Columnas { get; set; } = 1;
+        public double Ancho { get; set; } = 0;
+        public double Alto { get; set; } = 0;
+        public CampoCanvas? GetCampoCanvas(string Uid)
+        {
+            foreach(CampoCanvas campo in CamposPerfil)
+            {
+                if (campo.Uid == Uid) return campo;
+            }
+            return null;
+        }
         public List<CampoCanvas> CamposPerfil { get; set; } = new List<CampoCanvas> { };
         public static PerfilCatalogo GetPerfilCatalogo(string file)
         {
