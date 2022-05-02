@@ -40,7 +40,7 @@
 
   <ItemGroup>
     <Reference Include="BisregApi">
-      <HintPath>bin\Release\net6.0-windows\BisregApi.dll</HintPath>
+      <HintPath>..\BisregApi\bin\Debug\net6.0-windows\BisregApi.dll</HintPath>
     </Reference>
   </ItemGroup>
 
