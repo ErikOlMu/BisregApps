@@ -95,13 +95,13 @@
                     <uc:BisregCanvas MouseLeftButtonUp="Canvas_MouseLeftButtonUp" />
                 </uc:CanvasViewer.Contenido>
             </uc:CanvasViewer>
-            <ToolBarTray x:Name="Toolbar_IMG" Grid.Column="2" Width="Auto" Orientation="Vertical" Visibility="Hidden">
+            <ToolBarTray x:Name="Toolbar_IMG" Grid.Column="2" Width="Auto" Orientation="Vertical">
                 <ToolBar >
                     <Label Content="Imagen"/>
                     <Grid>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="1*"/>
-                            <ColumnDefinition Width="100"/>
+                            <ColumnDefinition Width="150"/>
                         </Grid.ColumnDefinitions>
                         <Label Content="Nombre :" Grid.Column="0"/>
                         <TextBox x:Name="tbx_Nombre_IMG" Grid.Column="1" TextChanged="tbx_Nombre_IMG_TextChanged"/>
@@ -125,6 +125,22 @@
                     <Grid>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="1*"/>
+                            <ColumnDefinition Width="70"/>
+                        </Grid.ColumnDefinitions>
+                        <Label Content="Valor Antes :" Grid.Column="0"/>
+                        <TextBox x:Name="tbx_AntesValor_IMG" Grid.Column="1" TextChanged="tbx_AntesValor_IMG_TextChanged"/>
+                    </Grid>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="1*"/>
+                            <ColumnDefinition Width="70"/>
+                        </Grid.ColumnDefinitions>
+                        <Label Content="Valor Despues :" Grid.Column="0"/>
+                        <TextBox x:Name="tbx_DespuesValor_IMG" Grid.Column="1" TextChanged="tbx_DespuesValor_IMG_TextChanged"/>
+                    </Grid>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="1*"/>
                             <ColumnDefinition Width="40"/>
                         </Grid.ColumnDefinitions>
                         <Label Content="Columna Excel :" Grid.Column="0"/>
@@ -132,13 +148,13 @@
                     </Grid>
                 </ToolBar>
             </ToolBarTray>
-            <ToolBarTray x:Name="Toolbar_Txt" Grid.Column="2" Width="Auto" Orientation="Vertical" >
+            <ToolBarTray x:Name="Toolbar_Txt" Grid.Column="2" Width="Auto" Orientation="Vertical" Visibility="Hidden" >
                 <ToolBar >
                     <Label Content="Texto"/>
                     <Grid>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="1*"/>
-                            <ColumnDefinition Width="100"/>
+                            <ColumnDefinition Width="150"/>
                         </Grid.ColumnDefinitions>
                         <Label Content="Nombre :" Grid.Column="0"/>
                         <TextBox x:Name="tbx_Nombre_Txt" Grid.Column="1" TextChanged="tbx_Nombre_Txt_TextChanged"/>
@@ -167,6 +183,22 @@
                         </Grid.ColumnDefinitions>
                         <Label Content="Rotacion :" Grid.Column="0"/>
                         <TextBox x:Name="tbx_Rotacion_Txt" Grid.Column="1" PreviewKeyDown="tbx_PuntoXComa_KeyDown" TextChanged="tbx_Rotacion_Txt_TextChanged"/>
+                    </Grid>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="1*"/>
+                            <ColumnDefinition Width="70"/>
+                        </Grid.ColumnDefinitions>
+                        <Label Content="Valor Antes :" Grid.Column="0"/>
+                        <TextBox x:Name="tbx_AntesValor_Txt" Grid.Column="1" TextChanged="tbx_AntesValor_Txt_TextChanged"/>
+                    </Grid>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="1*"/>
+                            <ColumnDefinition Width="70"/>
+                        </Grid.ColumnDefinitions>
+                        <Label Content="Valor Despues :" Grid.Column="0"/>
+                        <TextBox x:Name="tbx_DespuesValor_Txt" Grid.Column="1" TextChanged="tbx_DespuesValor_Txt_TextChanged"/>
                     </Grid>
                     <Grid>
                         <Grid.ColumnDefinitions>

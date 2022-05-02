@@ -9,9 +9,16 @@
 
   <ItemGroup>
     <None Remove="DefaultIMG512px.png" />
+    <None Remove="PCFICO.ico" />
+    <None Remove="PCFICO.png" />
   </ItemGroup>
 
   <ItemGroup>
+    <Resource Include="PCFICO.ico" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="FileAssociation" Version="1.0.0" />
     <PackageReference Include="UniversalSerializer" Version="3.18.4.15" />
     <PackageReference Include="WindowsAPICodePack-Shell" Version="1.1.1" />
   </ItemGroup>
@@ -24,6 +31,7 @@
 
   <ItemGroup>
     <Resource Include="DefaultIMG512px.png" />
+    <Resource Include="PCFICO.png" />
   </ItemGroup>
 
 </Project>

@@ -14,6 +14,8 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using BisregApi.ControlesWPF;
 using BisregApi.Utilidades;
+using BrendanGrant.Helpers.FileAssociation;
+
 namespace EditorPCF
 {
     /// <summary>
@@ -64,9 +66,65 @@ namespace EditorPCF
         public MainWindow()
         {
             InitializeComponent();
-            RecargarEditor();
+            //Añado las Fuentes al tbx de Fuentes
+            LoadFonts();
+
+            string[] lista = Environment.GetCommandLineArgs();
+            try
+            {
+                CargarDocumento(PerfilCatalogo.GetPerfilCatalogo(Environment.GetCommandLineArgs()[1]));
+            }
+            catch
+            {
+                CerrarDocumento();
+            }
+
+            //AsociarArchivo();
         }
 
+        public void AsociarArchivo()
+        {
+            FileAssociationInfo fai = new FileAssociationInfo(".pcf");
+            fai.Delete();
+            if (!fai.Exists)
+            {
+                fai.Create("EditorPCF");
+
+                //Specify MIME type (optional)
+                fai.ContentType = "application/pcf";
+
+                //Programs automatically displayed in open with list
+                fai.OpenWithList = new string[]
+               { "notepad.exe", "wordpad.exe"};
+            }
+            ProgramAssociationInfo pai = new ProgramAssociationInfo(fai.ProgID);
+            pai.Delete();
+            if (!pai.Exists)
+            {
+                pai.Create
+                (
+                //Description of program/file type
+                "Profile Catalog File",
+
+                new ProgramVerb
+                     (
+                     //Verb name
+                     "Open",
+                     //Path and arguments to use
+                     @"C:\SomePath\MyApp.exe %1"
+                     )
+                   );
+
+                //optional
+                pai.DefaultIcon = new ProgramIcon(@"pack://application:,,/EditorPCF;Component/PCFICO.ico");
+            }
+
+        }
+
+        public void LoadFonts()
+        {
+            cbx_Fuente_Txt.ItemsSource =
+        }
 
         public void CrearDocumento()
         {
@@ -277,7 +335,15 @@ namespace EditorPCF
         //Eventos para Abrir Guardar o Crear Archivos
         private void Abrir_Click(object sender, RoutedEventArgs e)
         {
-            CargarDocumento(PerfilCatalogo.GetPerfilCatalogo(Dialogos.OpenFile()));
+            try
+            {
+                CargarDocumento(PerfilCatalogo.GetPerfilCatalogo(Dialogos.OpenFile()));
+
+            }
+            catch
+            {
+                MessageBox.Show("No se a podido abrir el archivo");
+            }
 
         }
         private void Nuevo_Click(object sender, RoutedEventArgs e)
@@ -481,6 +547,34 @@ namespace EditorPCF
 
                 }
         }
+        private void tbx_AntesValor_Txt_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            try
+            {
+                CampoEditable.TextoAnterior = tbx_AntesValor_Txt.Text;
+            }
+            catch
+            {
+                int tbPos = ((TextBox)sender).SelectionStart;
+                tbx_AntesValor_Txt.Text = CampoEditable.TextoAnterior;
+                ((TextBox)sender).Select(tbPos, 0);
+
+            }
+        }
+        private void tbx_DespuesValor_Txt_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            try
+            {
+                CampoEditable.TextoPosterior = tbx_DespuesValor_Txt.Text;
+            }
+            catch
+            {
+                int tbPos = ((TextBox)sender).SelectionStart;
+                tbx_DespuesValor_Txt.Text = CampoEditable.TextoPosterior;
+                ((TextBox)sender).Select(tbPos, 0);
+
+            }
+        }
 
         //Eventos Editor Imagen
         private void tbx_Nombre_IMG_TextChanged(object sender, TextChangedEventArgs e)
@@ -549,5 +643,32 @@ namespace EditorPCF
         }
 
         
+        private void tbx_AntesValor_IMG_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            try
+            {
+                CampoEditable.TextoAnterior = tbx_AntesValor_IMG.Text;
+            }
+            catch
+            {
+                int tbPos = ((TextBox)sender).SelectionStart;
+                tbx_AntesValor_IMG.Text = CampoEditable.TextoAnterior;
+                ((TextBox)sender).Select(tbPos, 0);
+            }
+        }
+        private void tbx_DespuesValor_IMG_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            try
+            {
+                CampoEditable.TextoPosterior = tbx_DespuesValor_IMG.Text;
+            }
+            catch
+            {
+                int tbPos = ((TextBox)sender).SelectionStart;
+                tbx_DespuesValor_IMG.Text = CampoEditable.TextoPosterior;
+                ((TextBox)sender).Select(tbPos, 0);
+
+            }
+        }
     }
 }
