@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -15,6 +16,8 @@ using System.Windows.Shapes;
 using BisregApi.ControlesWPF;
 using BisregApi.Utilidades;
 using BrendanGrant.Helpers.FileAssociation;
+using EditorPCF.Objetos;
+using Microsoft.WindowsAPICodePack.Dialogs;
 
 namespace EditorPCF
 {
@@ -27,7 +30,8 @@ namespace EditorPCF
         private string FuenteTextoDefecto = "Arial";
         private PerfilCatalogo? Perfil;
         private CampoCanvas? ceditable;
-        private CampoCanvas? CampoEditable { 
+        private CampoCanvas? CampoEditable
+        {
             get
             {
                 return ceditable;
@@ -58,14 +62,21 @@ namespace EditorPCF
 
                     }
                 }
-                
-                
-                
+
+
+
             }
         }
+        ColeccionTamaños tamaños;
+
         public MainWindow()
         {
+            LoadFileTamaños();
+
             InitializeComponent();
+
+            LoadTamaños();
+
             //Añado las Fuentes al tbx de Fuentes
             LoadFonts();
 
@@ -79,9 +90,31 @@ namespace EditorPCF
                 CerrarDocumento();
             }
 
-            //AsociarArchivo();
         }
 
+        public void LoadFileTamaños()
+        {
+            //Si  no existe eñ archivo tamaños lo creo
+            if (!File.Exists(ColeccionTamaños.DirectorioAppData + ColeccionTamaños.file))
+            {
+                tamaños = new ColeccionTamaños();
+            }
+            else
+            {
+                tamaños = (ColeccionTamaños)Config.getConfig(ColeccionTamaños.file, typeof(ColeccionTamaños));
+            }
+            tamaños.Save();
+
+        }
+
+        public void LoadTamaños()
+        {
+            LoadFileTamaños();
+            cbx_Tamaño.ItemsSource = null;
+            cbx_Tamaño.ItemsSource = tamaños.Tamaños;
+        }
+
+        //Asociar Archivo a los tipo PCF
         public void AsociarArchivo()
         {
             FileAssociationInfo fai = new FileAssociationInfo(".pcf");
@@ -121,15 +154,17 @@ namespace EditorPCF
 
         }
 
+        //Cargar Fuentes en el cbx Fuentes
         public void LoadFonts()
         {
-            cbx_Fuente_Txt.ItemsSource =
+            cbx_Fuente_Txt.ItemsSource = Fonts.SystemFontFamilies;
         }
 
         public void CrearDocumento()
         {
             //Creamos un Perfil en Blanco
             Perfil = new PerfilCatalogo();
+            Perfil.NombrePerfil = "Perfil Nuevo";
             //Recargamos el Editor con el perfil Nuevo
             RecargarEditor();
         }
@@ -165,7 +200,7 @@ namespace EditorPCF
             VisibilityToolbarTxt(false);
             //Cargamos el Canvas con el Perfil
             CargarCanvas();
-        }  
+        }
         //Activar o desactivar Toolbar Superior
         public void OnOfHerramientasTop(bool enable)
         {
@@ -195,7 +230,7 @@ namespace EditorPCF
                 tbx_Columnas.Text = Perfil.Columnas.ToString();
                 tbx_Filas.Text = Perfil.Filas.ToString();
                 tbx_Ancho.Text = Perfil.Ancho.ToString();
-                tbx_Alto.Text = Perfil.Ancho.ToString();
+                tbx_Alto.Text = Perfil.Alto.ToString();
                 cbx_Tamaño.Text = "";
             }
             else
@@ -255,17 +290,40 @@ namespace EditorPCF
         {
             if (visible) Toolbar_IMG.Visibility = Visibility.Visible;
             else Toolbar_IMG.Visibility = Visibility.Hidden;
+
+            OcultarToolbar();
+
+        }
+        //Ocultar Toolbar
+        public void OcultarToolbar()
+        {
+            if (isVisibleToolbar())
+            {
+                clm_Toolbar.Width = new GridLength(0, GridUnitType.Auto);
+            }
+            else
+            {
+                clm_Toolbar.Width = new GridLength(0,GridUnitType.Pixel);
+            }
+        }
+        //Comprobar Visibilidad
+        public bool isVisibleToolbar()
+        {
+            return (Toolbar_IMG.IsVisible || Toolbar_Txt.IsVisible);
         }
         //Mostar o Ocultar Toolbar Txt
         public void VisibilityToolbarTxt(bool visible)
         {
             if (visible) Toolbar_Txt.Visibility = Visibility.Visible;
             else Toolbar_Txt.Visibility = Visibility.Hidden;
+
+            OcultarToolbar();
+
         }
 
-        
 
-        
+
+
 
 
 
@@ -276,7 +334,7 @@ namespace EditorPCF
         //-------------Metodos Canvas------------
         //Cargar Perfil en Canvas
         public void CargarCanvas()
-        { 
+        {
             //Pongo el Tamaño del Canvas segun las Filas y Columnas
             CargarTamañoCanvas();
             //Actualizo los Elementos del Canvas
@@ -304,7 +362,7 @@ namespace EditorPCF
         {
             if (Perfil != null)
             {
-                (CanvasView.Contenido as BisregCanvas).CamposList = Perfil.CamposPerfil;   
+                (CanvasView.Contenido as BisregCanvas).CamposList = Perfil.CamposPerfil;
             }
             //Si no hay Perfil eliminamos los campos que esten
             else
@@ -318,18 +376,18 @@ namespace EditorPCF
         {
             if (Perfil != null)
             {
-                Perfil.CamposPerfil.Add(new CampoCanvas("pack://application:,,/EditorPCF;Component/DefaultIMG512px.png", new Point(0, 0), 100,CamposCanvas.Imagen));
+                Perfil.CamposPerfil.Add(new CampoCanvas("pack://application:,,/EditorPCF;Component/DefaultIMG512px.png", new Point(0, 0), 100, CamposCanvas.Imagen));
                 UpdateElementosCanvas();
             }
         }
         private void btn_AddTxt_Click(object sender, RoutedEventArgs e)
         {
-            if(Perfil != null)
+            if (Perfil != null)
             {
                 Perfil.CamposPerfil.Add(new CampoCanvas("Text", new Point(0, 0), 20));
                 UpdateElementosCanvas();
             }
-            
+
         }
 
         //Eventos para Abrir Guardar o Crear Archivos
@@ -337,7 +395,17 @@ namespace EditorPCF
         {
             try
             {
-                CargarDocumento(PerfilCatalogo.GetPerfilCatalogo(Dialogos.OpenFile()));
+                var dialog = new CommonOpenFileDialog();
+                CommonFileDialogFilter pcfFilter = new CommonFileDialogFilter("PCF Files", ".pcf");
+                pcfFilter.ShowExtensions = true;
+                dialog.Filters.Add(pcfFilter);
+
+                dialog.IsFolderPicker = false;
+                dialog.Multiselect = false;
+                if (dialog.ShowDialog() == CommonFileDialogResult.Ok)
+                {
+                    CargarDocumento(PerfilCatalogo.GetPerfilCatalogo(dialog.FileName));
+                }
 
             }
             catch
@@ -352,8 +420,23 @@ namespace EditorPCF
         }
         private void Guardar_Click(object sender, RoutedEventArgs e)
         {
-            PerfilCatalogo.SavePerfilCatalogo(Perfil,Dialogos.SaveFile());
-            CerrarDocumento();
+            try
+            {
+                var dialog = new CommonSaveFileDialog();
+                CommonFileDialogFilter pcfFilter = new CommonFileDialogFilter("PCF Files", ".pcf");
+                pcfFilter.ShowExtensions = true;
+                dialog.Filters.Add(pcfFilter);
+
+                if (dialog.ShowDialog() == CommonFileDialogResult.Ok)
+                {
+                    PerfilCatalogo.SavePerfilCatalogo(Perfil, dialog.FileName);
+                    CerrarDocumento();
+                }
+            }
+            catch
+            {
+                MessageBox.Show("No se a podido Guardar el archivo");
+            }
         }
 
         private void Canvas_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
@@ -369,7 +452,7 @@ namespace EditorPCF
             }
 
         }
-        
+
         //Evento para solo permitir numeros y comas
         private void tbx_PuntoXComa_KeyDown(object sender, KeyEventArgs e)
         {
@@ -397,12 +480,16 @@ namespace EditorPCF
             base.OnKeyDown(new KeyEventArgs(e.KeyboardDevice, e.InputSource, e.Timestamp, newKey));
 
         }
-        
+
         //Eventos de Barra de Herramientas superior
         private void tbx_Name_TextChanged(object sender, TextChangedEventArgs e)
         {
-            //Guardamos el Nombre en el Perfil
-            Perfil.NombrePerfil = tbx_Name.Text;
+            if (Perfil != null)
+            {
+                //Guardamos el Nombre en el Perfil
+                Perfil.NombrePerfil = tbx_Name.Text;
+            }
+
         }
         private void tbx_Columnas_TextChanged(object sender, TextChangedEventArgs e)
         {
@@ -421,7 +508,7 @@ namespace EditorPCF
                     ((TextBox)sender).Select(tbPos, 0);
                 }
             }
-            
+
         }
         private void tbx_Filas_TextChanged(object sender, TextChangedEventArgs e)
         {
@@ -491,7 +578,7 @@ namespace EditorPCF
         {
             try
             {
-                CampoEditable.Elemento.SetValue(TextBlock.FontFamilyProperty, new FontFamily(cbx_Fuente_Txt.Text));
+                CampoEditable.Elemento.SetValue(TextBlock.FontFamilyProperty, new FontFamily((sender as ComboBox).SelectedItem.ToString()));
             }
             catch
             {
@@ -535,17 +622,17 @@ namespace EditorPCF
         }
         private void tbx_Columna_Txt_TextChanged(object sender, TextChangedEventArgs e)
         {
-                try
-                {
-                    CampoEditable.ColumnaExcel = tbx_Columna_Txt.Text;
-                }
-                catch
-                {
-                    int tbPos = ((TextBox)sender).SelectionStart;
-                    tbx_Columna_Txt.Text = CampoEditable.ColumnaExcel;
-                    ((TextBox)sender).Select(tbPos, 0);
+            try
+            {
+                CampoEditable.ColumnaExcel = tbx_Columna_Txt.Text;
+            }
+            catch
+            {
+                int tbPos = ((TextBox)sender).SelectionStart;
+                tbx_Columna_Txt.Text = CampoEditable.ColumnaExcel;
+                ((TextBox)sender).Select(tbPos, 0);
 
-                }
+            }
         }
         private void tbx_AntesValor_Txt_TextChanged(object sender, TextChangedEventArgs e)
         {
@@ -642,7 +729,7 @@ namespace EditorPCF
             }
         }
 
-        
+
         private void tbx_AntesValor_IMG_TextChanged(object sender, TextChangedEventArgs e)
         {
             try
@@ -669,6 +756,74 @@ namespace EditorPCF
                 ((TextBox)sender).Select(tbPos, 0);
 
             }
+        }
+
+
+
+        //Abrir Ventana de tamaños
+        private void Tamaños_Click(object sender, RoutedEventArgs e)
+        {
+
+            View.VentanaTamaños vtamaños = new View.VentanaTamaños();
+            vtamaños.Owner = this;
+            vtamaños.ShowDialog();
+
+            LoadTamaños();
+        }
+
+        private void cbx_Tamaño_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if ((sender as ComboBox).SelectedItem != null)
+            {
+                Perfil.Ancho = ((sender as ComboBox).SelectedItem as Tamaño).Ancho;
+                Perfil.Alto = ((sender as ComboBox).SelectedItem as Tamaño).Alto;
+                CargarHerramientasTop();
+            }
+
+        }
+
+        private void BisregCanvas_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Delete)
+            {
+                try
+                {
+                    Perfil.CamposPerfil.Remove(ceditable);
+                    CargarCanvas();
+                    VisibilityToolbarIMG(false);
+                    VisibilityToolbarTxt(false);
+                }
+                catch
+                {
+
+                }
+
+            }
+        }
+
+        private void CanvasView_Drop(object sender, DragEventArgs e)
+        {
+            try
+            {
+                if (e.Data.GetDataPresent(DataFormats.FileDrop))
+                { // Note that you can have more than one file.
+                    string[] files = (string[])e.Data.GetData(DataFormats.FileDrop);
+
+                    // Assuming you have one file that you care about, pass it off to whatever //
+                    // handling code you have defined.
+                    if (files[0].EndsWith(".pcf"))
+                    {
+
+                        CargarDocumento(PerfilCatalogo.GetPerfilCatalogo(files[0]));
+
+                    }
+                }
+            }
+            catch
+            {
+                MessageBox.Show("No se a podido cargar el perfil");
+            }
+
         }
     }
 }

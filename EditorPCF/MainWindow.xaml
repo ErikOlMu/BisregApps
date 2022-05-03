@@ -4,9 +4,10 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:EditorPCF"
+        xmlns:objetos="clr-namespace:EditorPCF.Objetos"
         xmlns:uc="clr-namespace:BisregApi.ControlesWPF;assembly=BisregApi"
         mc:Ignorable="d"
-        Title="Editor " Height="450" Width="800">
+        Title="Editor " Height="450" Width="800" Icon="pack://application:,,/EditorPCF;Component/PCFICO.ico">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
@@ -19,7 +20,9 @@
                 <MenuItem Header="Abrir" Click="Abrir_Click"/>
                 <MenuItem Header="Guardar" Click="Guardar_Click"/>
             </MenuItem>
+            <MenuItem Header="Tamaños" Click="Tamaños_Click"/>
         </Menu>
+        
         <ToolBarTray Grid.Row="1" Background="#FFEEF5FD">
             <ToolBar>
                 <Grid>
@@ -68,7 +71,13 @@
                         <ColumnDefinition Width="1*"/>
                     </Grid.ColumnDefinitions>
                     <Label Content="Tamaños :" Grid.Column="0"/>
-                    <ComboBox x:Name="cbx_Tamaño" Grid.Column="1" Width="100"/>
+                    <ComboBox x:Name="cbx_Tamaño" Grid.Column="1" Width="100" SelectionChanged="cbx_Tamaño_SelectionChanged">
+                        <ComboBox.ItemTemplate>
+                            <DataTemplate DataType="{x:Type objetos:Tamaño}">
+                                <TextBlock Text="{Binding Nombre}"/>
+                            </DataTemplate>
+                        </ComboBox.ItemTemplate>
+                    </ComboBox>
                 </Grid>
             </ToolBar>
         </ToolBarTray>
@@ -76,7 +85,7 @@
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto"/>
                 <ColumnDefinition Width="1*"/>
-                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition x:Name="clm_Toolbar" Width="Auto"/>
             </Grid.ColumnDefinitions>
             <ToolBarTray Orientation="Vertical" Grid.Column="0">
 
@@ -90,9 +99,9 @@
                     </Button>
                 </ToolBar>
             </ToolBarTray>
-            <uc:CanvasViewer Grid.Column="1" x:Name="CanvasView" >
+            <uc:CanvasViewer Grid.Column="1" Grid.ColumnSpan="2" x:Name="CanvasView" KeyDown="BisregCanvas_KeyDown" Drop="CanvasView_Drop" AllowDrop="True">
                 <uc:CanvasViewer.Contenido>
-                    <uc:BisregCanvas MouseLeftButtonUp="Canvas_MouseLeftButtonUp" />
+                    <uc:BisregCanvas MouseLeftButtonUp="Canvas_MouseLeftButtonUp"/>
                 </uc:CanvasViewer.Contenido>
             </uc:CanvasViewer>
             <ToolBarTray x:Name="Toolbar_IMG" Grid.Column="2" Width="Auto" Orientation="Vertical">

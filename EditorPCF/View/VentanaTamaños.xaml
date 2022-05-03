@@ -1,0 +1,66 @@
+﻿<Window x:Class="EditorPCF.View.VentanaTamaños"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:EditorPCF.View"
+        xmlns:objetos="clr-namespace:EditorPCF.Objetos"
+        mc:Ignorable="d"
+        Title="Tamaños" Height="300" Width="550">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="1*"/>
+            <ColumnDefinition Width="1*"/>
+        </Grid.ColumnDefinitions>
+        <Grid Grid.Column="0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="50"/>
+                <RowDefinition Height="1*"/>
+            </Grid.RowDefinitions>
+            <Label Grid.Row="0" Content="Tamaños:" FontSize="16" VerticalAlignment="Center" Margin="10"/>
+            <ListBox Grid.Row="1" x:Name="lbx_Tamaños" Margin="10" KeyDown="lbx_Tamaños_KeyDown">
+                <ListBox.ItemTemplate>
+                    <DataTemplate DataType="{x:Type objetos:Tamaño}">
+                        <TextBlock Text="{Binding Nombre}"/>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
+        </Grid>
+        <Grid Grid.Column="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="50"/>
+                <RowDefinition Height="30"/>
+                <RowDefinition Height="30"/>
+                <RowDefinition Height="30"/>
+                <RowDefinition Height="30"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <Label Grid.Row="0" Content="Añadir:" FontSize="16" VerticalAlignment="Center" Margin="10"/>
+            <Grid Grid.Row="1">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="100"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Label Margin="10,0" Grid.Column="0" Content="Nombre:"/>
+                <TextBox x:Name="tbx_Nombre" Margin="10,3" Grid.Column="1"/>
+            </Grid>
+            <Grid Grid.Row="2">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="100"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Label Margin="10,0" Grid.Column="0" Content="Alto:"/>
+                <TextBox x:Name="tbx_Alto" Margin="10,3" Grid.Column="1"  TextChanged="tbx_TextChanged" PreviewKeyDown="tbx_PuntoXComa_KeyDown"/>
+            </Grid>
+            <Grid Grid.Row="3">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="100"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Label Margin="10,0" Grid.Column="0" Content="Ancho:"/>
+                <TextBox x:Name="tbx_Ancho" Margin="10,3" Grid.Column="1"  TextChanged="tbx_TextChanged" PreviewKeyDown="tbx_PuntoXComa_KeyDown"/>
+            </Grid>
+            <Button x:Name="btn_Añadir" Grid.Row="4" HorizontalAlignment="Right" Width="100" Margin="20,0" Height="30" VerticalAlignment="Center" Content="Añadir" Click="btn_Añadir_Click"/>
+        </Grid>
+    </Grid>
+</Window>

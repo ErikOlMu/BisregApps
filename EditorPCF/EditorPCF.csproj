@@ -5,16 +5,13 @@
     <TargetFramework>net6.0-windows</TargetFramework>
     <Nullable>enable</Nullable>
     <UseWPF>true</UseWPF>
+    <PackageIcon>PCFICO.png</PackageIcon>
+    <ApplicationIcon>PCFICO.ico</ApplicationIcon>
   </PropertyGroup>
 
   <ItemGroup>
     <None Remove="DefaultIMG512px.png" />
-    <None Remove="PCFICO.ico" />
     <None Remove="PCFICO.png" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Resource Include="PCFICO.ico" />
   </ItemGroup>
 
   <ItemGroup>
@@ -31,7 +28,18 @@
 
   <ItemGroup>
     <Resource Include="DefaultIMG512px.png" />
-    <Resource Include="PCFICO.png" />
+    <Resource Include="PCFICO.ico" />
+    <Resource Include="PCFICO.png">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </Resource>
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="PCFICO.ico">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
   </ItemGroup>
 
 </Project>
