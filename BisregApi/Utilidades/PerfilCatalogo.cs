@@ -19,6 +19,9 @@ namespace BisregApi.Utilidades
         public int Columnas { get; set; } = 1;
         public double Ancho { get; set; } = 0;
         public double Alto { get; set; } = 0;
+
+        public int Copias { get; set; } = 1;
+
         public CampoCanvas? GetCampoCanvas(string Uid)
         {
             foreach(CampoCanvas campo in CamposPerfil)
@@ -28,6 +31,35 @@ namespace BisregApi.Utilidades
             return null;
         }
         public List<CampoCanvas> CamposPerfil { get; set; } = new List<CampoCanvas> { };
+        public List<string> GetColumnas()
+        {
+            List<string> columnas = new List<string>();
+            foreach (CampoCanvas c in CamposPerfil)
+            {
+                if (c.ColumnaExcel != "") columnas.Add(c.ColumnaExcel);
+            }
+            return columnas;
+        }
+        public List<CampoCanvas> GetCampoXTipo(byte Tipo)
+        {
+            List<CampoCanvas> campos = new List<CampoCanvas>();
+
+            foreach(CampoCanvas c in CamposPerfil)
+            {
+                if(c.getTipo() == Tipo) campos.Add(c);
+            }
+
+            return campos;
+        }
+        public CampoCanvas GetCampoCanvas4Column(string column)
+        {
+            foreach (CampoCanvas c in CamposPerfil)
+            {
+                if (c.ColumnaExcel != column) return c;
+            }
+            return null;
+
+        }
         public static PerfilCatalogo GetPerfilCatalogo(string file)
         {
             FileStream fs = new FileStream(file, FileMode.Open);

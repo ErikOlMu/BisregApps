@@ -15,7 +15,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="FileAssociation" Version="1.0.0" />
     <PackageReference Include="UniversalSerializer" Version="3.18.4.15" />
     <PackageReference Include="WindowsAPICodePack-Shell" Version="1.1.1" />
   </ItemGroup>

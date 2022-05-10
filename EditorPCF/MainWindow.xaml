@@ -7,7 +7,7 @@
         xmlns:objetos="clr-namespace:EditorPCF.Objetos"
         xmlns:uc="clr-namespace:BisregApi.ControlesWPF;assembly=BisregApi"
         mc:Ignorable="d"
-        Title="Editor " Height="450" Width="800" Icon="pack://application:,,/EditorPCF;Component/PCFICO.ico">
+        Title="Editor " Height="450" Width="932" Icon="pack://application:,,/EditorPCF;Component/PCFICO.ico">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
@@ -78,6 +78,14 @@
                             </DataTemplate>
                         </ComboBox.ItemTemplate>
                     </ComboBox>
+                </Grid>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="1*"/>
+                        <ColumnDefinition Width="1*"/>
+                    </Grid.ColumnDefinitions>
+                    <Label Content="Copias :" Grid.Column="0"/>
+                    <TextBox x:Name="tbx_Copias" Grid.Column="1" Width="30" TextChanged="tbx_Copias_TextChanged" />
                 </Grid>
             </ToolBar>
         </ToolBarTray>

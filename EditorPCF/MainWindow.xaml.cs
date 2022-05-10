@@ -15,7 +15,6 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using BisregApi.ControlesWPF;
 using BisregApi.Utilidades;
-using BrendanGrant.Helpers.FileAssociation;
 using EditorPCF.Objetos;
 using Microsoft.WindowsAPICodePack.Dialogs;
 
@@ -113,47 +112,6 @@ namespace EditorPCF
             cbx_Tamaño.ItemsSource = null;
             cbx_Tamaño.ItemsSource = tamaños.Tamaños;
         }
-
-        //Asociar Archivo a los tipo PCF
-        public void AsociarArchivo()
-        {
-            FileAssociationInfo fai = new FileAssociationInfo(".pcf");
-            fai.Delete();
-            if (!fai.Exists)
-            {
-                fai.Create("EditorPCF");
-
-                //Specify MIME type (optional)
-                fai.ContentType = "application/pcf";
-
-                //Programs automatically displayed in open with list
-                fai.OpenWithList = new string[]
-               { "notepad.exe", "wordpad.exe"};
-            }
-            ProgramAssociationInfo pai = new ProgramAssociationInfo(fai.ProgID);
-            pai.Delete();
-            if (!pai.Exists)
-            {
-                pai.Create
-                (
-                //Description of program/file type
-                "Profile Catalog File",
-
-                new ProgramVerb
-                     (
-                     //Verb name
-                     "Open",
-                     //Path and arguments to use
-                     @"C:\SomePath\MyApp.exe %1"
-                     )
-                   );
-
-                //optional
-                pai.DefaultIcon = new ProgramIcon(@"pack://application:,,/EditorPCF;Component/PCFICO.ico");
-            }
-
-        }
-
         //Cargar Fuentes en el cbx Fuentes
         public void LoadFonts()
         {
@@ -220,6 +178,8 @@ namespace EditorPCF
             tbx_Ancho.Text = "";
             tbx_Alto.Text = "";
             cbx_Tamaño.Text = "";
+            tbx_Copias.Text = "";
+
         }
         //Cargar datos Toolbar Superior
         public void CargarHerramientasTop()
@@ -232,6 +192,8 @@ namespace EditorPCF
                 tbx_Ancho.Text = Perfil.Ancho.ToString();
                 tbx_Alto.Text = Perfil.Alto.ToString();
                 cbx_Tamaño.Text = "";
+                tbx_Copias.Text = Perfil.Copias.ToString();
+
             }
             else
             {
@@ -256,6 +218,8 @@ namespace EditorPCF
                 tbx_Tamaño_IMG.Text = campo.Tamaño.ToString();
                 tbx_Rotacion_IMG.Text = campo.Rotacion.ToString();
                 tbx_Columna_IMG.Text = campo.ColumnaExcel;
+                tbx_AntesValor_IMG.Text = campo.TextoAnterior.ToString();
+                tbx_DespuesValor_IMG.Text = campo.TextoPosterior.ToString();
             }
             else
             {
@@ -263,6 +227,8 @@ namespace EditorPCF
                 tbx_Tamaño_IMG.Text = "";
                 tbx_Rotacion_IMG.Text = "";
                 tbx_Columna_IMG.Text = "";
+                tbx_AntesValor_IMG.Text = "";
+                tbx_DespuesValor_IMG.Text = "";
             }
         }
         //Cargar Edicion Txt
@@ -275,6 +241,8 @@ namespace EditorPCF
                 tbx_Tamaño_Txt.Text = campo.Tamaño.ToString();
                 tbx_Rotacion_Txt.Text = campo.Rotacion.ToString();
                 tbx_Columna_Txt.Text = campo.ColumnaExcel;
+                tbx_AntesValor_Txt.Text = campo.TextoAnterior.ToString();
+                tbx_DespuesValor_Txt.Text = campo.TextoPosterior.ToString();
             }
             else
             {
@@ -283,6 +251,8 @@ namespace EditorPCF
                 tbx_Tamaño_Txt.Text = "";
                 tbx_Rotacion_Txt.Text = "";
                 tbx_Columna_Txt.Text = "";
+                tbx_AntesValor_IMG.Text = "";
+                tbx_DespuesValor_IMG.Text = "";
             }
         }
         //Mostar o Ocultar Toolbar IMG
@@ -376,7 +346,8 @@ namespace EditorPCF
         {
             if (Perfil != null)
             {
-                Perfil.CamposPerfil.Add(new CampoCanvas("pack://application:,,/EditorPCF;Component/DefaultIMG512px.png", new Point(0, 0), 100, CamposCanvas.Imagen));
+                CampoCanvas cc = new CampoCanvas("pack://application:,,/EditorPCF;Component/DefaultIMG512px.png", new Point(0, 0), 100, CamposCanvas.Imagen);
+                Perfil.CamposPerfil.Add(cc);
                 UpdateElementosCanvas();
             }
         }
@@ -384,7 +355,8 @@ namespace EditorPCF
         {
             if (Perfil != null)
             {
-                Perfil.CamposPerfil.Add(new CampoCanvas("Text", new Point(0, 0), 20));
+                CampoCanvas cc = new CampoCanvas("Text", new Point(0, 0), 20);
+                Perfil.CamposPerfil.Add(cc);
                 UpdateElementosCanvas();
             }
 
@@ -567,6 +539,25 @@ namespace EditorPCF
                 }
             }
 
+        }
+        private void tbx_Copias_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            if (tbx_Copias.Text != "")
+            {
+                try
+                {
+                    
+                    Perfil.Copias = int.Parse(tbx_Copias.Text);
+                    
+                }
+                catch
+                {
+                    int tbPos = ((TextBox)sender).SelectionStart;
+                    tbx_Copias.Text = Perfil.Copias.ToString();
+                    ((TextBox)sender).Select(tbPos, 0);
+
+                }
+            }
         }
 
         //Eventos Editor de Texto
@@ -825,5 +816,7 @@ namespace EditorPCF
             }
 
         }
+
+        
     }
 }

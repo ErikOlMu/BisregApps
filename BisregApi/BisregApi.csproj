@@ -33,6 +33,7 @@
     <None Remove="IMG\Excel96px.png" />
     <None Remove="IMG\Foto72px.ico" />
     <None Remove="IMG\Foto72px.png" />
+    <None Remove="IMG\Guardar128px.png" />
     <None Remove="IMG\PDF128px.ico" />
     <None Remove="IMG\PDF128px.png" />
     <None Remove="IMG\PDF256px.ico" />
@@ -120,6 +121,7 @@
     <Resource Include="IMG\Foto72px.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
+    <Resource Include="IMG\Guardar128px.png" />
     <Resource Include="IMG\PDF128px.ico">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>

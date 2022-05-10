@@ -111,7 +111,6 @@ namespace BisregApi.ControlesWPF
         public void UpdateCampos()
         {
             CanvasPrincipal.Children.Clear();
-
             foreach (CampoCanvas campo in CamposList)
             {
                 

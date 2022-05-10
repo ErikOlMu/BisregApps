@@ -16,7 +16,7 @@ using BisregApi.Utilidades;
 using System.IO;
 using System.Dynamic;
 using System.Data;
-
+using Microsoft.WindowsAPICodePack.Dialogs;
 
 namespace CatalogosBisreg.Vista
 {
@@ -25,16 +25,27 @@ namespace CatalogosBisreg.Vista
     /// </summary>
     public partial class Principal : Window
     {
-        private string SettingsFile = "Config.conf";
         private Settings settings;
-
+        private PerfilCatalogo Perfil;
 
         //Constructor
         public Principal()
         {
-            InitializeComponent();
-            InicializarApp();
+            try {
+
+                InitializeComponent();
+                //Perfil = PerfilCatalogo.GetPerfilCatalogo(Environment.GetCommandLineArgs()[1]);
+                Perfil = PerfilCatalogo.GetPerfilCatalogo("C:\\Users\\oficina12\\Desktop\\Hola.pcf");
+                InicializarApp();
+            }
+            catch (Exception ex) { 
+
+               MessageBox.Show("No se puede abrir el Perfil " + ex.Message);
+               this.Close();
+            }
         }
+
+
 
         //Inicializar Vista
         private void InicializarApp()
@@ -53,6 +64,9 @@ namespace CatalogosBisreg.Vista
 
             //Añado las configuraciones a la vista
             tbx_DirectorioImagenes.Text = settings.Directorio_IMG;
+
+
+            
         }
 
         //Evento de cambiar directorio Imagenes
@@ -68,32 +82,43 @@ namespace CatalogosBisreg.Vista
             tbx_DirectorioImagenes.Text = Dialogos.OpenFolder();
         }
 
-        //Añado la Columna IMG y hago que sea ReadOnly
+        //Añado la Columna IMG y hago que sea ReadOnly //Añado el texto anterior y posterior en la busqueda
         private DataTable ComprobarIMG(DataTable data)
         {
             //Si no existe la creo
             if (data.Columns["IMG"] == null)
             {
                 data.Columns.Add("IMG", typeof(bool));
-
-                foreach (DataRow row in data.Rows)
+                foreach (CampoCanvas c in Perfil.GetCampoXTipo(CamposCanvas.Imagen))
                 {
-                    row["IMG"] = (File.Exists(settings.Directorio_IMG + "\\" + row["Referencia"] + ".jpg") || File.Exists(settings.Directorio_IMG + "\\" + row["Referencia"] + ".png") || File.Exists(settings.Directorio_IMG + "\\" + row["Referencia"] + "_0.jpg") || File.Exists(settings.Directorio_IMG + "\\" + row["Referencia"] + "_0.png"));
+                    if (c.ColumnaExcel != "")
+                    {
+                        foreach (DataRow row in data.Rows)
+                        {
+                            row["IMG"] = (File.Exists(settings.Directorio_IMG + "\\" +c.TextoAnterior+ row[c.ColumnaExcel] +c.TextoPosterior+ ".jpg") || File.Exists(settings.Directorio_IMG + "\\" + c.TextoAnterior + row[c.ColumnaExcel] + c.TextoPosterior + ".png") || File.Exists(settings.Directorio_IMG + "\\" + c.TextoAnterior + row[c.ColumnaExcel] + c.TextoPosterior + "_0.jpg") || File.Exists(settings.Directorio_IMG + "\\" + c.TextoAnterior + row[c.ColumnaExcel] + c.TextoPosterior + "_0.png"));
+                        }
+                    }
                 }
             }
             //Si existe la actualizo
             else
             {
                 data.Columns["IMG"].ReadOnly = false;
-                foreach (DataRow row in data.Rows)
+                foreach (CampoCanvas c in Perfil.GetCampoXTipo(CamposCanvas.Imagen))
                 {
-                    try
+                    if (c.ColumnaExcel != "")
                     {
-                        row["IMG"] = (File.Exists(settings.Directorio_IMG + "\\" + row["Referencia"] + ".jpg") || File.Exists(settings.Directorio_IMG + "\\" + row["Referencia"] + ".png") || File.Exists(settings.Directorio_IMG + "\\" + row["Referencia"] + "_0.jpg") || File.Exists(settings.Directorio_IMG + "\\" + row["Referencia"] + "_0.png"));
-                    }
-                    catch
-                    {
-                        //La Fila esta eliminada, se continua y listo
+                        foreach (DataRow row in data.Rows)
+                        {
+                            try
+                            {
+                                row["IMG"] = (File.Exists(settings.Directorio_IMG + "\\" + c.TextoAnterior + row[c.ColumnaExcel] + c.TextoPosterior + ".jpg") || File.Exists(settings.Directorio_IMG + "\\" + c.TextoAnterior + row[c.ColumnaExcel] + c.TextoPosterior + ".png") || File.Exists(settings.Directorio_IMG + "\\" + c.TextoAnterior + row[c.ColumnaExcel] + c.TextoPosterior + "_0.jpg") || File.Exists(settings.Directorio_IMG + "\\" + c.TextoAnterior + row[c.ColumnaExcel] + c.TextoPosterior + "_0.png"));
+                            }
+                            catch
+                            {
+                                //La Fila esta eliminada, se continua y listo
+                            }
+                        }
                     }
                 }
 
@@ -109,26 +134,18 @@ namespace CatalogosBisreg.Vista
         {
             
             try
-            {
-
-                
-
-                //Creo una Lista para los campos
-                List<String> Campos = new List<string>();
-                
-                //Añado el Campo Referencia
-                Campos.Add("Referencia");
-
-                //Obtengo la Lista de Campos
-                Campos.AddRange(lbx_Campos.Items.OfType<string>().ToList());
-
+            {   
 
                 //Obtengo el DataView desde el excel
-                DataTable data = Excel.GetDataTable(Dialogos.OpenFile(), Campos, settings.Limite_Excel);
+                DataTable data = Excel.GetDataTable(Dialogos.OpenFile(), Perfil, settings.Limite_Excel);
 
-                if (data != null)
+
+                 if (data != null)
                 {
+
+
                     //Compruebo que tenga IMG y lo añado
+                    //dtg.ItemsSource = ComprobarIMG(data).DefaultView;
                     dtg.ItemsSource = ComprobarIMG(data).DefaultView;
 
                     MessageBox.Show("Excel Importado con exito");
@@ -141,7 +158,7 @@ namespace CatalogosBisreg.Vista
                 
             }
 
-            catch (Exception)
+            catch (Exception ex)
             {
                 dtg.ItemsSource = null;
 
@@ -151,24 +168,7 @@ namespace CatalogosBisreg.Vista
             
         }
 
-        //Añadir campo
-        private void tbx_AñadirCampo_KeyDown(object sender, KeyEventArgs e)
-        {
-            if (e.Key == Key.Enter)
-            {
-                lbx_Campos.Items.Add(tbx_AñadirCampo.Text);
-                tbx_AñadirCampo.Text = "";
-            }
-        }
 
-        //Eliminar Campo
-        private void lbx_Campos_KeyDown(object sender, KeyEventArgs e)
-        {
-            if (e.Key == Key.Delete)
-            {
-                lbx_Campos.Items.Remove(lbx_Campos.SelectedItem);
-            }
-        }
 
         //Actualizar el campo de fotos
         private void btn_RecargarFotos_Click(object sender, RoutedEventArgs e)
@@ -186,15 +186,20 @@ namespace CatalogosBisreg.Vista
         //Abrir Ventana para Generar PDF
         private void btn_GenerarPDF_Click(object sender, RoutedEventArgs e)
         {
-            if(dtg.ItemsSource != null)
-            {
-                //Mando los datos de la tabla y los campos que quiero añadir
-               // new PDFView((dtg.ItemsSource as DataView).Table,lbx_Campos.Items.OfType<string>().ToList()).Show();
-            }
-            else
-            {
-                MessageBox.Show("Primero Importa los datos");
-            }
+
+            if (dtg.ItemsSource == null) MessageBox.Show("Primero debes importar datos");
+            else PrintDoc.Print(DocumentoCatalogo.GetFlowDocument((dtg.ItemsSource as DataView).Table, Perfil, tbx_DirectorioImagenes.Text));
+            
+        }
+
+        private void btn_Generar_Click(object sender, RoutedEventArgs e)
+        {
+        }
+
+        private void btn_VistaPrevia_Click(object sender, RoutedEventArgs e)
+        {
+            new VistaPrevia((dtg.ItemsSource as DataView).Table, settings.Directorio_IMG, Perfil).Show();
+
         }
     }
 }

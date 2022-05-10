@@ -117,18 +117,22 @@ namespace Referencias_Clientes.Modulos
                         try
                         {
                             contenedor.Child = getCanvas(datos.Rows[cont][1].ToString(), datos.Rows[cont][0].ToString(),datos.Rows[cont][2].ToString(),"Pcs:");
+
+                            if (contcopia >= settings.Copias)
+                            {
+                                contcopia = 0;
+                                cont++;
+                            }
                         }
                         catch
                         {
                             contenedor.Child = getCanvas("","","","");
-                        }
 
-                        if (contcopia >= settings.Copias)
-                        {
                             contcopia = 0;
                             cont++;
                         }
-                        contcopia++;
+
+                            contcopia++;
 
                         tableCell.Blocks.Add(contenedor);
                         rowDefinition.Cells.Add(tableCell);

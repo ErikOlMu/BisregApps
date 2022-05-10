@@ -1,13 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using System.Windows.Markup;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using System.Windows.Threading;
+using System.Xml;
 
 namespace BisregApi.Utilidades
 {
@@ -19,9 +23,11 @@ namespace BisregApi.Utilidades
         public static byte Imagen = 2;
 
     }
-    public class CampoCanvas
+    public class CampoCanvas : ICloneable
     {
-        
+
+
+
         //Constructores del Campos Canvas
         public CampoCanvas(string valor, Point coordenadas, int tamaño)
         {
@@ -34,7 +40,7 @@ namespace BisregApi.Utilidades
             //Añadimos Uid al Elemento
             Elemento.Uid = Elemento.GetHashCode().ToString();
         }
-        public CampoCanvas(string valor,Point coordenadas, int tamaño, byte Tipo)
+        public CampoCanvas(string valor, Point coordenadas, int tamaño, byte Tipo)
         {
             //Creamos el Elemento segun el tipo indicado
             switch (Tipo)
@@ -65,7 +71,7 @@ namespace BisregApi.Utilidades
             //Añadimos Uid al Elemento
             Elemento.Uid = Elemento.GetHashCode().ToString();
         }
-        public CampoCanvas(string valor,Point coordenadas, int tamaño, double rotacion, byte Tipo)
+        public CampoCanvas(string valor, Point coordenadas, int tamaño, double rotacion, byte Tipo)
         {
             //Creamos el Elemento segun el tipo indicado
             switch (Tipo)
@@ -107,7 +113,7 @@ namespace BisregApi.Utilidades
         }
         public CampoCanvas(UIElement elemento)
         {
-            
+
             Elemento = elemento;
 
             if (elemento != null)
@@ -115,7 +121,7 @@ namespace BisregApi.Utilidades
                 //Añadimos Uid al Elemento
                 Elemento.Uid = Elemento.GetHashCode().ToString();
             }
-            
+
         }
         public CampoCanvas()
         {
@@ -153,25 +159,25 @@ namespace BisregApi.Utilidades
                 }
                 if (Elemento is Image)
                 {
-                    Elemento.SetValue(Image.RenderTransformProperty, new RotateTransform(value,0,0));
+                    Elemento.SetValue(Image.RenderTransformProperty, new RotateTransform(value, 0, 0));
                 }
 
             }
         }
-        public string Valor 
+        public string Valor
         {
-            get 
+            get
             {
                 if (Elemento is TextBlock)
                 {
-                   return (string) Elemento.GetValue(TextBlock.TextProperty);
+                    return (string)Elemento.GetValue(TextBlock.TextProperty);
                 }
                 if (Elemento is Image)
                 {
-                    return (string) Elemento.GetValue(Image.SourceProperty).ToString();
+                    return (string)Elemento.GetValue(Image.SourceProperty).ToString();
                 }
                 return null;
-            } 
+            }
             set
             {
                 if (Elemento is TextBlock)
@@ -184,8 +190,8 @@ namespace BisregApi.Utilidades
                     bitmapImage.BeginInit();
                     bitmapImage.UriSource = new Uri(value);
                     bitmapImage.EndInit();
-                    Elemento.SetValue(Image.StretchProperty, Stretch.Fill );
-                    Elemento.SetValue(Image.SourceProperty, bitmapImage );
+                    Elemento.SetValue(Image.StretchProperty, Stretch.Fill);
+                    Elemento.SetValue(Image.SourceProperty, bitmapImage);
                 }
             }
         }
@@ -218,36 +224,54 @@ namespace BisregApi.Utilidades
 
         public string Uid
         {
-            get {
+            get
+            {
                 if (Elemento == null) return "";
-                else return Elemento.Uid; }
+                else return Elemento.Uid;
+            }
             set { Elemento.Uid = value; }
         }
-        public UIElement Elemento { get;set;}
-        
-        public Point Coordenadas 
+
+        public UIElement Elemento {get; set; }
+
+        public Point Coordenadas
         {
             get
             {
                 return new Point((double)Elemento.GetValue(Canvas.TopProperty), (double)Elemento.GetValue(Canvas.LeftProperty));
             }
-            set 
+            set
             {
                 Elemento.SetValue(Canvas.TopProperty, value.X);
                 Elemento.SetValue(Canvas.LeftProperty, value.Y);
-            } 
+            }
         }
 
         //Metodo para obtener el tipo que es el Elemento
         public byte getTipo()
         {
-            
+
             if (Elemento is TextBlock) return CamposCanvas.Texto;
             if (Elemento is Image) return CamposCanvas.Imagen;
 
             //Si no es ningun tipo devolvemos tipo Null
             return CamposCanvas.Null;
-           
+
+        }
+
+        public object Clone()
+        {
+            CampoCanvas temp = this.MemberwiseClone() as CampoCanvas;
+
+
+            if (temp.Elemento == null)
+                return (null);
+            string s = XamlWriter.Save(temp.Elemento);
+            StringReader stringReader = new StringReader(s);
+            XmlReader xmlReader = XmlTextReader.Create(stringReader, new XmlReaderSettings());
+            temp.Elemento = (UIElement)XamlReader.Load(xmlReader);
+
+            return temp;
         }
 
         public ContentControl ContentControl
@@ -262,9 +286,9 @@ namespace BisregApi.Utilidades
         }
 
         // Elementos Extras
-        public string ColumnaExcel { get; set; }
-        public string TextoAnterior { get; set; }
-        public string TextoPosterior { get; set; }
+        public string ColumnaExcel { get; set; } = "";
+        public string TextoAnterior { get; set; } = "";
+        public string TextoPosterior { get; set; } = "";
 
     }
 }

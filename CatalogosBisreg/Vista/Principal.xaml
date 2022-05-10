@@ -53,23 +53,16 @@
                     <Button x:Name="btn_DirectorioImagenes" Grid.Column="1" Margin="0,5,5,5" MaxHeight="20" MaxWidth="45" HorizontalAlignment="Left" Width="45" Content="···" TabIndex="1" Click="btn_DirectorioImagenes_Click"/>
                 </Grid>
             </Grid>
-            <Grid Grid.Row="0" Grid.Column="3" MaxHeight="60">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="1*"/>
-                    <RowDefinition Height="1*"/>
-                </Grid.RowDefinitions>
-                <Label Content="Añadir Campo" Grid.Row="0"/>
-                <TextBox x:Name="tbx_AñadirCampo" Grid.Row="1" Margin="5,5,5,5" MaxHeight="20" TabIndex="2" KeyDown="tbx_AñadirCampo_KeyDown" />
-            </Grid>
-                    <ListBox x:Name="lbx_Campos" Grid.Row="1" Grid.Column="3" Margin="5" KeyDown="lbx_Campos_KeyDown"/>
+            
             <uc:BotonImagen Grid.Column="0" Grid.Row="1" Margin="30,10,30,10" x:Name="btn_ImportarExcel" Click="btn_ImportarExcel_Click" Titulo="Importar Excel" Imagen="pack://application:,,/BisregApi;Component/IMG/Excel96px.png"/>
             <Grid Grid.Column="1" Grid.Row="1">
                 
-                <uc:BotonImagen Grid.Column="0" Grid.Row="1" Margin="30,5" x:Name="btn_VistaPrevia"  Titulo="VistaPrevia" Imagen="pack://application:,,/BisregApi;Component/IMG/DocPreview128px.png"/>
+                <uc:BotonImagen Grid.Column="0" Grid.Row="1" Margin="30,10" x:Name="btn_VistaPrevia" Click="btn_VistaPrevia_Click"  Titulo="VistaPrevia" Imagen="pack://application:,,/BisregApi;Component/IMG/DocPreview128px.png"/>
 
             </Grid>
 
-            <uc:BotonImagen Grid.Column="1" Grid.Row="0" Margin="30,10,30,10" x:Name="btn_RecargarFotos" Click="btn_RecargarFotos_Click" Titulo="Actualizar Fotos" Imagen="pack://application:,,/BisregApi;Component/IMG/Foto72px.png"/>
+            <uc:BotonImagen Grid.Column="3" Grid.Row="0" Margin="30,10,30,10" x:Name="btn_RecargarFotos" Click="btn_RecargarFotos_Click" Titulo="Actualizar Fotos" Imagen="pack://application:,,/BisregApi;Component/IMG/Foto72px.png"/>
+            <uc:BotonImagen Grid.Column="4" Grid.Row="1" Margin="30,10" x:Name="btn_Generar" Click="btn_Generar_Click" Titulo="Generar" Imagen="pack://application:,,/BisregApi;Component/IMG/Guardar128px.png"/>
 
         </Grid>
         <DataGrid x:Name="dtg" Grid.Row="1" Margin="10" RowStyle="{StaticResource ImagenTrigger}"/>

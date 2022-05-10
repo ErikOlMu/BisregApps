@@ -8,6 +8,12 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Aspose.Cells" Version="22.4.0" />
+    <PackageReference Include="UniversalSerializer" Version="3.18.4.15" />
+    <PackageReference Include="WindowsAPICodePack-Shell" Version="1.1.1" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Reference Include="BisregApi">
       <HintPath>..\BisregApi\bin\Debug\net6.0-windows\BisregApi.dll</HintPath>
     </Reference>
