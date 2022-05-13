@@ -10,6 +10,8 @@ using System.Windows;
 using System.Windows.Documents;
 using System.Windows.Media;
 using System.Threading;
+using BisregApi.Dialogos;
+using System.Windows.Controls;
 
 namespace BisregApi.Utilidades
 {
@@ -23,6 +25,81 @@ namespace BisregApi.Utilidades
     }
     public class DocumentoCatalogo
     {
+        public static FlowDocument GetFlowDocumentProgressBar(DataTable dataTable, PerfilCatalogo perfil, string rutaimg, ProgressBarDialog progressBar)
+        {
+
+            //Inicialicamos el flowdocument
+            FlowDocument flowDocument = new FlowDocument();
+            flowDocument.PageHeight = perfil.Alto;
+            flowDocument.PageWidth = perfil.Ancho;
+            flowDocument.PagePadding = new Thickness(0);
+            flowDocument.Background = Brushes.White;
+
+            //Bucle Tabla
+            Table table = new Table();
+            table.CellSpacing = 0;
+
+            TableRowGroup tableRowGroup = new TableRowGroup();
+
+            int cont = 0;
+            int contcopia = 1;
+            Application.Current.Dispatcher.Invoke(new Action(() =>
+            {
+                progressBar.labelinfo = "Cargando Imagen " + cont + " de " + dataTable.Rows.Count;
+           progressBar.progressBar.Maximum = dataTable.Rows.Count;
+        }));
+            
+
+                while (cont < (dataTable.Rows.Count))
+                {
+                
+                for (int i = 0; i < perfil.Filas; i++)
+                    {
+                        TableRow rowDefinition = new TableRow();
+                    
+                    for (int y = 0; y < perfil.Columnas; y++)
+                        {
+
+
+                      Application.Current.Dispatcher.Invoke(new Action(() =>
+                        {
+                            progressBar.labelinfo = "Cargando Imagen " + cont + " de " + dataTable.Rows.Count;
+                           progressBar.progressBar.Value = cont;
+                        }));
+
+                        TableCell tableCell = new TableCell();
+                            BlockUIContainer contenedor = new BlockUIContainer();
+                        
+                        try
+                            {
+                                contenedor.Child = getCanvas(dataTable.Rows[cont], perfil, rutaimg);
+                                if (contcopia >= perfil.Copias)
+                                {
+                                    contcopia = 0;
+                                    cont++;
+                                }
+                           }
+                            catch
+                            {
+                               contenedor.Child = getCanvas(perfil);
+                               contcopia = 0;
+                                cont++;
+                            }
+                            contcopia++;
+                            tableCell.Blocks.Add(contenedor);
+                            rowDefinition.Cells.Add(tableCell);
+
+                        }
+                        tableRowGroup.Rows.Add(rowDefinition);
+                    }
+                }
+                table.RowGroups.Add(tableRowGroup);
+                flowDocument.Blocks.Add(table);
+
+
+
+            return flowDocument;
+        }
         public static FlowDocument GetFlowDocument(DataTable dataTable, PerfilCatalogo perfil, string rutaimg)
         {
 

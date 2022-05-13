@@ -17,6 +17,7 @@ using System.IO;
 using System.Dynamic;
 using System.Data;
 using Microsoft.WindowsAPICodePack.Dialogs;
+using System.Threading;
 
 namespace CatalogosBisreg.Vista
 {
@@ -26,22 +27,24 @@ namespace CatalogosBisreg.Vista
     public partial class Principal : Window
     {
         private Settings settings;
-        private PerfilCatalogo Perfil;
+        private PerfilCatalogo? Perfil;
 
         //Constructor
         public Principal()
         {
-            try {
-
-                InitializeComponent();
-                //Perfil = PerfilCatalogo.GetPerfilCatalogo(Environment.GetCommandLineArgs()[1]);
-                Perfil = PerfilCatalogo.GetPerfilCatalogo("C:\\Users\\oficina12\\Desktop\\Hola.pcf");
-                InicializarApp();
+            InitializeComponent();
+            try
+            {
+                ChangeProfile(PerfilCatalogo.GetPerfilCatalogo(Environment.GetCommandLineArgs()[1]));
             }
-            catch (Exception ex) { 
+            catch (Exception ex)
+            {
 
-               MessageBox.Show("No se puede abrir el Perfil " + ex.Message);
-               this.Close();
+                Perfil = null;
+            }
+            finally
+            {
+                InicializarApp();
             }
         }
 
@@ -132,43 +135,46 @@ namespace CatalogosBisreg.Vista
         //Importar Excel
         private void btn_ImportarExcel_Click(object sender, RoutedEventArgs e)
         {
-            
-            try
-            {   
-
-                //Obtengo el DataView desde el excel
-                DataTable data = Excel.GetDataTable(Dialogos.OpenFile(), Perfil, settings.Limite_Excel);
-
-
-                 if (data != null)
-                {
-
-
-                    //Compruebo que tenga IMG y lo añado
-                    //dtg.ItemsSource = ComprobarIMG(data).DefaultView;
-                    dtg.ItemsSource = ComprobarIMG(data).DefaultView;
-
-                    MessageBox.Show("Excel Importado con exito");
-                }
-                else
-                {
-                    MessageBox.Show("Error Importando Excel. Comprueba si el tiene mas de " + settings.Limite_Excel + " referencias");
-                }
-
-                
-            }
-
-            catch (Exception ex)
+            if (Perfil != null)
             {
-                dtg.ItemsSource = null;
+                try
+                {
 
-                MessageBox.Show("Algo ha salido Mal");
+                    //Obtengo el DataView desde el excel
+                    DataTable data = Excel.GetDataTable(Dialogos.OpenFile(), Perfil, settings.Limite_Excel);
+
+
+                    if (data != null)
+                    {
+
+
+                        //Compruebo que tenga IMG y lo añado
+                        //dtg.ItemsSource = ComprobarIMG(data).DefaultView;
+                        dtg.ItemsSource = ComprobarIMG(data).DefaultView;
+
+                        MessageBox.Show("Excel Importado con exito");
+                    }
+                    else
+                    {
+                        MessageBox.Show("Error Importando Excel. Comprueba si el tiene mas de " + settings.Limite_Excel + " referencias");
+                    }
+
+
+                }
+
+                catch (Exception ex)
+                {
+                    dtg.ItemsSource = null;
+
+                    MessageBox.Show("Algo ha salido Mal");
+                }
             }
-
+            else
+            {
+                MessageBox.Show("Primero añade un Perfil");
+            }
             
         }
-
-
 
         //Actualizar el campo de fotos
         private void btn_RecargarFotos_Click(object sender, RoutedEventArgs e)
@@ -198,8 +204,45 @@ namespace CatalogosBisreg.Vista
 
         private void btn_VistaPrevia_Click(object sender, RoutedEventArgs e)
         {
-            new VistaPrevia((dtg.ItemsSource as DataView).Table, settings.Directorio_IMG, Perfil).Show();
+            if (dtg.ItemsSource != null)
+            {
+                VistaPrevia vista;
+                new VistaPrevia((dtg.ItemsSource as DataView).Table, settings.Directorio_IMG, Perfil).Show();
+            }
+            else MessageBox.Show("Primero debes importar datos");
+            
+        }
 
+        private void Window_Drop(object sender, DragEventArgs e)
+        {
+            try
+            {
+                if (e.Data.GetDataPresent(DataFormats.FileDrop))
+                { // Note that you can have more than one file.
+                    string[] files = (string[])e.Data.GetData(DataFormats.FileDrop);
+
+                    // Assuming you have one file that you care about, pass it off to whatever //
+                    // handling code you have defined.
+                    if (files[0].EndsWith(".pcf"))
+                    {
+
+                        ChangeProfile(PerfilCatalogo.GetPerfilCatalogo(files[0]));
+                    }
+                }
+            }
+            catch
+            {
+                MessageBox.Show("No se a podido cargar el perfil");
+                Perfil = null;
+                dtg.ItemsSource = null;
+
+            }
+        }
+        private void ChangeProfile(PerfilCatalogo perf)
+        {
+            Perfil = perf;
+            MainWindow.Title = Perfil.NombrePerfil;
+            dtg.ItemsSource = null;
         }
     }
 }

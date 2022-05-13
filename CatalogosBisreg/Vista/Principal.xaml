@@ -6,7 +6,8 @@
         xmlns:local="clr-namespace:CatalogosBisreg.Vista"
         xmlns:uc="clr-namespace:BisregApi.ControlesWPF;assembly=BisregApi"
         mc:Ignorable="d"
-        Title="Catalogos Bisreg" Height="470" Width="800" MinHeight="470" MinWidth="800" Icon="pack://application:,,/BisregApi;Component/IMG/Foto72px.ico">
+        x:Name="MainWindow"
+        Title="Catalogos Bisreg" Height="470" Width="800" MinHeight="470" MinWidth="800" Icon="pack://application:,,/BisregApi;Component/IMG/Foto72px.ico"  AllowDrop="True" Drop="Window_Drop">
     <Window.Resources>
         
         <Style x:Key="ImagenTrigger" TargetType="DataGridRow">

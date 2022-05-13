@@ -806,7 +806,6 @@ namespace EditorPCF
                     {
 
                         CargarDocumento(PerfilCatalogo.GetPerfilCatalogo(files[0]));
-
                     }
                 }
             }
