@@ -200,6 +200,11 @@ namespace CatalogosBisreg.Vista
 
         private void btn_Generar_Click(object sender, RoutedEventArgs e)
         {
+            if (dtg.ItemsSource != null)
+            {
+                PrintDoc.Print(DocumentoCatalogo.GetFlowDocument((dtg.ItemsSource as DataView).Table, Perfil, settings.Directorio_IMG));
+            }
+            else MessageBox.Show("Primero debes importar datos");
         }
 
         private void btn_VistaPrevia_Click(object sender, RoutedEventArgs e)

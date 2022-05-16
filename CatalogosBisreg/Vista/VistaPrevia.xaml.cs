@@ -38,9 +38,9 @@ namespace CatalogosBisreg.Vista
             InitializeComponent();
          
 
-            progressbard.Show();
+
            
-            ViewerDoc.Document = DocumentoCatalogo.GetFlowDocumentProgressBar(tabla, perfil, rutaimg, progressbard);
+            ViewerDoc.Document = DocumentoCatalogo.GetFlowDocument(tabla, perfil, rutaimg);
 
         }
 
