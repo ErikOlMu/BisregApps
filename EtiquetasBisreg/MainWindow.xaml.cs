@@ -32,11 +32,13 @@ namespace EtiquetasBisreg
         {
             InitializeComponent();
             ImportarCSV();
+            this.Close();
         }
-
+       
         private void ImportarCSV()
         {
-            string file = Environment.GetCommandLineArgs()[1];
+            //string file = Environment.GetCommandLineArgs()[1];
+            string file = "C:\\Users\\Disseny\\Desktop\\00012000366103.csv";
             string temp = System.IO.Path.GetFileNameWithoutExtension(file);
             PdfWriter writer = new PdfWriter(temp);
             PdfDocument pdfDoc = new PdfDocument(writer);
@@ -51,16 +53,18 @@ namespace EtiquetasBisreg
                     int Copias = int.Parse((dtRow[data.Columns[0]].ToString() ?? "").Replace("\"", ""));
 
                     Copias = Copias / FindCopias(Referencia);
-                    for (int i = 0; 1 < Copias; i++)
-                    {
+                    //for (int i = 0; i < Copias; i++)
+                    //{
                         BuclePage(pdfDoc.AddNewPage(new PageSize(113.0f, 57.0f)), Referencia);
-                    }
+                    //}
 
                 }
 
 
                 pdfDoc.Close();
-                PrintObject.PrintPdf(temp, new PrinterSettings().PrinterName);
+                PrintObject.Start(temp);
+                //PrintObject.PrintPdf(temp);
+                //PrintObject.PrintPdf(temp);
 
             }
 
