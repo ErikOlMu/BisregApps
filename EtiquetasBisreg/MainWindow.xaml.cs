@@ -28,17 +28,55 @@ namespace EtiquetasBisreg
     /// </summary>
     public partial class MainWindow : Window
     {
+        GestorReglas Reglas = new GestorReglas();
+        DataTable dataTableCantidades;
+
         public MainWindow()
         {
             InitializeComponent();
-            ImportarCSV();
-            this.Close();
+
+            if (Environment.GetCommandLineArgs().Length > 1)
+            {
+                ImportarCSV(Environment.GetCommandLineArgs()[1]);
+                this.Close();
+            }
+            else
+            {
+                ReloadBDD();
+            }
         }
-       
-        private void ImportarCSV()
+
+
+        private bool ReloadBDD()
         {
-            //string file = Environment.GetCommandLineArgs()[1];
-            string file = "C:\\Users\\Disseny\\Desktop\\00012000366103.csv";
+            try
+            {
+                Reglas = new GestorReglas();
+                if (!Reglas.DBValida())
+                {
+                    throw new Exception("Error");
+                }
+                UpdateDataGridCantidades();
+                return true;
+
+            }
+            catch
+            {
+                MessageBox.Show("No se a podido cargar la Base de datos");
+                return false;
+            }
+        }
+        private void UpdateDataGridCantidades()
+        {
+            dataTableCantidades = Reglas.GetDataTable("ReglaCantidad");
+            dtg_ReglasCantidad.ItemsSource = dataTableCantidades.DefaultView;
+        }
+
+        private void ImportarCSV(string file)
+        {
+            //string file = "C:\\Users\\Disseny\\Desktop\\00012000366103.csv";
+
+            //string file = "C:\\Users\\oficina12\\Desktop\\00012000366103.csv";
             string temp = System.IO.Path.GetFileNameWithoutExtension(file);
             PdfWriter writer = new PdfWriter(temp);
             PdfDocument pdfDoc = new PdfDocument(writer);
@@ -48,23 +86,26 @@ namespace EtiquetasBisreg
                 DataTable data = CSV.GetDataTable(file, true);
                 foreach (DataRow dtRow in data.Rows)
                 {
-                    
-                    string Referencia = (dtRow[data.Columns[1]].ToString() ?? "").Replace("\"", "");
-                    int Copias = int.Parse((dtRow[data.Columns[0]].ToString() ?? "").Replace("\"", ""));
+                    using (var documento = pdfDoc)
+                    {
+                        string Referencia = (dtRow[data.Columns[1]].ToString() ?? "").Replace("\"", "");
+                        int Copias = int.Parse((dtRow[data.Columns[0]].ToString() ?? "").Replace("\"", ""));
 
-                    Copias = Copias / FindCopias(Referencia);
-                    //for (int i = 0; i < Copias; i++)
-                    //{
-                        BuclePage(pdfDoc.AddNewPage(new PageSize(113.0f, 57.0f)), Referencia);
-                    //}
+
+
+                        Copias = Copias / Reglas.ConsultaReglaCantidad(new BisregApi.Diseño.ItemProduccion(Referencia, Copias));
+                        for (int i = 0; i < Copias; i++)
+                        {
+                            BuclePage(documento.AddNewPage(new PageSize(113.0f, 57.0f)), Referencia);
+                        }
+                    }
 
                 }
 
 
                 pdfDoc.Close();
                 PrintObject.Start(temp);
-                //PrintObject.PrintPdf(temp);
-                //PrintObject.PrintPdf(temp);
+
 
             }
 
@@ -94,9 +135,10 @@ namespace EtiquetasBisreg
 
         }
 
-        private static int FindCopias(string Referencia)
+        private void btnGuardarReglasCantidad_Click(object sender, RoutedEventArgs e)
         {
-            return 1;
+            Reglas.SaveDataTable(dataTableCantidades);
+            UpdateDataGridCantidades();
         }
     }
 }

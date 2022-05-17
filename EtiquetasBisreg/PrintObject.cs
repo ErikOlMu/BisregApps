@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using Ghostscript.NET.Processor;
 using Microsoft.Win32;
 
+
 namespace EtiquetasBisreg
 {
     public class PrintObject
@@ -18,7 +19,8 @@ namespace EtiquetasBisreg
         {
             // YOU NEED TO HAVE ADMINISTRATOR RIGHTS TO RUN THIS CODE
 
-            string printerName = "Godex G500";
+            //string printerName = "Godex G500";
+            string printerName = new PrinterSettings().PrinterName;
             string inputFile = file;
 
             using (GhostscriptProcessor processor = new GhostscriptProcessor())
