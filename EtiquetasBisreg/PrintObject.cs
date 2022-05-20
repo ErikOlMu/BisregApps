@@ -39,6 +39,8 @@ namespace EtiquetasBisreg
 
                 processor.StartProcessing(switches.ToArray(), null);
             }
+
+            File.Delete(inputFile);
         }
         private static string GetAcrobatReaderPath()
         {

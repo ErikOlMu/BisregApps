@@ -37,7 +37,17 @@ namespace EtiquetasBisreg
 
             if (Environment.GetCommandLineArgs().Length > 1)
             {
-                ImportarCSV(Environment.GetCommandLineArgs()[1]);
+                //MessageBox.Show(Environment.GetCommandLineArgs()[0]);
+                //MessageBox.Show(Environment.GetCommandLineArgs()[1]);
+                try
+                {
+
+                    ImportarCSV(Environment.GetCommandLineArgs()[1]);
+                }
+                catch(Exception e) {
+                    MessageBox.Show(e.Message);
+                }
+
                 this.Close();
             }
             else
@@ -77,35 +87,37 @@ namespace EtiquetasBisreg
             //string file = "C:\\Users\\Disseny\\Desktop\\00012000366103.csv";
 
             //string file = "C:\\Users\\oficina12\\Desktop\\00012000366103.csv";
-            string temp = System.IO.Path.GetFileNameWithoutExtension(file);
+            string temp = file.Replace(".csv","");
+            
             PdfWriter writer = new PdfWriter(temp);
             PdfDocument pdfDoc = new PdfDocument(writer);
 
             if (file.EndsWith(".csv"))
             {
                 DataTable data = CSV.GetDataTable(file, true);
+                            BuclePage(pdfDoc.AddNewPage(new PageSize(113.0f, 57.0f)), System.IO.Path.GetFileNameWithoutExtension(file));
+
                 foreach (DataRow dtRow in data.Rows)
                 {
-                    using (var documento = pdfDoc)
-                    {
+                   
                         string Referencia = (dtRow[data.Columns[1]].ToString() ?? "").Replace("\"", "");
                         int Copias = int.Parse((dtRow[data.Columns[0]].ToString() ?? "").Replace("\"", ""));
 
 
 
-                        Copias = Copias / Reglas.ConsultaReglaCantidad(new BisregApi.Diseño.ItemProduccion(Referencia, Copias));
+                        Copias = (int)Math.Ceiling((double)Copias / Reglas.ConsultaReglaCantidad(new BisregApi.Diseño.ItemProduccion(Referencia, Copias)));
                         for (int i = 0; i < Copias; i++)
                         {
-                            BuclePage(documento.AddNewPage(new PageSize(113.0f, 57.0f)), Referencia);
+                            BuclePage(pdfDoc.AddNewPage(new PageSize(113.0f, 57.0f)), Referencia);
                         }
-                    }
+                    
 
                 }
 
 
                 pdfDoc.Close();
                 PrintObject.Start(temp);
-
+                
 
             }
 
@@ -116,6 +128,18 @@ namespace EtiquetasBisreg
             }
         }
 
+        private void GenerarEtiquetas(string content, int Copias)
+        {
+            PdfWriter writer = new PdfWriter(content+Copias);
+            PdfDocument pdfDoc = new PdfDocument(writer);
+
+            for (int i = 0; i < Copias; i++)
+            {
+                BuclePage(pdfDoc.AddNewPage(new PageSize(113.0f, 57.0f)), content);
+            }
+            pdfDoc.Close();
+            PrintObject.Start(content + Copias);
+        }
 
 
         //Diseño etiqueta
@@ -139,6 +163,24 @@ namespace EtiquetasBisreg
         {
             Reglas.SaveDataTable(dataTableCantidades);
             UpdateDataGridCantidades();
+        }
+
+        private void tbx_Referencia_KeyDown(object sender, KeyEventArgs e)
+        {
+            
+            if(e.Key == Key.Enter) 
+            {
+                if (tbx_Referencia.Text != "" && tbx_Referencia.Text != null)
+                {
+                    int copias;
+
+                    if (!int.TryParse(tbx_Copias.Text, out copias))
+                    {
+                        copias = 1;
+                    };
+                    GenerarEtiquetas(tbx_Referencia.Text, copias);
+                }
+            }
         }
     }
 }

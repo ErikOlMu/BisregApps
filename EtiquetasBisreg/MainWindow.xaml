@@ -5,16 +5,31 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:EtiquetasBisreg"
         mc:Ignorable="d"
-        Title="Cantidades" Height="450" Width="281">
+        Title="Cantidades" Height="450" Width="281" ResizeMode="NoResize">
     <Grid>
         <Grid.RowDefinitions>
+            <RowDefinition Height="70"/>
             <RowDefinition Height="35"/>
             <RowDefinition Height="*"/>
             <RowDefinition Height="40"/>
         </Grid.RowDefinitions>
-        <Label Content="Cantidad" Grid.Row="0" Grid.Column="0" HorizontalAlignment="Center" FontWeight="Bold" FontSize="18"/>
-        <DataGrid x:Name="dtg_ReglasCantidad" Margin="10" Grid.Row="1" Grid.Column="0" HorizontalScrollBarVisibility="Disabled"/>
-        <Grid Grid.Row="2" Grid.Column="0">
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="1*"/>
+                <ColumnDefinition Width="1*"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="1*"/>
+                <RowDefinition Height="1*"/>
+            </Grid.RowDefinitions>
+            <Label Grid.Row="0" Grid.Column="0" Content="Referencia" FontWeight="Bold" FontSize="18"/>
+            <Label Grid.Row="0" Grid.Column="1" Content="Copias" FontWeight="Bold" FontSize="18"/>
+            <TextBox Margin="10,5" Grid.Row="1" Grid.Column="0" Name="tbx_Referencia" KeyDown="tbx_Referencia_KeyDown"/>
+            <TextBox Margin="10,5" Grid.Row="1" Grid.Column="1" Name="tbx_Copias" KeyDown="tbx_Referencia_KeyDown"/>
+        </Grid>
+        <Label Content="Cantidad" Grid.Row="1" HorizontalAlignment="Center" FontWeight="Bold" FontSize="18"/>
+        <DataGrid x:Name="dtg_ReglasCantidad" Margin="10" Grid.Row="2" Grid.Column="0" HorizontalScrollBarVisibility="Disabled"/>
+        <Grid Grid.Row="3" Grid.Column="0">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="1*"/>
                 <ColumnDefinition Width="200"/>
